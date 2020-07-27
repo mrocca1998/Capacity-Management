@@ -24,4 +24,6 @@ class CapChart extends React.Component {
     );
   }
 }
+
 export default CapChart;
+

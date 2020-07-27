@@ -1,4 +1,6 @@
 import * as React from "react";
+import AllocationForm from "./AllocationList";
+
 
 class EmployeeList extends React.Component {
 
@@ -6,7 +8,7 @@ class EmployeeList extends React.Component {
         return (
 			<div style = {{backgroundColor : '#eeddd3'}}>
                   {this.props.employees.map(employee => 
-                    ['Dev', 'BA', 'QA'].map(role => {
+                    ['BA', 'QA', 'Dev'].map(role => {
                         if (
                             this.props.allocations.filter(
                             allocation => (allocation.role === role
@@ -19,7 +21,7 @@ class EmployeeList extends React.Component {
                                 allocation.role === role
                                 && allocation.employeeId === employee.id 
                                 && allocation.projectId === this.props.projectId)
-                                .map(allocation => <Allocation refreshState = {this.props.refreshState} {...allocation}/>                
+                                .map(allocation => <Allocation refreshState = {this.props.refreshState} employees = {this.props.employees} {...allocation}/>                
                                 )}
                         </div>   
                     }              
@@ -34,12 +36,21 @@ class Allocation extends React.Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            isEditing: false
+        }
         this.deleteAllocation = this.deleteAllocation.bind(this);
+        this.toggleEdit = this.toggleEdit.bind(this);
+    }
+
+    toggleEdit() {
+        this.setState ({
+            isEditing: !this.state.isEditing
+        })
     }
 
     async deleteAllocation(id) {
-        if(window.confirm('Are you sure')) {
-            
+        if(window.confirm('Are you sure')) {     
             try { 
                 const result = await fetch('https://localhost:44391/api/allocations/' + this.props.id, {
                     method: 'delete',
@@ -57,15 +68,40 @@ class Allocation extends React.Component {
         }
     }
 
+ 	render() {
+      const allocation = this.props;
 
-	render() {
-  	const allocation = this.props;
-  	return (
-    	<div style = {{backgroundColor : '#eeddd3'}}>
-          Months: {allocation.startDate.substring(5, 7)}/{allocation.startDate.substring(0, 4)} - {allocation.endDate.substring(5, 7)}/{allocation.endDate.substring(0, 4)} Weight: {allocation.workWeight} Allocation: {parseFloat(allocation.allocation1 * 100)}%
-          <button onClick={this.deleteAllocation}>Delete Allocation</button>
-    	</div>
-    );
+      if (this.state.isEditing) {
+        return (
+            <div>
+                <AllocationForm 
+                    refreshState = {this.props.refreshState}
+                    employees = {this.props.employees}
+                    isEditing = {this.state.isEditing} 
+                    toggleEdit = {this.toggleEdit}
+                    id = {allocation.id}
+                    projectId = {allocation.projectId}
+                    employeeId = {allocation.employeeId}
+                    role = {allocation.role}
+                    startDate = {allocation.startDate}
+                    endDate = {allocation.endDate}
+                    allocation = {allocation.allocation1}
+                    weight = {allocation.workWeight}
+                />
+            </div>
+        )
+      }
+      else {
+        return (
+            <div style = {{backgroundColor : '#eeddd3'}}>
+                Months: {allocation.startDate.substring(5, 7)}/{allocation.startDate.substring(0, 4)} - {allocation.endDate.substring(5, 7)}/{allocation.endDate.substring(0, 4)} Allocation: {allocation.allocation1}%
+                Weight: {allocation.workWeight}
+                <button onClick = {this.toggleEdit}>Update</button>
+                <button onClick={this.deleteAllocation}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt="my image" width="12" height="12"/></button>
+            </div>
+        );
+      }
+  	
   }
 }
 export default EmployeeList;

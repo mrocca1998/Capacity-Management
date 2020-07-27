@@ -1,18 +1,20 @@
 import * as React from "react";
 import EmployeeList from './EmployeeList'
 
-class AllocationList extends React.Component {
+class AllocationForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             employee : '',
             role: 'BA',
-            startMonth : '',
-            endMonth : '',
-            allocation: '',
-            weight : ''
+            startDate : '',
+            endDate : '',
+            allocation: 100,
+            weight : '1'
         }
         this.postAllocation = this.postAllocation.bind(this);
+        this.putAllocation = this.putAllocation.bind(this);
+        this.fillState = this.fillState.bind(this);
     }
 
     changeHandler = (event) => {
@@ -52,11 +54,11 @@ class AllocationList extends React.Component {
                     projectId: this.props.projectId,
                     employeeId: 
                     this.props.employees.filter(employee => employee.name === this.state.employee)[0].id,
-                    startDate: this.state.startMonth,
-                    endDate: this.state.endMonth,
+                    role: this.state.role,
+                    startDate: this.state.startDate,
+                    endDate: this.state.endDate,
                     allocation1: this.state.allocation,
                     workWeight: this.state.weight,
-                    role: this.state.role
                 })
             });
 
@@ -66,11 +68,67 @@ class AllocationList extends React.Component {
         }
         this.props.refreshState();
     }
+
+    async putAllocation(event) {
+        event.preventDefault();
+        try {
+            const result = await fetch('https://localhost:44391/api/allocations/' + this.props.id, {
+                method: 'put',
+                headers: {
+                    'Content-type':'application/json',
+                },
+                body: JSON.stringify({
+                    id: this.props.id,
+                    projectId: this.props.projectId,
+                    employeeId: 
+                    this.props.employees.filter(employee => employee.name === this.state.employee)[0].id,
+                    role: this.state.role,
+                    startDate: this.state.startDate,
+                    endDate: this.state.endDate,
+                    allocation1: this.state.allocation,
+                    workWeight: this.state.weight,
+                })
+            });
+
+            console.log('Result ' + result)
+        } catch (e) {
+            console.log(e)
+        }
+        this.props.refreshState();
+        this.props.toggleEdit();
+    }
+
+    fillState() {
+        var event1 = new Date(this.props.startDate);
+        let startDate = JSON.stringify(event1)
+        startDate = startDate.slice(1,8)
+        var event2 = new Date(this.props.endDate);
+        let endDate = JSON.stringify(event2)
+        endDate = endDate.slice(1,8)
+        this.setState({
+            employee : 
+            this.props.employees.filter(employee => employee.id === this.props.employeeId)[0].name,
+            role: this.props.role,
+            startDate : startDate,
+            endDate : endDate,
+            allocation: this.props.allocation,
+            weight : this.props.weight
+        })
+    }
+
+    componentDidMount() {
+        if (this.props.isEditing) {
+            this.fillState();
+        }
+    };
+
     render() {
         return (
 			<div>
-            <EmployeeList refreshState = {this.props.refreshState} projectId = {this.props.projectId} employees = {this.props.employees} allocations = {this.props.allocations} addAllocation = {this.props.addAllocation}/>
-			<form onSubmit={this.postAllocation} style = {{backgroundColor : '#d3eedd'}}>
+            <form 
+                onSubmit={this.props.isEditing ? this.putAllocation : this.postAllocation} 
+                style={{backgroundColor: this.props.isEditing ? '#eeddd3' :'#d3eedd'}}
+            >
 			<label >Employee: </label>
             <input type="text" list="employees"
             name = 'employee'
@@ -90,19 +148,21 @@ class AllocationList extends React.Component {
                 <option>Dev</option>
             </select>
             <label > Start Month: </label>
-            <input type="month" min="2020-07" defaultValue="2020-07" 
-            name = 'startMonth'
-            value = {this.state.startMonth}
+            <input type="month" min="2020-07" 
+            name = 'startDate'
+            value = {this.state.startDate}
             onChange = {this.changeHandler}
-            required/>
+            required
+            style={{width: "145px"}}/>
             <label > End Month: </label>
-            <input type="month" min="2020-07" defaultValue="2020-07" 
-            name = 'endMonth'
-            value = {this.state.endMonth}
-            onChange = {this.changeHandler}/>
+            <input type="month" min="2020-07"
+            name = 'endDate'
+            value = {this.state.endDate}
+            onChange = {this.changeHandler}
+            style={{width: "145px"}}/>
             <label> Allocation: </label>
             <input 
-            type="number" min="0" max="1" step="0.01" 
+            type="number" min="0" max="100" step="0.01" 
             name = 'allocation'
             value = {this.state.allocation}
             onChange = {this.changeHandler}
@@ -114,11 +174,11 @@ class AllocationList extends React.Component {
             value = {this.state.weight}
             onChange = {this.changeHandler}>
                 <option>.25</option>
-                <option>.5</option>
+                <option>.50</option>
                 <option>.75</option>
                 <option>1</option>
             </select>        
-            <button type = 'submit'>Add Allocation</button>
+            {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
 			</form>
 			</div>
 			);
@@ -134,4 +194,4 @@ class EmployeeDropdown extends React.Component {
   }
 }
 
-export default AllocationList;
+export default AllocationForm;
