@@ -1,5 +1,4 @@
 import * as React from "react";
-import EmployeeList from './EmployeeList'
 
 class AllocationForm extends React.Component {
     constructor(props) {
