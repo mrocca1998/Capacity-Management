@@ -37,7 +37,9 @@ class Allocation extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            isEditing: false
+            isEditing: false,
+            monthNames : ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December" ]
         }
         this.deleteAllocation = this.deleteAllocation.bind(this);
         this.toggleEdit = this.toggleEdit.bind(this);
@@ -94,7 +96,7 @@ class Allocation extends React.Component {
       else {
         return (
             <div style = {{backgroundColor : '#eeddd3'}}>
-                Months: {allocation.startDate.substring(5, 7)}/{allocation.startDate.substring(0, 4)} - {allocation.endDate.substring(5, 7)}/{allocation.endDate.substring(0, 4)} Allocation: {allocation.allocation1}%
+                Months: {this.state.monthNames[new Date(allocation.startDate).getMonth()]} {allocation.startDate.substring(0, 4)} - {this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)} Allocation: {allocation.allocation1}%
                 Weight: {allocation.workWeight}
                 <button onClick = {this.toggleEdit}>Update</button>
                 <button onClick={this.deleteAllocation}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt="my image" width="12" height="12"/></button>

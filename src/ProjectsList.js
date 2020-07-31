@@ -16,6 +16,11 @@ class ProjectForm extends React.Component {
             devPoints : '',
             isShowing: ''
         }
+        this.formStyle = {
+            backgroundColor: '#d3e4ee',
+            marginLeft : 100,
+            marginRight : 100,
+        }
         this.postProject = this.postProject.bind(this);
         this.putProject = this.putProject.bind(this);
         this.fillState = this.fillState.bind(this);
@@ -28,7 +33,7 @@ class ProjectForm extends React.Component {
     async postProject(event) {
         event.preventDefault();
         try {
-            const result = await fetch('https://localhost:44391/api/projects', {
+            fetch('https://localhost:44391/api/projects', {
                 method: 'post',
                 headers: {
                     'Accept': 'application/json',
@@ -44,32 +49,48 @@ class ProjectForm extends React.Component {
                     devPoints : this.state.devPoints,
                     isShowing: false
                 })
-            });
-
-            console.log('Result ' + result)
+            })
+            .then(result => result.json())
+            .then(json => {
+                if (json.length > 0) {
+                    alert(json);
+                }  
+                this.props.refreshState();     
+            })
+            //console.log('Result ' + result)
         } catch (e) {
             console.log(e)
         }
-        this.props.refreshState();
+        
     }
 
     async putProject(event) {
         event.preventDefault();
         try {
-            const result = await fetch('https://localhost:44391/api/Projects/' + this.props.projectId, {
+            await fetch('https://localhost:44391/api/Projects/' + this.props.projectId, {
                 method: 'put',
                 headers: {
+                    'Accept': 'application/json',
                     'Content-type':'application/json',
                 },
                 body: JSON.stringify(this.state)
-            });
-
-            console.log('Result ' + result)
+            })
+            .then(result => result.json())
+            .then(json => {
+                if (json.length > 0) {
+                    alert(json);
+                }
+                else {
+                    this.props.toggleEdit();
+                }
+                this.props.refreshState();     
+            })
         } catch (e) {
             console.log(e)
         }
+        
+
         this.props.refreshState();
-        this.props.toggleEdit();
     }
 
     fillState() {
@@ -97,6 +118,8 @@ class ProjectForm extends React.Component {
         }
     };
 
+
+
     render() {
 
         return (
@@ -105,7 +128,8 @@ class ProjectForm extends React.Component {
             {/* Form */}
             <form 
                 onSubmit={this.props.isEditing ? this.putProject : this.postProject} 
-                style={{backgroundColor: this.props.isEditing ? '#ddd3ee' :'#d3e4ee'}}
+                //style={{backgroundColor: this.props.isEditing ? '#ddd3ee' :'#d3e4ee'}}
+                style = {this.formStyle}
             >
                             
             <label>Project Title: </label>
@@ -271,7 +295,6 @@ class Project extends React.Component {
                 <div style = {{backgroundColor : '#ddd3ee'}}>Project: {project.title} Start Date: {project.startDate.substring(5,7)}/{project.startDate.substring(8,10)}/{project.startDate.substring(0,4)} {project.endDate === null ? <span/> : <span>End Date: {project.endDate.substring(5,7)}/{project.endDate.substring(8,10)}/{project.endDate.substring(0,4)} </span>} Total Points: {project.totalPoints} BA Points: {project.baPoints} QA Points: {project.qaPoints} Dev Points: {project.devPoints}
                 <button onClick = {this.toggleEdit}>Update</button>
                 <button onClick={this.deleteProject}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt="my image" width="12" height="12"/></button>
-                <button onClick = {this.toggleShowing}>{this.props.isShowing ? 'Hide' : 'Show'} Breakdown</button>
                 </div>
                 <EmployeeList refreshState = {this.props.refreshState} projectId = {this.props.id} employees = {this.props.employees} allocations = {this.props.allocations} addAllocation = {this.props.addAllocation}/>
                 <AllocationForm

@@ -44,7 +44,7 @@ class AllocationForm extends React.Component {
                 }
                 this.props.refreshState();
             }
-            const alResult = await fetch('https://localhost:44391/api/allocations', {
+            fetch('https://localhost:44391/api/allocations', {
                 method: 'post',
                 headers: {
                     'Accept': 'application/json',
@@ -60,9 +60,14 @@ class AllocationForm extends React.Component {
                     allocation1: this.state.allocation,
                     workWeight: this.state.weight,
                 })
-            });
-
-            console.log('Result ' + alResult)
+            })
+            .then(result => result.json())
+            .then(json => {
+                if (json.length > 0) {
+                    alert(json);
+                }  
+                this.props.refreshState();     
+            })
         } catch (e) {
             console.log(e)
         }
@@ -72,30 +77,37 @@ class AllocationForm extends React.Component {
     async putAllocation(event) {
         event.preventDefault();
         try {
-            const result = await fetch('https://localhost:44391/api/allocations/' + this.props.id, {
+            await fetch('https://localhost:44391/api/allocations/' + this.props.id, {
                 method: 'put',
                 headers: {
+                    'Accept': 'application/json',
                     'Content-type':'application/json',
                 },
                 body: JSON.stringify({
                     id: this.props.id,
                     projectId: this.props.projectId,
-                    employeeId: 
-                    this.props.employees.filter(employee => employee.name === this.state.employee)[0].id,
+                    employeeId:this.props.employees.filter(employee => employee.name === this.state.employee)[0].id,
                     role: this.state.role,
                     startDate: this.state.startDate,
                     endDate: this.state.endDate,
                     allocation1: this.state.allocation,
                     workWeight: this.state.weight,
                 })
-            });
-
-            console.log('Result ' + result)
+            })
+            .then(result => result.json())
+            .then(json => {
+                if (json.length > 0) {
+                    alert(json);
+                }  
+                else {
+                    this.props.toggleEdit();
+                }
+                this.props.refreshState();     
+            })
         } catch (e) {
             console.log(e)
         }
-        this.props.refreshState();
-        this.props.toggleEdit();
+        this.props.refreshState();   
     }
 
     fillState() {
@@ -132,8 +144,10 @@ class AllocationForm extends React.Component {
 			<label >Employee: </label>
             <input type="text" list="employees"
             name = 'employee'
+            autoComplete = "off"
             value = {this.state.employee}
-            onChange = {this.changeHandler}/>
+            onChange = {this.changeHandler}
+            required/>
             <datalist id="employees">
                 {this.props.employees.map(employee => <EmployeeDropdown {...employee}/>)}
             </datalist>
@@ -173,10 +187,10 @@ class AllocationForm extends React.Component {
             name = 'weight'
             value = {this.state.weight}
             onChange = {this.changeHandler}>
-                <option>.25</option>
-                <option>.50</option>
-                <option>.75</option>
                 <option>1</option>
+                <option>.75</option>
+                <option>.50</option>
+                <option>.25</option>
             </select>        
             {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
 			</form>
