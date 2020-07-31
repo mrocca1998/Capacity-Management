@@ -10,12 +10,9 @@ stages:
 build_app: 
   only: 
     - master
-  image: mcr.microsoft.com/dotnet/core/sdk:3.1
   script: 
     - curl -sL https://deb.nodesource.com/setup_12.x | bash
     - apt-get install -y nodejs
-    - dotnet build -c Release --source http://nuget.erieinsurance.com/Daily/api/v2 --source https://api.nuget.org/v3/index.json
-    - dotnet publish -c Release -o ./dist
   stage: build
   artifacts:
     paths:
