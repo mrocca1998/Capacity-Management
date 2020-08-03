@@ -210,7 +210,8 @@ class App extends React.Component {
             </TabPanel>
             {this.state.projects.map(project => <TabPanel>
               <div>
-              <Project
+              <Project 
+              monthNames = {this.state.monthNames}
               refreshState = {this.refreshState} 
               employees = {this.state.employees} 
               allocationState = {this.state.allocations}  
