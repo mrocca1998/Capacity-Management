@@ -6,7 +6,7 @@ import BreakdownChart from './BreakdownChart';
 import * as serviceWorker from './serviceWorker';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import AllocationForm from './AllocationList';
+import { ProjectForm, Project } from './ProjectsList';
 
 
 //chart library format
@@ -111,9 +111,10 @@ class App extends React.Component {
       monthNames : ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December" ]
     };
+    this.refreshState = this.refreshState.bind(this);
   }
-  refreshState = () => {
-      fetch('https://localhost:44391/api/projects')
+  async refreshState () {
+      await fetch('https://localhost:44391/api/projects')
       .then(res => res.json())
       .then(json => {
           const projectData = [this.state.chartData[0],];
@@ -208,6 +209,7 @@ class App extends React.Component {
               <div><span>Employee: </span><span><input></input></span></div>
             </TabPanel>
             {this.state.projects.map(project => <TabPanel>
+              
               <div>
               <Project 
               monthNames = {this.state.monthNames}
