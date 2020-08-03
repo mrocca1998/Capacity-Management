@@ -1,0 +1,34 @@
+variables:
+  GIT_SSL_NO_VERIFY: "true" # skips cert check
+  ErrorActionPreference: STOP # powershell errors will stop pipeline
+  BUILD_VERSION: $CI_COMMIT_SHORT_SHA
+
+stages: 
+  - build
+  - deploy 
+
+build_app: 
+  only: 
+    - master
+  image: node:current
+  script: 
+    - npm install
+    - npm run build
+  stage: build
+  artifacts:
+    paths:
+    - ./build/*
+    expire_in: 1 day
+  tags:
+    - docker
+    - linux
+
+deployTest:
+  stage: deploy
+  only: 
+    refs:
+      - master
+  tags:
+    - svc_np_glbldr_stub01
+  script:
+    - ./myrobo.bat .\build \\tstsrvstub01\d$\Builds\CapacityManagerWeb\src

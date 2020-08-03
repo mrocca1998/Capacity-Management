@@ -1,5 +1,4 @@
 import * as React from "react";
-import { render } from "react-dom";
 import { Chart } from "react-google-charts";
  
 class CapChart extends React.Component {

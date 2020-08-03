@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css'
 import CapChart from './CapChart';
 import BreakdownChart from './BreakdownChart';
-import ProjectsList, {ProjectForm, Project} from './ProjectsList';
 import * as serviceWorker from './serviceWorker';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';

@@ -23,7 +23,9 @@ class EmployeeList extends React.Component {
                                 && allocation.projectId === this.props.projectId)
                                 .map(allocation => <Allocation refreshState = {this.props.refreshState} employees = {this.props.employees} {...allocation}/>                
                                 )}
-                        </div>   
+                        </div> 
+                        
+                        return;
                     }              
                     )
                 )}
@@ -99,7 +101,7 @@ class Allocation extends React.Component {
                 Months: {this.state.monthNames[new Date(allocation.startDate).getMonth()]} {allocation.startDate.substring(0, 4)} - {this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)} Allocation: {allocation.allocation1}%
                 Weight: {allocation.workWeight}
                 <button onClick = {this.toggleEdit}>Update</button>
-                <button onClick={this.deleteAllocation}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt="my image" width="12" height="12"/></button>
+                <button onClick={this.deleteAllocation}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" width="12" height="12"/></button>
             </div>
         );
       }
