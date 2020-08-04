@@ -1,4 +1,6 @@
 import * as React from "react";
+import { API_ROOT } from './api-config';
+
 
 class AllocationForm extends React.Component {
     constructor(props) {
@@ -25,7 +27,7 @@ class AllocationForm extends React.Component {
         try { 
             if (this.props.employees.filter(employee => employee.name === this.state.employee).length === 0) {
                 try { 
-                    const emResult = await fetch('https://localhost:44391/api/employees', {
+                    const emResult = await fetch(API_ROOT + 'employees', {
                         method: 'post',
                         headers: {
                             'Accept': 'application/json',
@@ -43,7 +45,7 @@ class AllocationForm extends React.Component {
                 }
                 this.props.refreshState();
             }
-            fetch('https://localhost:44391/api/allocations', {
+            fetch(API_ROOT + 'allocations', {
                 method: 'post',
                 headers: {
                     'Accept': 'application/json',
@@ -76,7 +78,7 @@ class AllocationForm extends React.Component {
     async putAllocation(event) {
         event.preventDefault();
         try {
-            await fetch('https://localhost:44391/api/allocations/' + this.props.id, {
+            await fetch(API_ROOT + 'allocations/' + this.props.id, {
                 method: 'put',
                 headers: {
                     'Accept': 'application/json',

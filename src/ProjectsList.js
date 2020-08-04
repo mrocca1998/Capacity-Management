@@ -1,6 +1,8 @@
 import * as React from "react";
 import AllocationForm from "./AllocationList";
 import EmployeeList from './Employees'
+import { API_ROOT } from './api-config';
+
 
 class ProjectForm extends React.Component {
     constructor(props) {
@@ -33,7 +35,7 @@ class ProjectForm extends React.Component {
     async postProject(event) {
         event.preventDefault();
         try {
-            fetch('https://localhost:44391/api/projects', {
+            fetch(API_ROOT + 'projects', {
                 method: 'post',
                 headers: {
                     'Accept': 'application/json',
@@ -67,7 +69,7 @@ class ProjectForm extends React.Component {
     async putProject(event) {
         event.preventDefault();
         try {
-            await fetch('https://localhost:44391/api/Projects/' + this.props.projectId, {
+            await fetch(API_ROOT + 'Projects/' + this.props.projectId, {
                 method: 'put',
                 headers: {
                     'Accept': 'application/json',
@@ -224,7 +226,7 @@ class Project extends React.Component {
         if(window.confirm('Are you sure')) {
             
             try { 
-                const result = await fetch('https://localhost:44391/api/projects/' + this.props.id, {
+                const result = await fetch(API_ROOT + 'projects/' + this.props.id, {
                     method: 'delete',
                     headers: {
                         'Accept': 'application/json',
@@ -242,7 +244,7 @@ class Project extends React.Component {
 
     toggleShowing() {
         try {
-            const result = fetch('https://localhost:44391/api/projects/' + this.props.id, {
+            const result = fetch(API_ROOT + 'projects/' + this.props.id, {
                 method: 'put',
                 headers: {
                     'Accept': 'application/json',

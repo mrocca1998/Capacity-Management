@@ -1,5 +1,7 @@
 import * as React from "react";
 import AllocationForm from "./AllocationList";
+import { API_ROOT } from './api-config';
+
 
 
 class EmployeeList extends React.Component {
@@ -56,7 +58,7 @@ class Allocation extends React.Component {
     async deleteAllocation(id) {
         if(window.confirm('Are you sure')) {     
             try { 
-                const result = await fetch('https://localhost:44391/api/allocations/' + this.props.id, {
+                const result = await fetch(API_ROOT + 'allocations/' + this.props.id, {
                     method: 'delete',
                     headers: {
                         'Accept': 'application/json',

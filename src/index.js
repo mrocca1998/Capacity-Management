@@ -7,6 +7,8 @@ import * as serviceWorker from './serviceWorker';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { ProjectForm, Project } from './ProjectsList';
+import { API_ROOT } from './api-config';
+
 
 
 //chart library format
@@ -118,7 +120,7 @@ class App extends React.Component {
     this.refreshState = this.refreshState.bind(this);
   }
   async refreshState () {
-      await fetch('https://localhost:44391/api/projects')
+      await fetch(API_ROOT + 'projects')
       .then(res => res.json())
       .then(json => {
           const projectData = [this.state.chartData[0],];
@@ -148,7 +150,7 @@ class App extends React.Component {
       this.setState({
         empty: this.state.projects.length === 1
       });
-      fetch('https://localhost:44391/api/employees')
+      fetch(API_ROOT + 'employees')
       .then(res => res.json())
       .then(json => {
           this.setState({
@@ -156,7 +158,7 @@ class App extends React.Component {
           });
         },
       )
-      fetch('https://localhost:44391/api/allocations')
+      fetch(API_ROOT + 'allocations')
       .then(res => res.json())
       .then(json => {
           this.setState({
