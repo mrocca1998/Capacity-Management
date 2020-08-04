@@ -1,6 +1,6 @@
 import * as React from "react";
 import AllocationForm from "./AllocationList";
-import EmployeeList from './EmployeeList'
+import EmployeeList from './Employees'
 
 class ProjectForm extends React.Component {
     constructor(props) {
@@ -294,9 +294,9 @@ class Project extends React.Component {
             <div>
                 <div style = {{backgroundColor : '#ddd3ee'}}>Project: {project.title} Start Date: {this.props.monthNames[new Date(project.startDate).getMonth()]} {project.startDate.substring(8, 10)}, {project.startDate.substring(0, 4)} {project.endDate === null ? <span/> : <span>End Date: {this.props.monthNames[new Date(project.endDate).getMonth()]} {project.endDate.substring(8, 10)}, {project.endDate.substring(0, 4)}</span>} Total Points: {project.totalPoints} BA Points: {project.baPoints} QA Points: {project.qaPoints} Dev Points: {project.devPoints}
                 <button onClick = {this.toggleEdit}>Update</button>
-                <button onClick={this.deleteProject}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt="my image" width="12" height="12"/></button>
+                <button onClick={this.deleteProject}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt='This better work' width="12" height="12"/></button>
                 </div>
-                <EmployeeList refreshState = {this.props.refreshState} projectId = {this.props.id} employees = {this.props.employees} allocations = {this.props.allocations} addAllocation = {this.props.addAllocation}/>
+                <EmployeeList key = {this.props.id} refreshState = {this.props.refreshState} projectId = {this.props.id} employees = {this.props.employees} allocations = {this.props.allocations} addAllocation = {this.props.addAllocation}/>
                 <AllocationForm
                     refreshState = {this.props.refreshState} 
                     projectId = {project.id} 

@@ -148,7 +148,7 @@ class AllocationForm extends React.Component {
             onChange = {this.changeHandler}
             required/>
             <datalist id="employees">
-                {this.props.employees.map(employee => <EmployeeDropdown {...employee}/>)}
+                {this.props.employees.map(employee => <EmployeeDropdown key = {employee.id} {...employee}/>)}
             </datalist>
             <label > Role: </label>
             <select type = "text" 

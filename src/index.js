@@ -51,6 +51,7 @@ function Legend(props) {
   }
   return <table rules ='all' 
   style = {tableStyle}>
+<thead>
  <tr>
     <th width = '20'>Weight</th>
     <th width = '30'>Description</th>
@@ -58,6 +59,8 @@ function Legend(props) {
     <th width = '50'> QA Hours per point</th>
     <th width = '50'> Dev Hours per point</th>
   </tr>
+</thead>
+<tbody>
   <tr>
     <td>.25</td>
     <td>Lead, not much direct work</td>
@@ -86,6 +89,7 @@ function Legend(props) {
     <td>11</td>
     <td>9</td>
   </tr>
+</tbody>
   </table>;
 }
 
@@ -191,24 +195,24 @@ class App extends React.Component {
 
         <Legend />
         
-        <Tabs deafultIndex={0}>
+        <Tabs>
             <TabList>
               <Tab>Employees</Tab>
-              {this.state.projects.map(project => <Tab>{project.title}</Tab>)}
+              {this.state.projects.map(project => <Tab key = {project.id}>{project.title}</Tab>)}
             </TabList>
             <TabPanel>
               {this.state.employees.map(employee =>
-               <div style = {{backgroundColor : '#eeddd3'}}>{employee.name}<br/>
+               <div key = {employee.id} style = {{backgroundColor : '#eeddd3'}}>{employee.name}<br/>
                 {this.state.allocations.filter(allocation =>
                   allocation.employeeId === employee.id)
                   .map(allocation => 
-                    <div style = {{backgroundColor : '#d3e4ee'}}>{this.state.monthNames[new Date(allocation.startDate).getMonth()]} {allocation.startDate.substring(0, 4)} - {this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)} Project : {this.state.projects.filter(project => project.id === allocation.projectId)[0].title} Role : {allocation.role}
+                    <div key = {allocation.id} style = {{backgroundColor : '#d3e4ee'}}>{this.state.monthNames[new Date(allocation.startDate).getMonth()]} {allocation.startDate.substring(0, 4)} - {this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)} Project : {this.state.projects.filter(project => project.id === allocation.projectId)[0].title} Role : {allocation.role}
                       </div>               
                   )}
               </div>)}
               <div><span>Employee: </span><span><input></input></span></div>
             </TabPanel>
-            {this.state.projects.map(project => <TabPanel>
+            {this.state.projects.map(project => <TabPanel key = {project.id}>
               
               <div>
               <Project 
@@ -240,10 +244,8 @@ class App extends React.Component {
     );
   }	
 }
-
 ReactDOM.render(
-  <App title = 'Webteam Capacity Management'
-  />,
+  <App title = {'Webteams Capacity Management'}/>,
   document.getElementById('root')
 );
 
