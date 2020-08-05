@@ -1,6 +1,6 @@
 import * as React from "react";
 import AllocationForm from "./AllocationList";
-import EmployeeList from './Employees'
+import AlloCollapsable from './Employees'
 import { API_ROOT } from './api-config';
 
 
@@ -265,6 +265,16 @@ class Project extends React.Component {
 	render() {
     const project = this.props;
 
+    const tableStyle = {
+    border: '2px solid black',
+    backgroundColor: '#d3e4ee',
+    marginLeft : 'auto',
+    marginRight : 'auto',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#fff'
+  }
+
     if (this.state.isEditing) {
         return (
             <div>
@@ -282,7 +292,7 @@ class Project extends React.Component {
                     devPoints = {this.props.devPoints}
                     isShowing = {this.props.isShowing}
                 />
-                <EmployeeList refreshState = {this.props.refreshState} projectId = {this.props.id} employees = {this.props.employees} allocations = {this.props.allocations} />               
+                <AlloCollapsable refreshState = {this.props.refreshState} projectId = {this.props.id} employees = {this.props.employees} allocations = {this.props.allocations} />               
                 <AllocationForm 
                     refreshState = {this.props.refreshState}
                     projectId = {project.id} 
@@ -294,11 +304,41 @@ class Project extends React.Component {
     }  else {
         return (
             <div>
-                <div style = {{backgroundColor : '#ddd3ee'}}>Project: {project.title} Start Date: {this.props.monthNames[new Date(project.startDate).getMonth()]} {project.startDate.substring(8, 10)}, {project.startDate.substring(0, 4)} {project.endDate === null ? <span/> : <span>End Date: {this.props.monthNames[new Date(project.endDate).getMonth()]} {project.endDate.substring(8, 10)}, {project.endDate.substring(0, 4)}</span>} Total Points: {project.totalPoints} BA Points: {project.baPoints} QA Points: {project.qaPoints} Dev Points: {project.devPoints}
+                <table style = {tableStyle} rules = 'all'>
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Total Points</th>
+                            <th>BA Points</th>
+                            <th>QA Points</th>
+                            <th>Dev Points</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{project.title}</td>
+                            <td>{this.props.monthNames[new Date(project.startDate).getMonth()]} {project.startDate.substring(8, 10)}, {project.startDate.substring(0, 4)}</td>
+                            <td>{project.endDate === null ? <span/> : <span>End Date: {this.props.monthNames[new Date(project.endDate).getMonth()]} {project.endDate.substring(8, 10)}, {project.endDate.substring(0, 4)}</span>}</td>
+                            <td>{project.totalPoints}</td>
+                            <td>{project.qaPoints}</td>
+                            <td>{project.baPoints}</td>
+                            <td>{project.devPoints}</td>
+                            <td>
+                                <button onClick = {this.toggleEdit}>Update</button>
+                                <button onClick={this.deleteProject}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt='This better work' width="12" height="12"/></button>
+                             </td>
+                        </tr>
+                    </tbody>
+                </table>
+                {/* <div style = {{backgroundColor : '#ddd3ee'}}>Project: {project.title}
+                 Start Date: {this.props.monthNames[new Date(project.startDate).getMonth()]} {project.startDate.substring(8, 10)}, {project.startDate.substring(0, 4)} {project.endDate === null ? <span/> : <span>End Date: {this.props.monthNames[new Date(project.endDate).getMonth()]} {project.endDate.substring(8, 10)}, {project.endDate.substring(0, 4)}</span>} Total Points: {project.totalPoints} BA Points: {project.baPoints} QA Points: {project.qaPoints} Dev Points: {project.devPoints}
                 <button onClick = {this.toggleEdit}>Update</button>
                 <button onClick={this.deleteProject}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt='This better work' width="12" height="12"/></button>
-                </div>
-                <EmployeeList key = {this.props.id} refreshState = {this.props.refreshState} projectId = {this.props.id} employees = {this.props.employees} allocations = {this.props.allocations} addAllocation = {this.props.addAllocation}/>
+                </div> */}
+                <AlloCollapsable key = {this.props.id} refreshState = {this.props.refreshState} projectId = {this.props.id} employees = {this.props.employees} allocations = {this.props.allocations} addAllocation = {this.props.addAllocation}/>
                 <AllocationForm
                     refreshState = {this.props.refreshState} 
                     projectId = {project.id} 

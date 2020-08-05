@@ -150,7 +150,7 @@ class App extends React.Component {
       this.setState({
         empty: this.state.projects.length === 1
       });
-      fetch(API_ROOT + 'employees')
+      await fetch(API_ROOT + 'employees')
       .then(res => res.json())
       .then(json => {
           this.setState({
@@ -158,7 +158,7 @@ class App extends React.Component {
           });
         },
       )
-      fetch(API_ROOT + 'allocations')
+      await fetch(API_ROOT + 'allocations')
       .then(res => res.json())
       .then(json => {
           this.setState({
@@ -166,9 +166,6 @@ class App extends React.Component {
               });
         },
       )   
-      // this.setState({
-      //   isEmpty: this.state.projects.length === 0
-      // })
   }
 
 
