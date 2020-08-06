@@ -130,7 +130,7 @@ class App extends React.Component {
           json.map(project =>
               projectData.push([
                   project.id,
-                  project.title,
+                  project.title + ': ' + this.state.monthNames[new Date(project.calcEndDate).getMonth()] + ' ' + project.calcEndDate.substring(8, 10)+ ', ' + project.calcEndDate.substring(0, 4),
                   project.endDate && new Date(project.calcEndDate) > new Date(project.endDate) ? 'Insufficient Resources' : null,
                   new Date(project.startDate),
                   new Date(project.calcEndDate),

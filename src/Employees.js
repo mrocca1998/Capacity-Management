@@ -26,14 +26,14 @@ class AlloCollapsable extends React.Component {
     renderItem(employee, role) {
         const clickCallback = () => this.handleRowClick(employee.id);
         const itemRows = [
-			<tr key={employee.id} class = "noBorder">
+			<tr key1={employee.id} class = "noBorder">
 			    <td><b><u>{employee.name}, {role}</u></b> <button onClick={clickCallback}>+</button></td><td/><td/><td/>
 			</tr>
         ];
         
         if(this.state.expandedRows.includes(employee.id)) {
                 itemRows.push(
-                    <tr key1 = {employee.id} class = "noTopBorder">
+                    <tr key1 = {employee.id} >
                         <th>Start Month</th>
                         <th>End Month</th>
                         <th>Allocation</th>
@@ -46,7 +46,7 @@ class AlloCollapsable extends React.Component {
                 && allocation.projectId === this.props.projectId)
                 .map(allocation => 
                     itemRows.push(
-                    <Allocation key = {allocation.id} refreshState = {this.props.refreshState} employees = {this.props.employees} {...allocation}/>   
+                    <Allocation key = {allocation.id} key1 = {employee.id} refreshState = {this.props.refreshState} employees = {this.props.employees} {...allocation}/>   
                     )    
                 )
         }
@@ -125,7 +125,7 @@ class Allocation extends React.Component {
 
       if (this.state.isEditing) {
         return (
-            <tr>
+            <tr key1 = {this.props.key1}>
                 <td colSpan = "5">
                 <AllocationForm 
                     refreshState = {this.props.refreshState}
@@ -147,7 +147,7 @@ class Allocation extends React.Component {
       }
       else {
         return (
-            <tr>
+            <tr key1 = {this.props.key1}>
                 <td>{this.state.monthNames[new Date(allocation.startDate).getMonth()]} {allocation.startDate.substring(0, 4)}</td>
                 <td>{this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)}</td>
                 <td>{allocation.allocation1}%</td>
