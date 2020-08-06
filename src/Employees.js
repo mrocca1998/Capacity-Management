@@ -27,7 +27,7 @@ class AlloCollapsable extends React.Component {
         const clickCallback = () => this.handleRowClick(employee.id);
         const itemRows = [
 			<tr key={employee.id} class = "noBorder">
-			    <td><b><u>{employee.name}, {role}</u></b><button onClick={clickCallback}>+</button></td><td/><td/><td/>
+			    <td><b><u>{employee.name}, {role}</u></b> <button onClick={clickCallback}>+</button></td><td/><td/><td/>
 			</tr>
         ];
         
@@ -125,7 +125,8 @@ class Allocation extends React.Component {
 
       if (this.state.isEditing) {
         return (
-            <div>
+            <tr>
+                <td colSpan = "5">
                 <AllocationForm 
                     refreshState = {this.props.refreshState}
                     employees = {this.props.employees}
@@ -140,13 +141,15 @@ class Allocation extends React.Component {
                     allocation = {allocation.allocation1}
                     weight = {allocation.workWeight}
                 />
-            </div>
+                </td>
+            </tr>
         )
       }
       else {
         return (
             <tr>
-                <td>{this.state.monthNames[new Date(allocation.startDate).getMonth()]} {allocation.startDate.substring(0, 4)} - {this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)}</td>
+                <td>{this.state.monthNames[new Date(allocation.startDate).getMonth()]} {allocation.startDate.substring(0, 4)}</td>
+                <td>{this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)}</td>
                 <td>{allocation.allocation1}%</td>
                 <td>{allocation.workWeight}</td>
                 <td>

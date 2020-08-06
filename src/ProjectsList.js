@@ -187,7 +187,7 @@ class ProjectForm extends React.Component {
             onChange = {this.changeHandler}
             required 
             />
-            <label > Developer Points: </label>
+            <label > Dev Points: </label>
             <input 
             type="number"
             name = 'devPoints'
@@ -266,12 +266,13 @@ class Project extends React.Component {
     const project = this.props;
 
     const tableStyle = {
-    marginLeft : '20px',
+    marginLeft : 'auto',
     marginRight : 'auto',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: 'black',
-    textAlign: 'center'
+    borderColor: 'white',
+    textAlign: 'center',
+    backgroundColor: '#ADD8E6'
   }
 
     if (this.state.isEditing) {
@@ -322,8 +323,8 @@ class Project extends React.Component {
                             <td>{this.props.monthNames[new Date(project.startDate).getMonth()]} {project.startDate.substring(8, 10)}, {project.startDate.substring(0, 4)} </td>
                             <td>{project.endDate === null ? <span/> : <span>{this.props.monthNames[new Date(project.endDate).getMonth()]} {project.endDate.substring(8, 10)}, {project.endDate.substring(0, 4)}</span>}</td>
                             <td>{project.totalPoints}</td>
-                            <td>{project.qaPoints}</td>
                             <td>{project.baPoints}</td>
+                            <td>{project.qaPoints}</td>
                             <td>{project.devPoints}</td>
                             <td>
                                 <button onClick = {this.toggleEdit}>Update</button>

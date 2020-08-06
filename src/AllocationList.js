@@ -11,7 +11,7 @@ class AllocationForm extends React.Component {
             startDate : '',
             endDate : '',
             allocation: 100,
-            weight : 1,
+            weight : '1',
         }
         this.postAllocation = this.postAllocation.bind(this);
         this.putAllocation = this.putAllocation.bind(this);
@@ -163,6 +163,7 @@ class AllocationForm extends React.Component {
                 <option>QA</option>
                 <option>Dev</option>
             </select>
+            <br/>
             <label > Start Month: </label>
             <input type="month" min="2020-07" 
             name = 'startDate'
@@ -170,13 +171,13 @@ class AllocationForm extends React.Component {
             onChange = {this.changeHandler}
             required
             style={{width: "145px"}}/>
-            <br/><label > End Month: </label>
+            <label > End Month: </label>
             <input type="month" min="2020-07"
             name = 'endDate'
             value = {this.state.endDate}
             onChange = {this.changeHandler}
             style={{width: "145px"}}/>
-            <label> Allocation: </label>
+            <br/><label> Allocation: </label>
             <input 
             type="number" min="0" max="100" step="1" 
             name = 'allocation'
@@ -185,7 +186,14 @@ class AllocationForm extends React.Component {
             required 
             />
             <label> Weight: </label>
-            <select type = "number" 
+            <input 
+            type="number" min=".25" max="1" step=".25" 
+            name = 'weight'
+            value = {this.state.weight}
+            onChange = {this.changeHandler}
+            required 
+            />
+            {/* <select type = "number" 
             name = 'weight'
             value = {this.state.weight}
             onChange = {this.changeHandler}>
@@ -193,7 +201,7 @@ class AllocationForm extends React.Component {
                 <option>.75</option>
                 <option>.50</option>
                 <option>.25</option>
-            </select>        
+            </select>         */}
             {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
 			</form>
 			</div>
