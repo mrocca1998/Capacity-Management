@@ -12,12 +12,14 @@ class CapChart extends React.Component {
       className={"my-pretty-chart-container"}>
         <Chart
   width={'100%'}
-  height={this.props.height +'px'}
+  //height={this.props.height +'px'}
+  height = '200px'
   chartType="Gantt"
   loader={<div>Loading Chart</div>}
   data={this.props.data}
   options={{
-    height: this.props.height,
+    height: '200px',
+    //height: this.props.height,
     gantt: {
       trackHeight: 30,
       criticalPathEnabled: false,

@@ -141,7 +141,7 @@ class AllocationForm extends React.Component {
 			<div>
             <form 
                 onSubmit={this.props.isEditing ? this.putAllocation : this.postAllocation} 
-                style={{backgroundColor: this.props.isEditing ? '#eeddd3' :'#d3eedd'}}
+                style={{backgroundColor: this.props.isEditing ? 'white' :'#d3eedd'}}
             >
 			<label >Employee: </label>
             <input type="text" list="employees"
@@ -170,7 +170,7 @@ class AllocationForm extends React.Component {
             onChange = {this.changeHandler}
             required
             style={{width: "145px"}}/>
-            <label > End Month: </label>
+            <br/><label > End Month: </label>
             <input type="month" min="2020-07"
             name = 'endDate'
             value = {this.state.endDate}

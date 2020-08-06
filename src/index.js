@@ -115,9 +115,11 @@ class App extends React.Component {
       ],
       ], projects: [], allocations: [], employees: [], height: 0, 
       monthNames : ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December" ]
+      "July", "August", "September", "October", "November", "December" ],
+      showLegend: false,
     };
     this.refreshState = this.refreshState.bind(this);
+    this.toggleLegend = this.toggleLegend.bind(this);
   }
   async refreshState () {
       await fetch(API_ROOT + 'projects')
@@ -168,7 +170,12 @@ class App extends React.Component {
       )   
   }
 
+  toggleLegend() {
+    this.setState({
+      showLegend: !this.state.showLegend,
+    })
 
+  }
   
   componentDidMount() {
     this.refreshState();
@@ -177,14 +184,26 @@ class App extends React.Component {
   
 
 	render() {
+    const buttonStyle = {
+      backgroundColor: '#66c2ff',
+      borderRadius : '10px',
+      borderWidth: '1px',
+      textAlign: 'center'
+    }
+    const tabStyle = {
+      marginLeft : '100px',
+      marginRight : '100px',
+    }
   	return (
     	<div>
         <div><h1 style={{textAlign: "center"}}>{this.props.title}</h1></div>
 
         {this.state.projects.length === 0 ? <div/> : <CapChart height = {this.state.height} data={this.state.chartData} refreshState = {this.refreshState}/>}
-        <Legend />
+
+        <div> <p style = {{color: 'white'}}>________________________________________________________________________________________<button style = {buttonStyle} onClick = {this.toggleLegend}>{this.state.showLegend ? 'Hide' : 'Show'} Legend</button></p>
+        {this.state.showLegend ? <Legend /> : <span/>}</div>
         
-        <Tabs>
+        <Tabs style = {tabStyle}>
             <TabList>
               <Tab>Employees</Tab>
               {this.state.projects.map(project => <Tab key = {project.id}>{project.title}</Tab>)}

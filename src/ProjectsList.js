@@ -20,8 +20,8 @@ class ProjectForm extends React.Component {
         }
         this.formStyle = {
             backgroundColor: '#d3e4ee',
-            marginLeft : 100,
-            marginRight : 100,
+            marginLeft : 'auto',
+            marginRight : 'auto',
         }
         this.postProject = this.postProject.bind(this);
         this.putProject = this.putProject.bind(this);
@@ -266,13 +266,11 @@ class Project extends React.Component {
     const project = this.props;
 
     const tableStyle = {
-    border: '2px solid black',
-    backgroundColor: '#d3e4ee',
-    marginLeft : 'auto',
+    marginLeft : '20px',
     marginRight : 'auto',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: 'black',
     textAlign: 'center'
   }
 
@@ -321,7 +319,7 @@ class Project extends React.Component {
                     <tbody>
                         <tr>
                             <td>{project.title}</td>
-                            <td>{this.props.monthNames[new Date(project.startDate).getMonth()]} {project.startDate.substring(8, 10)}, {project.startDate.substring(0, 4)}</td>
+                            <td>{this.props.monthNames[new Date(project.startDate).getMonth()]} {project.startDate.substring(8, 10)}, {project.startDate.substring(0, 4)} </td>
                             <td>{project.endDate === null ? <span/> : <span>{this.props.monthNames[new Date(project.endDate).getMonth()]} {project.endDate.substring(8, 10)}, {project.endDate.substring(0, 4)}</span>}</td>
                             <td>{project.totalPoints}</td>
                             <td>{project.qaPoints}</td>
@@ -339,6 +337,7 @@ class Project extends React.Component {
                 <button onClick = {this.toggleEdit}>Update</button>
                 <button onClick={this.deleteProject}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt='This better work' width="12" height="12"/></button>
                 </div> */}
+                <br/>
                 <AlloCollapsable key = {this.props.id} refreshState = {this.props.refreshState} projectId = {this.props.id} employees = {this.props.employees} allocations = {this.props.allocations} addAllocation = {this.props.addAllocation}/>
                 <AllocationForm
                     refreshState = {this.props.refreshState} 
