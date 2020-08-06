@@ -11,7 +11,7 @@ class AllocationForm extends React.Component {
             startDate : '',
             endDate : '',
             allocation: 100,
-            weight : '1'
+            weight : 1,
         }
         this.postAllocation = this.postAllocation.bind(this);
         this.putAllocation = this.putAllocation.bind(this);
@@ -124,8 +124,9 @@ class AllocationForm extends React.Component {
             role: this.props.role,
             startDate : startDate,
             endDate : endDate,
+            weight : this.props.weight,
             allocation: this.props.allocation,
-            weight : this.props.weight
+            
         })
     }
 
@@ -177,14 +178,14 @@ class AllocationForm extends React.Component {
             style={{width: "145px"}}/>
             <label> Allocation: </label>
             <input 
-            type="number" min="0" max="100" step="0.01" 
+            type="number" min="0" max="100" step="1" 
             name = 'allocation'
             value = {this.state.allocation}
             onChange = {this.changeHandler}
             required 
             />
             <label> Weight: </label>
-            <select type = "text" 
+            <select type = "number" 
             name = 'weight'
             value = {this.state.weight}
             onChange = {this.changeHandler}>
