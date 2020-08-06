@@ -55,8 +55,8 @@ function Legend(props) {
   style = {tableStyle}>
 <thead>
  <tr>
-    <th width = '20'>Weight</th>
-    <th width = '30'>Description</th>
+    <th style = {{width: 20}}>Weight</th>
+    <th style = {{width: 50}}>Description</th>
     <th width = '50'> BA Hours per point</th>
     <th width = '50'> QA Hours per point</th>
     <th width = '50'> Dev Hours per point</th>
@@ -182,22 +182,13 @@ class App extends React.Component {
         <div><h1 style={{textAlign: "center"}}>{this.props.title}</h1></div>
 
         {this.state.projects.length === 0 ? <div/> : <CapChart height = {this.state.height} data={this.state.chartData} refreshState = {this.refreshState}/>}
-
-        <ProjectForm 
-          height = {this.state.height}
-          isEditing = {false}
-          allocations = {this.state.allocations} 
-          employees = {this.state.employees} 
-          projects = {this.state.projects} 
-          refreshState={this.refreshState}
-        />
-
         <Legend />
         
         <Tabs>
             <TabList>
               <Tab>Employees</Tab>
               {this.state.projects.map(project => <Tab key = {project.id}>{project.title}</Tab>)}
+              <Tab>+</Tab>
             </TabList>
             <TabPanel>
               {this.state.employees.map(employee =>
@@ -233,6 +224,16 @@ class App extends React.Component {
               {...project}/>
               </div>
             </TabPanel>)}
+            <TabPanel>
+              <ProjectForm 
+                height = {this.state.height}
+                isEditing = {false}
+                allocations = {this.state.allocations} 
+                employees = {this.state.employees} 
+                projects = {this.state.projects} 
+                refreshState={this.refreshState}
+              />
+            </TabPanel>
           </Tabs  >
 
     

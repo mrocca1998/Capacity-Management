@@ -272,7 +272,8 @@ class Project extends React.Component {
     marginRight : 'auto',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#fff'
+    borderColor: '#fff',
+    textAlign: 'center'
   }
 
     if (this.state.isEditing) {
@@ -321,7 +322,7 @@ class Project extends React.Component {
                         <tr>
                             <td>{project.title}</td>
                             <td>{this.props.monthNames[new Date(project.startDate).getMonth()]} {project.startDate.substring(8, 10)}, {project.startDate.substring(0, 4)}</td>
-                            <td>{project.endDate === null ? <span/> : <span>End Date: {this.props.monthNames[new Date(project.endDate).getMonth()]} {project.endDate.substring(8, 10)}, {project.endDate.substring(0, 4)}</span>}</td>
+                            <td>{project.endDate === null ? <span/> : <span>{this.props.monthNames[new Date(project.endDate).getMonth()]} {project.endDate.substring(8, 10)}, {project.endDate.substring(0, 4)}</span>}</td>
                             <td>{project.totalPoints}</td>
                             <td>{project.qaPoints}</td>
                             <td>{project.baPoints}</td>
