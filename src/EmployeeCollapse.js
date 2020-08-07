@@ -33,7 +33,8 @@ class EmployeeCollapsable extends React.Component {
           refreshState = {this.props.refreshState}
           onClick = {clickCallback}
           hasAllocations = {this.props.allocations.filter(allocation =>
-            allocation.employeeId === employee.id).length > 0}
+          allocation.employeeId === employee.id).length > 0}
+          expandedRows = {this.state.expandedRows}
         />
         <br/>
       </tr>
@@ -161,8 +162,8 @@ class Employee extends React.Component {
               <th><u>{this.props.employee.name}</u></th>
               <th>
                   <button onClick = {this.toggleEdit}>Edit</button>
-                  <button onClick={this.deleteEmployee}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>
-                  {this.props.hasAllocations ? <button onClick={this.props.onClick}>+</button> : <span/>}
+                  <button onClick={this.deleteEmployee} class = "Aes"><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>
+                  {this.props.hasAllocations ? <button onClick={this.props.onClick} class = "Aes">{this.props.expandedRows.includes(this.props.employee.id) ? '-':'+'}</button> : <span/>}
               </th>
           </tr>
       );

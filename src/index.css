@@ -15,4 +15,24 @@ tr.noBorder th {
   border: 0;
 }
 
+button {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border-color:black;
+  border-radius: 5px;
+  border-width: 1px;
+  cursor:pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+button.Aes {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+}
+
 

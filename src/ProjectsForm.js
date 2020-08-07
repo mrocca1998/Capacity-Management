@@ -19,7 +19,6 @@ class ProjectForm extends React.Component {
             isShowing: ''
         }
         this.formStyle = {
-            backgroundColor: '#d3e4ee',
             marginLeft : 'auto',
             marginRight : 'auto',
         }

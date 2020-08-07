@@ -27,7 +27,7 @@ class AlloCollapsable extends React.Component {
         const clickCallback = () => this.handleRowClick(employee.id);
         const itemRows = [
 			<tr key1={employee.id} class = "noBorder">
-			    <th><b><u>{employee.name}, {role}</u></b> <button onClick={clickCallback}>+</button></th><br/>
+			    <th><b><u>{employee.name}, {role}</u></b> <button onClick={clickCallback} class = "Aes">{this.state.expandedRows.includes(employee.id) ? '-':'+'}</button></th><br/>
                 <br/>
 			</tr>
         ];
@@ -161,7 +161,7 @@ class Allocation extends React.Component {
                     <td>{allocation.role}</td>
                     <td>
                         <button onClick = {this.toggleEdit}>Update</button>
-                        <button onClick={this.deleteAllocation}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>          
+                        <button onClick={this.deleteAllocation} class ="Aes"><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>          
                     </td>
                 </tr>
             :
@@ -172,7 +172,7 @@ class Allocation extends React.Component {
                     <td>{allocation.workWeight}</td>
                     <td>
                         <button onClick = {this.toggleEdit}>Update</button>
-                        <button onClick={this.deleteAllocation}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>          
+                        <button onClick={this.deleteAllocation} class = "Aes"><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>          
                     </td>
                 </tr>
         );

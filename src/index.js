@@ -186,7 +186,6 @@ class App extends React.Component {
 
 	render() {
     const buttonStyle = {
-      backgroundColor: '#66c2ff',
       borderRadius : '10px',
       borderWidth: '1px',
       textAlign: 'center'
