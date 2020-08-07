@@ -69,6 +69,9 @@ class AlloCollapsable extends React.Component {
                 const perItemRows = this.renderItem(employee, role);
                 allItemRows = allItemRows.concat(perItemRows);
                 }
+                return (
+                    <span/>
+                )
             }              
             )
         )

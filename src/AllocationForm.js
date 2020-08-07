@@ -402,13 +402,13 @@ class AllocationForm extends React.Component {
 		}
 	}
 
-class EmployeeDropdown extends React.Component {
-	render() {
-  	const employee = this.props;
-  	return (
-        <option>{employee.name}</option>
-    );
-  }
-}
+// class EmployeeDropdown extends React.Component {
+// 	render() {
+//   	const employee = this.props;
+//   	return (
+//         <option>{employee.name}</option>
+//     );
+//   }
+// }
 
 export default AllocationForm;

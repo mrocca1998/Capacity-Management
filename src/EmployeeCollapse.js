@@ -81,7 +81,9 @@ class EmployeeCollapsable extends React.Component {
 
               const perItemRows = this.renderItem(employee);
               allItemRows = allItemRows.concat(perItemRows);
-
+            return (
+                <span/>
+            )
       }
       )
       
