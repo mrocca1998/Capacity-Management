@@ -292,7 +292,7 @@ class Project extends React.Component {
                     devPoints = {this.props.devPoints}
                     isShowing = {this.props.isShowing}
                 />
-                <AlloCollapsable refreshState = {this.props.refreshState} projectId = {this.props.id} employees = {this.props.employees} allocations = {this.props.allocations} />               
+                <AlloCollapsable refreshState = {this.props.refreshState} projectId = {this.props.id} employees = {this.props.employees} allocations = {this.props.allocations} />
                 <AllocationForm 
                     refreshState = {this.props.refreshState}
                     projectId = {project.id} 

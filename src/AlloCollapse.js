@@ -27,7 +27,8 @@ class AlloCollapsable extends React.Component {
         const clickCallback = () => this.handleRowClick(employee.id);
         const itemRows = [
 			<tr key1={employee.id} class = "noBorder">
-			    <th><b><u>{employee.name}, {role}</u></b> <button onClick={clickCallback}>+</button></th>
+			    <th><b><u>{employee.name}, {role}</u></b> <button onClick={clickCallback}>+</button></th><br/>
+                <br/>
 			</tr>
         ];
         

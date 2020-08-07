@@ -35,6 +35,7 @@ class EmployeeCollapsable extends React.Component {
           hasAllocations = {this.props.allocations.filter(allocation =>
             allocation.employeeId === employee.id).length > 0}
         />
+        <br/>
       </tr>
       ];
       
