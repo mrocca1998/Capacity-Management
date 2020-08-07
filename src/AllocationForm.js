@@ -137,14 +137,13 @@ class AllocationForm extends React.Component {
     };
 
     render() {
-        return (
-			<div>
-            <form 
-                onSubmit={this.props.isEditing ? this.putAllocation : this.postAllocation} 
-                //style={{backgroundColor: this.props.isEditing ? 'white' :'#d3eedd'}}
-            >
-            {this.props.isEmTab ? 
-                 <div>
+        if (this.props.isEditing) {
+            return (
+                this.props.isEmTab ? 
+                    <td colSpan = "6">
+                    <form 
+                    onSubmit={this.props.isEditing ? this.putAllocation : this.postAllocation} 
+                    >
                     {/* <label >Employee: </label>
                     <input type="text" list="employees"
                     name = 'employee'
@@ -165,34 +164,31 @@ class AllocationForm extends React.Component {
                         <option>QA</option>
                         <option>Dev</option>
                     </select>
-                    <br/>
-                    <label > Start Month: </label> */}
-                    <td>
+                    <br/> */}
+                    {/* <label > Start Month: </label> */}
                     <input type="month" min="2020-07" 
                     name = 'startDate'
                     value = {this.state.startDate}
                     onChange = {this.changeHandler}
                     required
-                    style={{width: "145px"}}/>
-                    </td>
+                    style={{width : "145px"}}/>
                     {/* <label > End Month: </label> */}
-                    <td>
                     <input type="month" min="2020-07"
                     name = 'endDate'
                     value = {this.state.endDate}
                     onChange = {this.changeHandler}
                     style={{width: "145px"}}/>
-                    </td>
                     {/* <br/><label> Allocation: </label> */}
-                    <td>Project Name temp</td>
+                    <p style={{display:'inline'}}> {this.props.projects.filter(project => project.id === this.props.projectId)[0].title}  </p>
                     <input 
+                    width = "100"
                     type="number" min="0" max="100" step="1" 
                     name = 'allocation'
                     value = {this.state.allocation}
                     onChange = {this.changeHandler}
                     required 
                     />
-                    <label> Weight: </label>
+                    {/* <label> Weight: </label> */}
                     <input 
                     type="number" min=".25" max="1" step=".25" 
                     name = 'weight'
@@ -200,11 +196,24 @@ class AllocationForm extends React.Component {
                     onChange = {this.changeHandler}
                     required 
                     />
+                                        <select type = "text" 
+                    name = 'role'
+                    value = {this.state.role}
+                    onChange = {this.changeHandler}
+                    required>
+                        <option>BA</option>
+                        <option>QA</option>
+                        <option>Dev</option>
+                    </select>
                     {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
-                </div>
-            :
-                <div>
-                    <label >Employee: </label>
+                    </form>   
+                    </td> 
+                :
+                    <td colSpan = "5">
+                    <form 
+                        onSubmit={this.props.isEditing ? this.putAllocation : this.postAllocation} 
+                    >
+                    {/* <label >Employee: </label>
                     <input type="text" list="employees"
                     name = 'employee'
                     autoComplete = "off"
@@ -224,29 +233,30 @@ class AllocationForm extends React.Component {
                         <option>QA</option>
                         <option>Dev</option>
                     </select>
-                    <br/>
-                    <label > Start Month: </label>
+                    <br/> */}
+                    {/* <label > Start Month: </label> */}
                     <input type="month" min="2020-07" 
                     name = 'startDate'
                     value = {this.state.startDate}
                     onChange = {this.changeHandler}
                     required
-                    style={{width: "145px"}}/>
-                    <label > End Month: </label>
+                    style={{width : "145px"}}/>
+                    {/* <label > End Month: </label> */}
                     <input type="month" min="2020-07"
                     name = 'endDate'
                     value = {this.state.endDate}
                     onChange = {this.changeHandler}
                     style={{width: "145px"}}/>
-                    <br/><label> Allocation: </label>
+                    {/* <br/><label> Allocation: </label> */}
                     <input 
+                    width = "100"
                     type="number" min="0" max="100" step="1" 
                     name = 'allocation'
                     value = {this.state.allocation}
                     onChange = {this.changeHandler}
                     required 
                     />
-                    <label> Weight: </label>
+                    {/* <label> Weight: </label> */}
                     <input 
                     type="number" min=".25" max="1" step=".25" 
                     name = 'weight'
@@ -255,74 +265,140 @@ class AllocationForm extends React.Component {
                     required 
                     />
                     {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
-                </div>
-            }
-			</form>
-            </div>
+                    </form>    
+                    </td>            
 
-			/* <label >Employee: </label>
-            <input type="text" list="employees"
-            name = 'employee'
-            autoComplete = "off"
-            value = {this.state.employee}
-            onChange = {this.changeHandler}
-            required/>
-            <datalist id="employees">
-                {this.props.employees.map(employee => <EmployeeDropdown key = {employee.id} {...employee}/>)}
-            </datalist>
-            <label > Role: </label>
-            <select type = "text" 
-            name = 'role'
-            value = {this.state.role}
-            onChange = {this.changeHandler}
-            required>
-                <option>BA</option>
-                <option>QA</option>
-                <option>Dev</option>
-            </select>
-            <br/>
-            <label > Start Month: </label>
-            <input type="month" min="2020-07" 
-            name = 'startDate'
-            value = {this.state.startDate}
-            onChange = {this.changeHandler}
-            required
-            style={{width: "145px"}}/>
-            <label > End Month: </label>
-            <input type="month" min="2020-07"
-            name = 'endDate'
-            value = {this.state.endDate}
-            onChange = {this.changeHandler}
-            style={{width: "145px"}}/>
-            <br/><label> Allocation: </label>
-            <input 
-            type="number" min="0" max="100" step="1" 
-            name = 'allocation'
-            value = {this.state.allocation}
-            onChange = {this.changeHandler}
-            required 
-            />
-            <label> Weight: </label>
-            <input 
-            type="number" min=".25" max="1" step=".25" 
-            name = 'weight'
-            value = {this.state.weight}
-            onChange = {this.changeHandler}
-            required 
-            />
-            {/* <select type = "number" 
-            name = 'weight'
-            value = {this.state.weight}
-            onChange = {this.changeHandler}>
-                <option>1</option>
-                <option>.75</option>
-                <option>.50</option>
-                <option>.25</option>
-            </select>         */
-            /* </div>{this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
-			</form> */
-			/* </div> */
-        )	
+            )
+        } 
+        else {
+            return (
+                <form 
+                    onSubmit={this.props.isEditing ? this.putAllocation : this.postAllocation} 
+                >
+                <label >Employee: </label>
+                <select type="text"
+                name = 'employee'
+                value = {this.state.employee}
+                onChange = {this.changeHandler}
+                required>
+                {this.props.employees.map(employee =>
+                    <option>{employee.name}</option>
+                )}
+                </select>
+                <label > Role: </label>
+                <select type = "text" 
+                name = 'role'
+                value = {this.state.role}
+                onChange = {this.changeHandler}
+                required>
+                    <option>BA</option>
+                    <option>QA</option>
+                    <option>Dev</option>
+                </select>
+                <label > Start Month: </label>
+                <input type="month" min="2020-07" 
+                name = 'startDate'
+                value = {this.state.startDate}
+                onChange = {this.changeHandler}
+                required
+                style={{width: "145px"}}/>
+                <label > End Month: </label>
+                <input type="month" min="2020-07"
+                name = 'endDate'
+                value = {this.state.endDate}
+                onChange = {this.changeHandler}
+                style={{width: "145px"}}/>
+                <br/><label> Allocation: </label>
+                <input 
+                type="number" min="0" max="100" step="1" 
+                name = 'allocation'
+                value = {this.state.allocation}
+                onChange = {this.changeHandler}
+                required 
+                />
+                <label> Weight: </label>
+                <input 
+                type="number" min=".25" max="1" step=".25" 
+                name = 'weight'
+                value = {this.state.weight}
+                onChange = {this.changeHandler}
+                required 
+                />
+                {/* <select type = "number" 
+                name = 'weight'
+                value = {this.state.weight}
+                onChange = {this.changeHandler}>
+                    <option>1</option>
+                    <option>.75</option>
+                    <option>.50</option>
+                    <option>.25</option>
+                </select>         */}
+                {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
+                </form>
+            )
+        }
+
+			// <label >Employee: </label>
+            // <input type="text" list="employees"
+            // name = 'employee'
+            // autoComplete = "off"
+            // value = {this.state.employee}
+            // onChange = {this.changeHandler}
+            // required/>
+            // <datalist id="employees">
+            //     {this.props.employees.map(employee => <EmployeeDropdown key = {employee.id} {...employee}/>)}
+            // </datalist>
+            // <label > Role: </label>
+            // <select type = "text" 
+            // name = 'role'
+            // value = {this.state.role}
+            // onChange = {this.changeHandler}
+            // required>
+            //     <option>BA</option>
+            //     <option>QA</option>
+            //     <option>Dev</option>
+            // </select>
+            // <br/>
+            // <label > Start Month: </label>
+            // <input type="month" min="2020-07" 
+            // name = 'startDate'
+            // value = {this.state.startDate}
+            // onChange = {this.changeHandler}
+            // required
+            // style={{width: "145px"}}/>
+            // <label > End Month: </label>
+            // <input type="month" min="2020-07"
+            // name = 'endDate'
+            // value = {this.state.endDate}
+            // onChange = {this.changeHandler}
+            // style={{width: "145px"}}/>
+            // <br/><label> Allocation: </label>
+            // <input 
+            // type="number" min="0" max="100" step="1" 
+            // name = 'allocation'
+            // value = {this.state.allocation}
+            // onChange = {this.changeHandler}
+            // required 
+            // />
+            // <label> Weight: </label>
+            // <input 
+            // type="number" min=".25" max="1" step=".25" 
+            // name = 'weight'
+            // value = {this.state.weight}
+            // onChange = {this.changeHandler}
+            // required 
+            // />
+            // {/* <select type = "number" 
+            // name = 'weight'
+            // value = {this.state.weight}
+            // onChange = {this.changeHandler}>
+            //     <option>1</option>
+            //     <option>.75</option>
+            //     <option>.50</option>
+            //     <option>.25</option>
+            // </select>         */}
+            // {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
+			// </form>
 		}
 	}
 

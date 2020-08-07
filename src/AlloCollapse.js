@@ -124,8 +124,7 @@ class Allocation extends React.Component {
 
       if (this.state.isEditing) {
         return (
-            <tr key1 = {this.props.key1}>
-                {/* <td colSpan = "5"> */}
+            <tr key1 = {this.props.key1}>  
                 <AllocationForm 
                     refreshState = {this.props.refreshState}
                     employees = {this.props.employees}
@@ -139,9 +138,10 @@ class Allocation extends React.Component {
                     endDate = {allocation.endDate}
                     allocation = {allocation.allocation1}
                     weight = {allocation.workWeight}
+                    isEmTab = {this.props.isEmTab}
+                    projects = {this.props.projects}
                     
                 />
-                {/* </td> */}
             </tr>
         )
       }
