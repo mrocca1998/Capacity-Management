@@ -1,5 +1,5 @@
 import * as React from "react";
-import AllocationForm from "./AllocationList";
+import AllocationForm from "./AllocationForm";
 import { API_ROOT } from './api-config';
 import './index.css'
 
@@ -27,7 +27,7 @@ class AlloCollapsable extends React.Component {
         const clickCallback = () => this.handleRowClick(employee.id);
         const itemRows = [
 			<tr key1={employee.id} class = "noBorder">
-			    <td><b><u>{employee.name}, {role}</u></b> <button onClick={clickCallback}>+</button></td><td/><td/><td/>
+			    <th><b><u>{employee.name}, {role}</u></b> <button onClick={clickCallback}>+</button></th>
 			</tr>
         ];
         
@@ -68,7 +68,6 @@ class AlloCollapsable extends React.Component {
                 const perItemRows = this.renderItem(employee, role);
                 allItemRows = allItemRows.concat(perItemRows);
                 }
-                return <span/>
             }              
             )
         )
@@ -126,7 +125,7 @@ class Allocation extends React.Component {
       if (this.state.isEditing) {
         return (
             <tr key1 = {this.props.key1}>
-                <td colSpan = "5">
+                {/* <td colSpan = "5"> */}
                 <AllocationForm 
                     refreshState = {this.props.refreshState}
                     employees = {this.props.employees}
@@ -140,31 +139,42 @@ class Allocation extends React.Component {
                     endDate = {allocation.endDate}
                     allocation = {allocation.allocation1}
                     weight = {allocation.workWeight}
+                    
                 />
-                </td>
+                {/* </td> */}
             </tr>
         )
       }
       else {
         return (
-            <tr key1 = {this.props.key1}>
-                <td>{this.state.monthNames[new Date(allocation.startDate).getMonth()]} {allocation.startDate.substring(0, 4)}</td>
-                <td>{this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)}</td>
-                <td>{allocation.allocation1}%</td>
-                <td>{allocation.workWeight}</td>
-                <td>
-                    <button onClick = {this.toggleEdit}>Update</button>
-                    <button onClick={this.deleteAllocation}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>          
-                </td>
-            </tr>
-                //* Months: {this.state.monthNames[new Date(allocation.startDate).getMonth()]} {allocation.startDate.substring(0, 4)} - {this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)} Allocation: {allocation.allocation1}%
-                //Weight: {allocation.workWeight} */}
-                //{/* <button onClick = {this.toggleEdit}>Update</button>
-                //<button onClick={this.deleteAllocation}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button> */}
+            this.props.isEmTab ? 
+                <tr>
+                    <td>{this.state.monthNames[new Date(allocation.startDate).getMonth()]} {allocation.startDate.substring(0, 4)}</td>
+                    <td>{this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)}</td>
+                    <td>{this.props.projects.filter(project => project.id === allocation.projectId)[0].title}</td>
+                    <td>{allocation.allocation1}%</td>
+                    <td>{allocation.workWeight}</td>
+                    <td>{allocation.role}</td>
+                    <td>
+                        <button onClick = {this.toggleEdit}>Update</button>
+                        <button onClick={this.deleteAllocation}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>          
+                    </td>
+                </tr>
+            :
+                <tr key1 = {this.props.key1}>
+                    <td>{this.state.monthNames[new Date(allocation.startDate).getMonth()]} {allocation.startDate.substring(0, 4)}</td>
+                    <td>{this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)}</td>
+                    <td>{allocation.allocation1}%</td>
+                    <td>{allocation.workWeight}</td>
+                    <td>
+                        <button onClick = {this.toggleEdit}>Update</button>
+                        <button onClick={this.deleteAllocation}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>          
+                    </td>
+                </tr>
         );
       }
   	
   }
 }
 
-export default AlloCollapsable;
+export {AlloCollapsable, Allocation, };

@@ -6,8 +6,9 @@ import BreakdownChart from './BreakdownChart';
 import * as serviceWorker from './serviceWorker';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { ProjectForm, Project } from './ProjectsList';
+import { ProjectForm, Project } from './ProjectsForm';
 import { API_ROOT } from './api-config';
+import EmployeeCollapsable from './EmployeeCollapse';
 
 
 
@@ -198,7 +199,7 @@ class App extends React.Component {
     	<div>
         <div><h1 style={{textAlign: "center"}}>{this.props.title}</h1></div>
 
-        {this.state.projects.length === 0 ? <div/> : <CapChart height = {this.state.height} data={this.state.chartData} refreshState = {this.refreshState}/>}
+        {this.state.projects.length === 0 ? <div/> : <div class = 'code'><CapChart className = "code" height = {this.state.height} data={this.state.chartData} refreshState = {this.refreshState}/></div>}
 
         <div> <p style = {{color: 'white'}}>________________________________________________________________________________________<button style = {buttonStyle} onClick = {this.toggleLegend}>{this.state.showLegend ? 'Hide' : 'Show'} Legend</button></p>
         {this.state.showLegend ? <Legend /> : <span/>}</div>
@@ -210,7 +211,13 @@ class App extends React.Component {
               <Tab>+</Tab>
             </TabList>
             <TabPanel>
-              {this.state.employees.map(employee =>
+              <EmployeeCollapsable 
+                employees = {this.state.employees}
+                allocations = {this.state.allocations}
+                projects = {this.state.projects}
+                refreshState = {this.refreshState}
+              />
+              {/* {this.state.employees.map(employee =>
                <div key = {employee.id} style = {{backgroundColor : '#eeddd3'}}>{employee.name}<br/>
                 {this.state.allocations.filter(allocation =>
                   allocation.employeeId === employee.id)
@@ -219,7 +226,7 @@ class App extends React.Component {
                       </div>               
                   )}
               </div>)}
-              <div><span>Employee: </span><span><input></input></span></div>
+              <div><span>Employee: </span><span><input></input></span></div> */}
             </TabPanel>
             {this.state.projects.map(project => <TabPanel key = {project.id}>
               

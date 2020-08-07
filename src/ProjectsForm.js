@@ -1,6 +1,6 @@
 import * as React from "react";
-import AllocationForm from "./AllocationList";
-import AlloCollapsable from './Employees'
+import AllocationForm from "./AllocationForm";
+import { AlloCollapsable }from './AlloCollapse'
 import { API_ROOT } from './api-config';
 
 

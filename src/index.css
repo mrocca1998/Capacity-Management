@@ -7,16 +7,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+div.code {
+  position: 'fixed'
 }
 
-tr.noBorder td {
+tr.noBorder th {
   border: 0;
 }
 
-tr.noTopBorder td {
-  border-top: 0;
-}
 
