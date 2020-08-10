@@ -261,6 +261,7 @@ class Project extends React.Component {
         }
         this.props.refreshState();
     }
+
 	render() {
     const project = this.props;
 

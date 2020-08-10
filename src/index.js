@@ -64,19 +64,12 @@ function Legend(props) {
   </tr>
 </thead>
 <tbody>
-  <tr>
-    <td>.25</td>
-    <td>Lead, not much direct work</td>
-    <td>63</td>
-    <td>63</td>
-    <td>63</td>
-  </tr>
-  <tr>
-    <td>.50</td>
-    <td>New Employee</td>
-    <td>28</td>
-    <td>38</td>
-    <td>33</td>
+<tr>
+    <td>1</td>
+    <td>Full capactiy</td>
+    <td>6</td>
+    <td>11</td>
+    <td>9</td>
   </tr>
   <tr>
     <td>.75</td>
@@ -86,14 +79,21 @@ function Legend(props) {
     <td>17</td>
   </tr>
   <tr>
-    <td>1</td>
-    <td>Full capactiy</td>
-    <td>6</td>
-    <td>11</td>
-    <td>9</td>
+    <td>.50</td>
+    <td>New Employee</td>
+    <td>28</td>
+    <td>38</td>
+    <td>33</td>
+  </tr>
+  <tr>
+    <td>.25</td>
+    <td>Lead, not much direct work</td>
+    <td>63</td>
+    <td>63</td>
+    <td>63</td>
   </tr>
 </tbody>
-  </table>;
+</table>;
 }
 
 
@@ -132,11 +132,12 @@ class App extends React.Component {
               projectData.push([
                   project.id,
                   project.title + ': ' + this.state.monthNames[new Date(project.calcEndDate).getMonth()] + ' ' + project.calcEndDate.substring(8, 10)+ ', ' + project.calcEndDate.substring(0, 4),
-                  project.endDate && new Date(project.calcEndDate) > new Date(project.endDate) ? 'Insufficient Resources' : null,
+                  null,
                   new Date(project.startDate),
                   new Date(project.calcEndDate),
                   null,
-                  100 * (((project.totalPoints-project.baPoints)+(project.totalPoints-project.qaPoints)+(project.totalPoints-project.devPoints))/3)/project.totalPoints,
+                  project.endDate && new Date(project.calcEndDate) >= new Date(project.endDate)? Math.round(100 * this.daysBetween(new Date(project.startDate), new Date(project.endDate))/ this.daysBetween(new Date(project.startDate), new Date(project.calcEndDate))) : 100,
+                  //100 * (((project.totalPoints-project.baPoints)+(project.totalPoints-project.qaPoints)+(project.totalPoints-project.devPoints))/3)/project.totalPoints,
                   null,
               ])
            )
@@ -175,7 +176,11 @@ class App extends React.Component {
     this.setState({
       showLegend: !this.state.showLegend,
     })
+  }
 
+  daysBetween(firstDate, secondDate) {
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    return Math.round(Math.abs((firstDate - secondDate) / oneDay));
   }
   
   componentDidMount() {

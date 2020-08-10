@@ -6,6 +6,10 @@ class CapChart extends React.Component {
     marginLeft : 50,
     marginRight : 50,
   }
+  daysBetween(firstDate, secondDate) {
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    return Math.round(Math.abs((firstDate - secondDate) / oneDay));
+  }
   render() {
     return (
       <div style = {this.chartStyle}
@@ -21,10 +25,26 @@ class CapChart extends React.Component {
     height: '200px',
     //height: this.props.height,
     gantt: {
+      labelStyle: {
+        color: 'white',
+        fontName: 'Arial',
+        fontSize: 15,
+        
+      },
+        
+      palette: [
+        {
+          "color": "#FF3333",
+          "dark": "#5377ed",
+          "light": "#9400D3"
+        }
+      ],
       trackHeight: 30,
       criticalPathEnabled: false,
       sortTasks: false,
-      innerGridTrack: 'purple',
+      tooltip : {
+        trigger: 'none'
+      }
     },
   }}
   rootProps={{ 'data-testid': '2' }}

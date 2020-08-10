@@ -5,6 +5,11 @@ class BreakdownChart extends React.Component {
     constructor(props) {
       super(props)
     }
+
+    daysBetween(firstDate, secondDate) {
+      const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+      return Math.round(Math.abs((firstDate - secondDate) / oneDay));
+    }
   
     render() {   
       this.monthNames = ["January", "February", "March", "April", "May", "June",
@@ -19,23 +24,23 @@ class BreakdownChart extends React.Component {
           new Date(this.props.startDate),
           new Date(this.props.baEndDate),
           null,
-          (this.props.totalPoints - this.props.baPoints)/this.props.totalPoints * 100,
+          this.props.endDate && new Date(this.props.baEndDate) >= new Date(this.props.endDate) ? Math.round(100 * this.daysBetween(new Date(this.props.startDate), new Date(this.props.endDate))/ this.daysBetween(new Date(this.props.startDate), new Date(this.props.baEndDate))) : 100,
           null,], 
           [2,
           'QA: ' + this.monthNames[new Date(this.props.qaEndDate).getMonth()] + ' ' + this.props.qaEndDate.substring(8, 10)+ ', ' + this.props.qaEndDate.substring(0, 4),
-          this.props.endDate && new Date(this.props.qaEndDate) > new Date(this.props.endDate) ? 'Insufficient Resources' : null,
+          null,
           new Date(this.props.startDate),
           new Date(this.props.qaEndDate),
           null,
-          (this.props.totalPoints - this.props.qaPoints)/this.props.totalPoints * 100,
+          this.props.endDate && new Date(this.props.qaEndDate) >= new Date(this.props.endDate) ? Math.round(100 * this.daysBetween(new Date(this.props.startDate), new Date(this.props.endDate))/ this.daysBetween(new Date(this.props.startDate), new Date(this.props.qaEndDate))) : 100,
           null,], 
           [3,
           'Dev: ' + this.monthNames[new Date(this.props.devEndDate).getMonth()] + ' ' + this.props.devEndDate.substring(8, 10)+ ', ' + this.props.devEndDate.substring(0, 4),
-          this.props.endDate && new Date(this.props.devEndDate) > new Date(this.props.endDate) ? 'Insufficient Resources' : null,
+          null,
           new Date(this.props.startDate),
           new Date(this.props.devEndDate),
           null,
-          (this.props.totalPoints - this.props.devPoints)/this.props.totalPoints * 100,
+          this.props.endDate && new Date(this.props.devEndDate) >= new Date(this.props.endDate) ? Math.round(100 * this.daysBetween(new Date(this.props.startDate), new Date(this.props.endDate))/ this.daysBetween(new Date(this.props.startDate), new Date(this.props.devEndDate))) : 100,
           null,],]} />
         </div>
       )

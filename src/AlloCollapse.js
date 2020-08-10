@@ -11,6 +11,7 @@ class AlloCollapsable extends React.Component {
             expandedRows : []
         };
         this.renderItem = this.renderItem.bind(this);
+        this.sortAllocations = this.sortAllocations.bind(this);
     }
 
     handleRowClick(rowId) {
@@ -24,17 +25,17 @@ class AlloCollapsable extends React.Component {
     }
     
     renderItem(employee, role) {
-        const clickCallback = () => this.handleRowClick(employee.id);
+        const clickCallback = () => this.handleRowClick(employee.id + role);
         const itemRows = [
-			<tr key1={employee.id} class = "noBorder">
-			    <th><b><u>{employee.name}, {role}</u></b> <button onClick={clickCallback} class = "Aes">{this.state.expandedRows.includes(employee.id) ? '-':'+'}</button></th><br/>
+			<tr key1={employee.id + role} class = "noBorder">
+			    <th><b>{employee.name}, {role}</b> <button onClick={clickCallback} class = "Aes">{this.state.expandedRows.includes(employee.id) ? '-':'+'}</button></th><br/>
                 <br/>
 			</tr>
         ];
         
-        if(this.state.expandedRows.includes(employee.id)) {
+        if(this.state.expandedRows.includes(employee.id + role)) {
                 itemRows.push(
-                    <tr key1 = {employee.id} >
+                    <tr key1 = {employee.id + role} >
                         <th>Start Month</th>
                         <th>End Month</th>
                         <th>Allocation</th>
@@ -47,17 +48,32 @@ class AlloCollapsable extends React.Component {
                 && allocation.projectId === this.props.projectId)
                 .map(allocation => 
                     itemRows.push(
-                    <Allocation key = {allocation.id} key1 = {employee.id} refreshState = {this.props.refreshState} employees = {this.props.employees} {...allocation}/>   
+                    <Allocation 
+                        key = {allocation.id} 
+                        key1 = {employee.id + role} 
+                        refreshState = {this.props.refreshState} 
+                        employees = {this.props.employees} 
+                        sortAllocations = {this.sortAllocations}
+                        {...allocation}
+                    />   
                     )    
                 )
         }
         
         return itemRows;    
     }
+
+    sortAllocations() {
+        this.props.allocations.sort((a, b) => (new Date(a.startDate) >= new Date(b.startDate)) ? 1 : -1)
+    }
+
+    componentDidMount () {
+        this.sortAllocations();
+    };
     
     render() {
         let allItemRows = [];
-
+        this.sortAllocations();
         this.props.employees.map(employee =>
             ['BA', 'QA', 'Dev'].map(role => {
                 if (
@@ -144,7 +160,7 @@ class Allocation extends React.Component {
                     weight = {allocation.workWeight}
                     isEmTab = {this.props.isEmTab}
                     projects = {this.props.projects}
-                    
+                    sortAllocations = {this.props.sortAllocations}
                 />
             </tr>
         )

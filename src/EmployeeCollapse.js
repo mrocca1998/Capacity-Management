@@ -262,7 +262,6 @@ class EmployeeForm extends React.Component {
               onSubmit={this.props.isEditing ? this.putEmployee : this.postEmployee} 
               //style={{backgroundColor: this.props.isEditing ? 'white' :'#d3eedd'}}
           >
-    <label >Employee: </label>
           <input type="text"
           name = 'name'
           autoComplete = "off"

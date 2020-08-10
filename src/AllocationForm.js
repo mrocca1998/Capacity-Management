@@ -6,7 +6,7 @@ class AllocationForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            employee : '',
+            employee : this.props.employees.length > 0 ? this.props.employees[0].name: '',
             role: 'BA',
             startDate : '',
             endDate : '',
@@ -24,27 +24,7 @@ class AllocationForm extends React.Component {
     
     async postAllocation(event) {
         event.preventDefault();
-        try { 
-            if (this.props.employees.filter(employee => employee.name === this.state.employee).length === 0) {
-                try { 
-                    const emResult = await fetch(API_ROOT + 'employees', {
-                        method: 'post',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-type':'application/json',
-                        },
-                        body: JSON.stringify({
-                            name : this.state.employee,
-                            role : this.state.role
-                        })
-                    });
-        
-                    console.log('Result ' + emResult)
-                } catch (e) {
-                    console.log(e)
-                }
-                this.props.refreshState();
-            }
+        try {
             fetch(API_ROOT + 'allocations', {
                 method: 'post',
                 headers: {
@@ -103,7 +83,9 @@ class AllocationForm extends React.Component {
                 else {
                     this.props.toggleEdit();
                 }
-                this.props.refreshState();     
+                this.props.refreshState();   
+                this.props.sortAllocations();   
+  
             })
         } catch (e) {
             console.log(e)
@@ -129,6 +111,7 @@ class AllocationForm extends React.Component {
             
         })
     }
+
 
     componentDidMount() {
         if (this.props.isEditing) {
