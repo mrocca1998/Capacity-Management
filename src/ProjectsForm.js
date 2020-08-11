@@ -2,6 +2,8 @@ import * as React from "react";
 import AllocationForm from "./AllocationForm";
 import { AlloCollapsable }from './AlloCollapse'
 import { API_ROOT } from './api-config';
+import './index.css'
+
 
 
 class ProjectForm extends React.Component {
@@ -327,8 +329,10 @@ class Project extends React.Component {
                             <td>{project.qaPoints}</td>
                             <td>{project.devPoints}</td>
                             <td>
+                                <span>
                                 <button onClick = {this.toggleEdit}>Update</button>
-                                <button onClick={this.deleteProject}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt='This better work' width="12" height="12"/></button>
+                                &nbsp;<button onClick={this.deleteProject} class = "Aes"><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt='This better work' width="12" height="12"/></button>
+                                </span>
                              </td>
                         </tr>
                     </tbody>

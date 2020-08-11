@@ -27,7 +27,6 @@ class EmployeeCollapsable extends React.Component {
   renderItem(employee) {
       const clickCallback = () => this.handleRowClick(employee.id);
       const itemRows = [
-      <tr key1={employee.id} class = "noBorder" colSpan = "4">
         <Employee
           employee = {employee}
           refreshState = {this.props.refreshState}
@@ -36,8 +35,6 @@ class EmployeeCollapsable extends React.Component {
           allocation.employeeId === employee.id).length > 0}
           expandedRows = {this.state.expandedRows}
         />
-        <br/>
-      </tr>
       ];
       
       if(this.state.expandedRows.includes(employee.id)) {
@@ -46,12 +43,13 @@ class EmployeeCollapsable extends React.Component {
             ) {
               itemRows.push(
                   <tr key1 = {employee.id} >
-                      <th>Start Month</th>
-                      <th>End Month</th>
-                      <th>Project</th>
-                      <th>Allocation</th>
-                      <th>Weight</th>
-                      <th>Role</th>
+                      <th class = "first">Start Month</th>
+                      <th class = "second">End Month</th>
+                      <th class = "emThird">Project</th>
+                      <th class = "third">Allocation</th>
+                      <th class = "fourth">Weight</th>
+                      <th class = "emFifth">Role</th>
+                      <th class = "seventh"></th>
                   </tr>
               )
             }
@@ -144,7 +142,6 @@ class Employee extends React.Component {
     if (this.state.isEditing) {
       return (
           <tr key1 = {this.props.key1} class="noBorder">
-              <th colSpan = "1">
               <EmployeeForm 
                   refreshState = {this.props.refreshState}
                   isEditing = {this.state.isEditing} 
@@ -152,19 +149,22 @@ class Employee extends React.Component {
                   id = {this.props.employee.id}
                   name = {this.props.employee.name}
               />
-              </th>
+              <br/>
+              <br/>
           </tr>
       )
     }
     else {
       return (
           <tr key1 = {this.props.key1} class = "noBorder">
-              <th><u>{this.props.employee.name}</u></th>
-              <th>
-                  <button onClick = {this.toggleEdit}>Edit</button>
-                  <button onClick={this.deleteEmployee} class = "Aes"><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>
-                  {this.props.hasAllocations ? <button onClick={this.props.onClick} class = "Aes">{this.props.expandedRows.includes(this.props.employee.id) ? '-':'+'}</button> : <span/>}
+              <th colspan = "3" style = {{width: "300px"}}>
+                  {this.props.employee.name} 
+                  &nbsp;<button onClick = {this.toggleEdit}>Edit</button>
+                  &nbsp;<button onClick={this.deleteEmployee} class = "Aes"><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>
+                  &nbsp;{this.props.hasAllocations ? <button onClick={this.props.onClick} class = "Aes">{this.props.expandedRows.includes(this.props.employee.id) ? '-':'+'}</button> : <span/>}
               </th>
+              <br/>
+              <br/>
           </tr>
       );
     }
@@ -257,20 +257,21 @@ class EmployeeForm extends React.Component {
 
   render() {
       return (
-    <div>
+    <td class = "emForm" colspan = "2">
           <form 
               onSubmit={this.props.isEditing ? this.putEmployee : this.postEmployee} 
-              //style={{backgroundColor: this.props.isEditing ? 'white' :'#d3eedd'}}
           >
-          <input type="text"
+          <input 
+          class = "emForm"
+          type="text"
           name = 'name'
           autoComplete = "off"
           value = {this.state.name}
           onChange = {this.changeHandler}
           required/>
-          {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Employee</button>}
+          {this.props.isEditing ? <span>&nbsp;<button onClick = {this.props.toggleEdit}>Cancel</button>&nbsp;<button type = 'submit'>Confirm</button></span> : <span>&nbsp;<button type = 'submit'>Add Employee</button></span>}
     </form>
-    </div>
+    </td>
     );
   }
 }

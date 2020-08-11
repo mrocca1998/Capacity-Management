@@ -1,5 +1,6 @@
 import * as React from "react";
 import { API_ROOT } from './api-config';
+import './tables.css'
 
 
 class AllocationForm extends React.Component {
@@ -15,6 +16,7 @@ class AllocationForm extends React.Component {
         }
         this.postAllocation = this.postAllocation.bind(this);
         this.putAllocation = this.putAllocation.bind(this);
+        this.putAllocationCheck = this.putAllocationCheck.bind(this);
         this.fillState = this.fillState.bind(this);
     }
 
@@ -56,7 +58,6 @@ class AllocationForm extends React.Component {
     }
 
     async putAllocation(event) {
-        event.preventDefault();
         try {
             await fetch(API_ROOT + 'allocations/' + this.props.id, {
                 method: 'put',
@@ -82,6 +83,44 @@ class AllocationForm extends React.Component {
                 }  
                 else {
                     this.props.toggleEdit();
+                }
+                this.props.refreshState();   
+                this.props.sortAllocations();   
+  
+            })
+        } catch (e) {
+            console.log(e)
+        }
+        this.props.refreshState();   
+    }
+
+    async putAllocationCheck(event) {
+        event.preventDefault();
+        try {
+            await fetch(API_ROOT + 'allocations/Check/' + this.props.id, {
+                method: 'put',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type':'application/json',
+                },
+                body: JSON.stringify({
+                    id: this.props.id,
+                    projectId: this.props.projectId,
+                    employeeId:this.props.employees.filter(employee => employee.name === this.state.employee)[0].id,
+                    role: this.state.role,
+                    startDate: this.state.startDate,
+                    endDate: this.state.endDate,
+                    allocation1: this.state.allocation,
+                    workWeight: this.state.weight,
+                })
+            })
+            .then(result => result.json())
+            .then(json => {
+                if (json.length > 0) {
+                    alert(json);
+                }  
+                else {
+                    this.putAllocation();
                 }
                 this.props.refreshState();   
                 this.props.sortAllocations();   
@@ -123,31 +162,10 @@ class AllocationForm extends React.Component {
         if (this.props.isEditing) {
             return (
                 this.props.isEmTab ? 
-                    <td colSpan = "6">
+                    <td colSpan = "7">
                     <form 
-                    onSubmit={this.props.isEditing ? this.putAllocation : this.postAllocation} 
+                    onSubmit={this.props.isEditing ? this.putAllocationCheck : this.postAllocation} 
                     >
-                    {/* <label >Employee: </label>
-                    <input type="text" list="employees"
-                    name = 'employee'
-                    autoComplete = "off"
-                    value = {this.state.employee}
-                    onChange = {this.changeHandler}
-                    required/>
-                    <datalist id="employees">
-                        {this.props.employees.map(employee => <EmployeeDropdown key = {employee.id} {...employee}/>)}
-                    </datalist>
-                    <label > Role: </label>
-                    <select type = "text" 
-                    name = 'role'
-                    value = {this.state.role}
-                    onChange = {this.changeHandler}
-                    required>
-                        <option>BA</option>
-                        <option>QA</option>
-                        <option>Dev</option>
-                    </select>
-                    <br/> */}
                     {/* <label > Start Month: </label> */}
                     <input type="month" min="2020-07" 
                     name = 'startDate'
@@ -160,10 +178,15 @@ class AllocationForm extends React.Component {
                     name = 'endDate'
                     value = {this.state.endDate}
                     onChange = {this.changeHandler}
-                    style={{width: "145px"}}/>
+                    style={{width: "146px"}}/>
                     {/* <br/><label> Allocation: </label> */}
-                    <p style={{display:'inline'}}> {this.props.projects.filter(project => project.id === this.props.projectId)[0].title}  </p>
+                    <input type = "text"
+                    value = {this.props.projects.filter(project => project.id === this.props.projectId)[0].title}
+                    class = "emFormThird"
+                    readOnly
+                    />
                     <input 
+                    class = "third"
                     width = "100"
                     type="number" min="0" max="100" step="1" 
                     name = 'allocation'
@@ -172,51 +195,32 @@ class AllocationForm extends React.Component {
                     required 
                     />
                     {/* <label> Weight: </label> */}
-                    <input 
+                    <input
+                    class = "fourth"
                     type="number" min=".25" max="1" step=".25" 
                     name = 'weight'
                     value = {this.state.weight}
                     onChange = {this.changeHandler}
                     required 
                     />
-                                        <select type = "text" 
+                    <select type = "text" 
                     name = 'role'
                     value = {this.state.role}
                     onChange = {this.changeHandler}
+                    class = "emFormSixth"
                     required>
                         <option>BA</option>
                         <option>QA</option>
                         <option>Dev</option>
                     </select>
-                    {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
+                    {this.props.isEditing ? <span>&nbsp;<button onClick = {this.props.toggleEdit}>Cancel</button>&nbsp;<button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
                     </form>   
                     </td> 
                 :
-                    <td colSpan = "5">
+                    <td class = "form" colspan = "6">
                     <form 
-                        onSubmit={this.props.isEditing ? this.putAllocation : this.postAllocation} 
+                        onSubmit={this.props.isEditing ? this.putAllocationCheck : this.postAllocation} 
                     >
-                    {/* <label >Employee: </label>
-                    <input type="text" list="employees"
-                    name = 'employee'
-                    autoComplete = "off"
-                    value = {this.state.employee}
-                    onChange = {this.changeHandler}
-                    required/>
-                    <datalist id="employees">
-                        {this.props.employees.map(employee => <EmployeeDropdown key = {employee.id} {...employee}/>)}
-                    </datalist>
-                    <label > Role: </label>
-                    <select type = "text" 
-                    name = 'role'
-                    value = {this.state.role}
-                    onChange = {this.changeHandler}
-                    required>
-                        <option>BA</option>
-                        <option>QA</option>
-                        <option>Dev</option>
-                    </select>
-                    <br/> */}
                     {/* <label > Start Month: </label> */}
                     <input type="month" min="2020-07" 
                     name = 'startDate'
@@ -232,7 +236,7 @@ class AllocationForm extends React.Component {
                     style={{width: "145px"}}/>
                     {/* <br/><label> Allocation: </label> */}
                     <input 
-                    width = "100"
+                    class = "third"
                     type="number" min="0" max="100" step="1" 
                     name = 'allocation'
                     value = {this.state.allocation}
@@ -241,13 +245,24 @@ class AllocationForm extends React.Component {
                     />
                     {/* <label> Weight: </label> */}
                     <input 
+                    class = "fourth"
                     type="number" min=".25" max="1" step=".25" 
                     name = 'weight'
                     value = {this.state.weight}
                     onChange = {this.changeHandler}
                     required 
                     />
-                    {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
+                    <select type = "text" 
+                    name = 'role'
+                    value = {this.state.role}
+                    onChange = {this.changeHandler}
+                    class = "emFormSixth"
+                    required>
+                        <option>BA</option>
+                        <option>QA</option>
+                        <option>Dev</option>
+                    </select>
+                    {this.props.isEditing ? <span>&nbsp;<button onClick = {this.props.toggleEdit}>Cancel</button>&nbsp;<button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
                     </form>    
                     </td>            
 
@@ -256,8 +271,9 @@ class AllocationForm extends React.Component {
         else {
             return (
                 <form 
-                    onSubmit={this.props.isEditing ? this.putAllocation : this.postAllocation} 
+                    onSubmit={this.props.isEditing ? this.putAllocationCheck : this.postAllocation} 
                 >
+                <br/>
                 <label >Employee: </label>
                 <select type="text"
                 name = 'employee'

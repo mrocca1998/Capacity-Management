@@ -196,8 +196,8 @@ class App extends React.Component {
       textAlign: 'center'
     }
     const tabStyle = {
-      marginLeft : '100px',
-      marginRight : '100px',
+      marginLeft : '10%',
+      marginRight : '10%',
     }
   	return (
     	<div>

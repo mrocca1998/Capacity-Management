@@ -11,9 +11,7 @@ div.code {
   position: 'fixed'
 }
 
-tr.noBorder th {
-  border: 0;
-}
+
 
 button {
   background-color: Transparent;

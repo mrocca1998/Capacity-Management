@@ -1,7 +1,7 @@
 import * as React from "react";
 import AllocationForm from "./AllocationForm";
 import { API_ROOT } from './api-config';
-import './index.css'
+import './tables.css'
 
 class AlloCollapsable extends React.Component {
     constructor() {
@@ -28,7 +28,7 @@ class AlloCollapsable extends React.Component {
         const clickCallback = () => this.handleRowClick(employee.id + role);
         const itemRows = [
 			<tr key1={employee.id + role} class = "noBorder">
-			    <th><b>{employee.name}, {role}</b> <button onClick={clickCallback} class = "Aes">{this.state.expandedRows.includes(employee.id) ? '-':'+'}</button></th><br/>
+			    <th style = {{width: "300px"}} colspan = "3">{employee.name}, {role} <button onClick={clickCallback} class = "Aes">{this.state.expandedRows.includes(employee.id + role) ? '-':'+'}</button></th><br/>
                 <br/>
 			</tr>
         ];
@@ -36,10 +36,12 @@ class AlloCollapsable extends React.Component {
         if(this.state.expandedRows.includes(employee.id + role)) {
                 itemRows.push(
                     <tr key1 = {employee.id + role} >
-                        <th>Start Month</th>
-                        <th>End Month</th>
-                        <th>Allocation</th>
-                        <th>Weight</th>
+                        <th class = "first">Start Month</th>
+                        <th class = "second">End Month</th>
+                        <th class = "third">Allocation</th>
+                        <th class = "fourth">Weight</th>
+                        <th class = "emFifth">Role</th>
+                        <th class = "fifth"></th>
                     </tr>
                 )
                 this.props.allocations.filter(allocation =>
@@ -93,7 +95,7 @@ class AlloCollapsable extends React.Component {
         )
         
         return (
-			    <table rules = 'all'>
+			    <table rules = 'all' class = "alloTable">
                      {allItemRows}
                 </table>
         );
@@ -144,7 +146,7 @@ class Allocation extends React.Component {
 
       if (this.state.isEditing) {
         return (
-            <tr key1 = {this.props.key1}>  
+            <tr key1 = {this.props.key1} class = "form">  
                 <AllocationForm 
                     refreshState = {this.props.refreshState}
                     employees = {this.props.employees}
@@ -174,10 +176,12 @@ class Allocation extends React.Component {
                     <td>{this.props.projects.filter(project => project.id === allocation.projectId)[0].title}</td>
                     <td>{allocation.allocation1}%</td>
                     <td>{allocation.workWeight}</td>
-                    <td>{allocation.role}</td>
-                    <td>
-                        <button onClick = {this.toggleEdit}>Update</button>
-                        <button onClick={this.deleteAllocation} class ="Aes"><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>          
+                    <td class = "sixth">{allocation.role}</td>
+                    <td class = "seventh">
+                        <span>
+                        &nbsp;<button onClick = {this.toggleEdit}>Update</button>
+                        <button onClick={this.deleteAllocation} class ="Aes"><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>   
+                        </span>       
                     </td>
                 </tr>
             :
@@ -186,8 +190,9 @@ class Allocation extends React.Component {
                     <td>{this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)}</td>
                     <td>{allocation.allocation1}%</td>
                     <td>{allocation.workWeight}</td>
-                    <td>
-                        <button onClick = {this.toggleEdit}>Update</button>
+                    <td class = "sixth">{allocation.role}</td>
+                    <td class = "fifth">
+                        &nbsp;<button onClick = {this.toggleEdit}>Update</button>
                         <button onClick={this.deleteAllocation} class = "Aes"><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>          
                     </td>
                 </tr>

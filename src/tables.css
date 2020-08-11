@@ -1,0 +1,80 @@
+tr.noBorder th {
+    border: 0;
+    width: 149px;
+    text-align: left
+  }
+th.first {
+  width: 149px;
+}
+
+th.second {
+    width: 147px;
+}
+
+th.third {
+  width: 85px;
+}
+
+input.third {
+  width:80px
+}
+
+th.fourth {
+  width:70px
+}
+
+input.fourth {
+  width:65px;
+}
+
+th.fifth {
+  border: 0;
+}
+
+td.fifth {
+  border: 0;
+}
+
+tr.form {
+  border: 0;
+  border-color: white;
+}
+
+td.emForm {
+  border: 0;
+  border-color: white;
+  width: 300px
+}
+
+input.emForm {
+  width:100px;
+}
+
+th.emThird {
+  width: 125px;
+}
+th.emFifth {
+  width: 46px;
+  border-right: 0;
+}
+
+input.emFormThird {
+  width:120px
+}
+
+td.sixth {
+  border-right: 0
+}
+
+select.emFormSixth {
+  width: 49px;  
+}
+
+th.seventh {
+  border: 0;
+  width: 124px;
+}
+
+td.seventh {
+  border: 0;
+}
