@@ -1,18 +1,3 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-div.code {
-  position: 'fixed'
-}
-
-
-
 button {
   background-color: Transparent;
   background-repeat:no-repeat;
@@ -33,4 +18,24 @@ button.Aes {
   outline:none;
 }
 
+div.cenButton {
+  display: flex;
+  top: 0px;
+  justify-content: center;
+}
+
+div.theRest {
+  position: relative;
+  top: 0px;
+}
+
+div.chart {
+  justify-content: center;
+}
+
+div.sticky {
+  position: sticky;
+  top:0;
+  z-index: 999
+}
 

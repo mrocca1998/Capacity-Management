@@ -17,12 +17,12 @@ class CapChart extends React.Component {
         <Chart
   width={'100%'}
   //height={this.props.height +'px'}
-  height = '200px'
+  height = {this.props.height}
   chartType="Gantt"
   loader={<div>Loading Chart</div>}
   data={this.props.data}
   options={{
-    height: '200px',
+    height: this.props.height,
     //height: this.props.height,
     gantt: {
       labelStyle: {

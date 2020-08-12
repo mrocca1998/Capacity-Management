@@ -36,11 +36,6 @@ import EmployeeCollapsable from './EmployeeCollapse';
 //     ],
 //   ];
 
-// padding: 10px;
-//         border: 2px solid #1c87c9;
-//         border-radius: 5px;
-//         background-color: #e5e5e5;
-//         text-align: center;
 
 function Legend(props) {
   const tableStyle = {
@@ -117,7 +112,7 @@ class App extends React.Component {
       ], projects: [], allocations: [], employees: [], height: 0, 
       monthNames : ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December" ],
-      showLegend: false,
+      showLegend: false, 
     };
     this.refreshState = this.refreshState.bind(this);
     this.toggleLegend = this.toggleLegend.bind(this);
@@ -137,7 +132,6 @@ class App extends React.Component {
                   new Date(project.calcEndDate),
                   null,
                   project.endDate && new Date(project.calcEndDate) >= new Date(project.endDate)? Math.round(100 * this.daysBetween(new Date(project.startDate), new Date(project.endDate))/ this.daysBetween(new Date(project.startDate), new Date(project.calcEndDate))) : 100,
-                  //100 * (((project.totalPoints-project.baPoints)+(project.totalPoints-project.qaPoints)+(project.totalPoints-project.devPoints))/3)/project.totalPoints,
                   null,
               ])
            )
@@ -185,9 +179,7 @@ class App extends React.Component {
   
   componentDidMount() {
     this.refreshState();
-  };
-
-  
+  };  
 
 	render() {
     const buttonStyle = {
@@ -201,12 +193,19 @@ class App extends React.Component {
     }
   	return (
     	<div>
-        <div><h1 style={{textAlign: "center"}}>{this.props.title}</h1></div>
+        <h1 style={{textAlign: "center"}}>{this.props.title}</h1>
 
-        {this.state.projects.length === 0 ? <div/> : <div class = 'code'><CapChart className = "code" height = {this.state.height} data={this.state.chartData} refreshState = {this.refreshState}/></div>}
-
-        <div> <p style = {{color: 'white'}}>________________________________________________________________________________________<button style = {buttonStyle} onClick = {this.toggleLegend}>{this.state.showLegend ? 'Hide' : 'Show'} Legend</button></p>
-        {this.state.showLegend ? <Legend /> : <span/>}</div>
+        {this.state.projects.length === 0 ? <div/> : 
+          <div class = "sticky" style = {{height: 45 + 30 * this.state.projects.length}}>
+            <CapChart
+              data={this.state.chartData} 
+              height = {45 + 30 * this.state.projects.length} 
+              refreshState = {this.refreshState}/>
+          </div >}
+        <div class = "theRest">
+        <div class = "cenButton"><button style = {buttonStyle} onClick = {this.toggleLegend}>{this.state.showLegend ? 'Hide' : 'Show'} Legend</button></div>
+        {this.state.showLegend ? <Legend /> : <span/>}
+        
         
         <Tabs style = {tabStyle}>
             <TabList>
@@ -221,16 +220,6 @@ class App extends React.Component {
                 projects = {this.state.projects}
                 refreshState = {this.refreshState}
               />
-              {/* {this.state.employees.map(employee =>
-               <div key = {employee.id} style = {{backgroundColor : '#eeddd3'}}>{employee.name}<br/>
-                {this.state.allocations.filter(allocation =>
-                  allocation.employeeId === employee.id)
-                  .map(allocation => 
-                    <div key = {allocation.id} style = {{backgroundColor : '#d3e4ee'}}>{this.state.monthNames[new Date(allocation.startDate).getMonth()]} {allocation.startDate.substring(0, 4)} - {this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)} Project : {this.state.projects.filter(project => project.id === allocation.projectId)[0].title} Role : {allocation.role}
-                      </div>               
-                  )}
-              </div>)}
-              <div><span>Employee: </span><span><input></input></span></div> */}
             </TabPanel>
             {this.state.projects.map(project => <TabPanel key = {project.id}>
               
@@ -266,9 +255,9 @@ class App extends React.Component {
             </TabPanel>
           </Tabs  >
 
-    
-
       </div>
+      </div>
+      
 
       
     );
