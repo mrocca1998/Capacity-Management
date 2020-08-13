@@ -4,23 +4,30 @@ import { API_ROOT } from './api-config';
 import './tables.css'
 
 class AlloCollapsable extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        const projectArray = this.props.projectRows[this.props.projectName];
         
         this.state = {
-            expandedRows : []
+            expandedRows : projectArray
         };
         this.renderItem = this.renderItem.bind(this);
+        this.handleRowClick = this.handleRowClick.bind(this);
         this.sortAllocations = this.sortAllocations.bind(this);
     }
 
     handleRowClick(rowId) {
         const currentExpandedRows = this.state.expandedRows;
         const isRowCurrentlyExpanded = currentExpandedRows.includes(rowId);
-        const newExpandedRows = isRowCurrentlyExpanded ? 
-			currentExpandedRows.filter(id => id !== rowId) : 
-			currentExpandedRows.concat(rowId);
+
+        isRowCurrentlyExpanded ? 
+        this.props.collapseProjectRow(rowId, this.props.projectName) :
+        this.props.expandProjectRow(rowId, this.props.projectName);
         
+        const newExpandedRows = isRowCurrentlyExpanded ? 
+        currentExpandedRows.filter(id => id !== rowId) : 
+        currentExpandedRows.concat(rowId);
+
         this.setState({expandedRows : newExpandedRows});
     }
     

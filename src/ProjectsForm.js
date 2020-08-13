@@ -294,7 +294,16 @@ class Project extends React.Component {
                     devPoints = {this.props.devPoints}
                     isShowing = {this.props.isShowing}
                 />
-                <AlloCollapsable refreshState = {this.props.refreshState} projectId = {this.props.id} employees = {this.props.employees} allocations = {this.props.allocations} />
+                <AlloCollapsable 
+                    refreshState = {this.props.refreshState} 
+                    projectId = {this.props.id} 
+                    employees = {this.props.employees} 
+                    allocations = {this.props.allocations} 
+                    expandProjectRow = {this.props.expandProjectRow}
+                    collapseProjectRow = {this.prop.scollapseProjectRow}
+                    projectRows = {this.props.projectRows}
+                    projectName = {this.props.title}
+                />
                 <AllocationForm 
                     refreshState = {this.props.refreshState}
                     projectId = {project.id} 
@@ -343,7 +352,17 @@ class Project extends React.Component {
                 <button onClick={this.deleteProject}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt='This better work' width="12" height="12"/></button>
                 </div> */}
                 <br/>
-                <AlloCollapsable key = {this.props.id} refreshState = {this.props.refreshState} projectId = {this.props.id} employees = {this.props.employees} allocations = {this.props.allocations} addAllocation = {this.props.addAllocation}/>
+                <AlloCollapsable 
+                    key = {this.props.id} 
+                    refreshState = {this.props.refreshState} 
+                    projectId = {this.props.id} employees = {this.props.employees} 
+                    allocations = {this.props.allocations} 
+                    addAllocation = {this.props.addAllocation}
+                    expandProjectRow = {this.props.expandProjectRow}
+                    collapseProjectRow = {this.props.collapseProjectRow}
+                    projectRows = {this.props.projectRows}
+                    projectName = {this.props.title}
+                />
                 <AllocationForm
                     refreshState = {this.props.refreshState} 
                     projectId = {project.id} 

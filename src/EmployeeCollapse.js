@@ -5,23 +5,31 @@ import{ Allocation }from './AlloCollapse';
 
 
 class EmployeeCollapsable extends React.Component {
-  constructor() {
-      super();
+  constructor(props) {
+      super(props);
       
       this.state = {
-          expandedRows : []
+          expandedRows : this.props.employeeRows
       };
       this.renderItem = this.renderItem.bind(this);
+      this.handleRowClick = this.handleRowClick.bind(this);
   }
 
   handleRowClick(rowId) {
       const currentExpandedRows = this.state.expandedRows;
       const isRowCurrentlyExpanded = currentExpandedRows.includes(rowId);
-      const newExpandedRows = isRowCurrentlyExpanded ? 
-    currentExpandedRows.filter(id => id !== rowId) : 
-    currentExpandedRows.concat(rowId);
+
+      isRowCurrentlyExpanded ? 
+      this.props.collapseEmRow(rowId) :
+      this.props.expandEmRow(rowId);
       
+      const newExpandedRows = isRowCurrentlyExpanded ? 
+      currentExpandedRows.filter(id => id !== rowId) : 
+      currentExpandedRows.concat(rowId);
+
       this.setState({expandedRows : newExpandedRows});
+      
+    
   }
   
   renderItem(employee) {

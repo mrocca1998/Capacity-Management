@@ -113,17 +113,24 @@ class App extends React.Component {
       monthNames : ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December" ],
       showLegend: false, 
+      employeeRows : [],
+      projectRows:{},
     };
     this.refreshState = this.refreshState.bind(this);
     this.toggleLegend = this.toggleLegend.bind(this);
+    this.expandEmRow = this.expandEmRow.bind(this);
+    this.collapseEmRow = this.collapseEmRow.bind(this);
+    this.expandProjectRow = this.expandProjectRow.bind(this);
+    this.collapseProjectRow = this.collapseProjectRow.bind(this);
   }
   async refreshState () {
       await fetch(API_ROOT + 'projects')
       .then(res => res.json())
       .then(json => {
           const projectData = [this.state.chartData[0],];
-
+          const rowCopy = {};
           json.map(project =>
+
               projectData.push([
                   project.id,
                   project.title + ': ' + this.state.monthNames[new Date(project.calcEndDate).getMonth()] + ' ' + project.calcEndDate.substring(8, 10)+ ', ' + project.calcEndDate.substring(0, 4),
@@ -133,13 +140,18 @@ class App extends React.Component {
                   null,
                   project.endDate && new Date(project.calcEndDate) >= new Date(project.endDate)? Math.round(100 * this.daysBetween(new Date(project.startDate), new Date(project.endDate))/ this.daysBetween(new Date(project.startDate), new Date(project.calcEndDate))) : 100,
                   null,
-              ])
-           )
+              ]),
+          )
+
+          json.map(project =>
+            rowCopy[project.title] = [],
+          )       
 
           
           this.setState({
             projects: json,
             chartData: projectData,
+            projectRows: rowCopy,
             height: (120 + (json.length * 30)),
           });
         }
@@ -169,6 +181,35 @@ class App extends React.Component {
   toggleLegend() {
     this.setState({
       showLegend: !this.state.showLegend,
+    })
+  }
+
+  expandEmRow = (rowId) => {
+    this.setState(prevState => ({
+    	employeeRows: [...prevState.employeeRows, rowId],
+    }));
+  }
+
+  collapseEmRow(rowId) {
+    this.setState({
+      employeeRows: this.state.employeeRows.filter(id => id !== rowId)
+    })
+  }
+
+  expandProjectRow = (rowId, projectName) => {
+    const rowsCopy = this.state.projectRows;
+    rowsCopy[projectName].push(rowId);
+    this.setState ({
+      projectRows: rowsCopy
+    })
+  }
+
+
+  collapseProjectRow(rowId, projectName) {
+    const rowsCopy = this.state.projectRows;
+    rowsCopy[projectName] = rowsCopy[projectName].filter(id => id !== rowId);
+    this.setState ({
+      projectRows: rowsCopy
     })
   }
 
@@ -219,6 +260,9 @@ class App extends React.Component {
                 allocations = {this.state.allocations}
                 projects = {this.state.projects}
                 refreshState = {this.refreshState}
+                expandEmRow = {this.expandEmRow}
+                collapseEmRow = {this.collapseEmRow}
+                employeeRows = {this.state.employeeRows}
               />
             </TabPanel>
             {this.state.projects.map(project => <TabPanel key = {project.id}>
@@ -229,6 +273,9 @@ class App extends React.Component {
               refreshState = {this.refreshState} 
               employees = {this.state.employees} 
               allocationState = {this.state.allocations}  
+              expandProjectRow = {this.expandProjectRow}
+              collapseProjectRow = {this.collapseProjectRow}
+              projectRows = {this.state.projectRows}
               {...project}/>
               <BreakdownChart height = {150} chartSettings = {[
               { type: 'string', label: 'Task ID' },
@@ -245,6 +292,7 @@ class App extends React.Component {
             </TabPanel>)}
             <TabPanel>
               <ProjectForm 
+              
                 height = {this.state.height}
                 isEditing = {false}
                 allocations = {this.state.allocations} 
