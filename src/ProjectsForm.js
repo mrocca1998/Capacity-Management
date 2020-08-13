@@ -300,7 +300,7 @@ class Project extends React.Component {
                     employees = {this.props.employees} 
                     allocations = {this.props.allocations} 
                     expandProjectRow = {this.props.expandProjectRow}
-                    collapseProjectRow = {this.prop.scollapseProjectRow}
+                    collapseProjectRow = {this.props.collapseProjectRow}
                     projectRows = {this.props.projectRows}
                     projectName = {this.props.title}
                 />
