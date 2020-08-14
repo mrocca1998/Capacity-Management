@@ -38,56 +38,43 @@ import EmployeeCollapsable from './EmployeeCollapse';
 
 
 function Legend(props) {
-  const tableStyle = {
-    border: '2px solid black',
-    backgroundColor: '#d3e4ee',
-    marginLeft : 'auto',
-    marginRight : 'auto',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#fff'
-  }
   return <table rules ='all' 
-  style = {tableStyle}>
-<thead>
- <tr>
+  class = "legendTable">
+ <tr class = "legendTable">
     <th style = {{width: 20}}>Weight</th>
     <th style = {{width: 50}}>Description</th>
     <th width = '50'> BA Hours per point</th>
     <th width = '50'> QA Hours per point</th>
     <th width = '50'> Dev Hours per point</th>
   </tr>
-</thead>
-<tbody>
-<tr>
+<tr class = "legendTable">
     <td>1</td>
     <td>Full capactiy</td>
     <td>6</td>
     <td>11</td>
     <td>9</td>
   </tr>
-  <tr>
+<tr class = "legendTable">
     <td>.75</td>
     <td>Progressing towards full capacity or also mentoring junior members</td>
     <td>13</td>
     <td>19</td>
     <td>17</td>
   </tr>
-  <tr>
+<tr class = "legendTable">
     <td>.50</td>
     <td>New Employee</td>
     <td>28</td>
     <td>38</td>
     <td>33</td>
   </tr>
-  <tr>
+  <tr class = "legendTable">
     <td>.25</td>
     <td>Lead, not much direct work</td>
     <td>63</td>
     <td>63</td>
     <td>63</td>
   </tr>
-</tbody>
 </table>;
 }
 
@@ -133,7 +120,10 @@ class App extends React.Component {
 
               projectData.push([
                   project.id,
-                  project.title + ': ' + this.state.monthNames[new Date(project.calcEndDate).getMonth()] + ' ' + project.calcEndDate.substring(8, 10)+ ', ' + project.calcEndDate.substring(0, 4),
+                  project.endDate? 
+                  project.title + '\nIntended ' + project.endDate.substring(5,10) + '-' + project.endDate.substring(0,4) + '\nCalculated ' + project.calcEndDate.substring(5,10) + '-' + project.calcEndDate.substring(0,4)
+                  : 
+                  project.title + '\nCalculated ' + project.calcEndDate.substring(5,10) + '-' + project.calcEndDate.substring(0,4),
                   null,
                   new Date(project.startDate),
                   new Date(project.calcEndDate),
@@ -152,7 +142,7 @@ class App extends React.Component {
             projects: json,
             chartData: projectData,
             projectRows: rowCopy,
-            height: (120 + (json.length * 30)),
+            height: (120 + (json.length * 100)),
           });
         }
         
@@ -229,30 +219,34 @@ class App extends React.Component {
       textAlign: 'center'
     }
     const tabStyle = {
+      borderColor: 'blue',
       marginLeft : '10%',
       marginRight : '10%',
     }
   	return (
-    	<div>
-        <h1 style={{textAlign: "center"}}>{this.props.title}</h1>
-
+    	<div class = "body">
+      <div class = "header"><h1><b>{this.props.title}</b></h1></div>
+      <br/>
         {this.state.projects.length === 0 ? <div/> : 
-          <div class = "sticky" style = {{height: 45 + 30 * this.state.projects.length}}>
+          <div class = "sticky" style = {{height: 45 + 60 * this.state.projects.length}}>
             <CapChart
               data={this.state.chartData} 
-              height = {45 + 30 * this.state.projects.length} 
+              height = {45 + 60 * this.state.projects.length} 
+              trackHeight = {60}
               refreshState = {this.refreshState}/>
           </div >}
         <div class = "theRest">
+        <br/>
         <div class = "cenButton"><button style = {buttonStyle} onClick = {this.toggleLegend}>{this.state.showLegend ? 'Hide' : 'Show'} Legend</button></div>
-        {this.state.showLegend ? <Legend /> : <span/>}
+        <br/>
+        {this.state.showLegend ? <span><Legend /><br/></span> : <span/>}
         
         
         <Tabs style = {tabStyle}>
             <TabList>
-              <Tab>Employees</Tab>
+              <Tab >Employees</Tab>
               {this.state.projects.map(project => <Tab key = {project.id}>{project.title}</Tab>)}
-              <Tab>+</Tab>
+              <Tab >+</Tab>
             </TabList>
             <TabPanel>
               <EmployeeCollapsable 
@@ -315,6 +309,7 @@ ReactDOM.render(
   <App title = {'Webteams Capacity Management'}/>,
   document.getElementById('root')
 );
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

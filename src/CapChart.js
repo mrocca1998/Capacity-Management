@@ -23,28 +23,31 @@ class CapChart extends React.Component {
   data={this.props.data}
   options={{
     height: this.props.height,
+    //backgroundColor: {fill: '#F7F7F7'},
+    tooltip : {
+      trigger: 'none'
+    },
     //height: this.props.height,
     gantt: {
       labelStyle: {
         color: 'white',
         fontName: 'Arial',
-        fontSize: 15,
-        
+        fontSize: 14, 
       },
-        
       palette: [
         {
-          "color": "#FF3333",
-          "dark": "#5377ed",
+          // "color": "#FF3333",
+          "color": "#002955",
+          "dark": "#0079c1",
           "light": "#9400D3"
         }
       ],
-      trackHeight: 30,
+      trackHeight: this.props.trackHeight,
       criticalPathEnabled: false,
       sortTasks: false,
-      tooltip : {
-        trigger: 'none'
-      }
+      innerGridTrack: {fill: 'white'},
+      innerGridDarkTrack: {fill: 'light grey'},
+      labelMaxWidth: 300
     },
   }}
   rootProps={{ 'data-testid': '2' }}

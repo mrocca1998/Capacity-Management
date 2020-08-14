@@ -1,7 +1,56 @@
+div.body {
+margin-left: auto;
+margin-right: auto;
+justify-content: center;
+}
+
+table.legendTable {
+  font: 95% Arial, Helvetica, sans-serif;
+  margin-left: auto;
+  margin-right : auto;
+  border-color: #0079c1;
+  border: 2px;
+}
+
+/* tr:first-child td:first-child { border-top-left-radius: 10px; }
+tr:first-child td:last-child { border-top-right-radius: 10px; }
+tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+tr:last-child td:last-child { border-bottom-right-radius: 10px; } */
+
+tr.legendTable th{
+  background-color: #0079c1;
+  color: #F7F7F7;
+  border-color: #0079c1;
+}
+
+tr.legendTable td {
+  color: #555555;
+  text-align: center;
+  border-color: #0079c1;
+}
+
+div.header {
+  margin-right: -100px;
+  margin-left: -100px;
+  margin-top: -25px;
+  height : 80px;
+  background-color: #002955;
+  text-align: center;
+}
+
+div.header h1 {
+  font: 95% Arial, Helvetica, sans-serif;
+  font-size: 35px;
+  color: white;
+  line-height: 80px;
+}
+
 button {
+  font: 95% Arial, Helvetica, sans-serif;
   background-color: Transparent;
   background-repeat:no-repeat;
-  border-color:black;
+  border-color:#0079c1;
+  color : #0079c1;
   border-radius: 5px;
   border-width: 1px;
   cursor:pointer;
@@ -38,4 +87,3 @@ div.sticky {
   top:0;
   z-index: 999
 }
-

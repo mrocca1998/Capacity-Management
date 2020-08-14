@@ -131,7 +131,6 @@ class ProjectForm extends React.Component {
             {/* Form */}
             <form 
                 onSubmit={this.props.isEditing ? this.putProject : this.postProject} 
-                //style={{backgroundColor: this.props.isEditing ? '#ddd3ee' :'#d3e4ee'}}
                 style = {this.formStyle}
             >
                             
@@ -274,7 +273,8 @@ class Project extends React.Component {
     borderWidth: 1,
     borderColor: 'white',
     textAlign: 'center',
-    backgroundColor: '#ADD8E6'
+    color: 'white',
+    backgroundColor: '#43D1AF'
   }
 
     if (this.state.isEditing) {
@@ -315,9 +315,8 @@ class Project extends React.Component {
     }  else {
         return (
             <div>
-                <table style = {tableStyle} rules = 'all'>
-                    <thead>
-                        <tr>
+                <table class = "legendTable" rules = 'all'>
+                        <tr class = "legendTable">
                             <th>Project</th>
                             <th>Start Date</th>
                             <th>End Date</th>
@@ -327,9 +326,7 @@ class Project extends React.Component {
                             <th>Dev Points</th>
                             <th></th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
+                        <tr class = "legendTable">
                             <td>{project.title}</td>
                             <td>{this.props.monthNames[new Date(project.startDate).getMonth()]} {project.startDate.substring(8, 10)}, {project.startDate.substring(0, 4)} </td>
                             <td>{project.endDate === null ? <span/> : <span>{this.props.monthNames[new Date(project.endDate).getMonth()]} {project.endDate.substring(8, 10)}, {project.endDate.substring(0, 4)}</span>}</td>
@@ -344,7 +341,6 @@ class Project extends React.Component {
                                 </span>
                              </td>
                         </tr>
-                    </tbody>
                 </table>
                 {/* <div style = {{backgroundColor : '#ddd3ee'}}>Project: {project.title}
                  Start Date: {this.props.monthNames[new Date(project.startDate).getMonth()]} {project.startDate.substring(8, 10)}, {project.startDate.substring(0, 4)} {project.endDate === null ? <span/> : <span>End Date: {this.props.monthNames[new Date(project.endDate).getMonth()]} {project.endDate.substring(8, 10)}, {project.endDate.substring(0, 4)}</span>} Total Points: {project.totalPoints} BA Points: {project.baPoints} QA Points: {project.qaPoints} Dev Points: {project.devPoints}
