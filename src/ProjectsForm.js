@@ -266,17 +266,6 @@ class Project extends React.Component {
 	render() {
     const project = this.props;
 
-    const tableStyle = {
-    marginLeft : 'auto',
-    marginRight : 'auto',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'white',
-    textAlign: 'center',
-    color: 'white',
-    backgroundColor: '#43D1AF'
-  }
-
     if (this.state.isEditing) {
         return (
             <div>
