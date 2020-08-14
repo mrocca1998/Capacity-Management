@@ -228,11 +228,11 @@ class App extends React.Component {
       <div class = "header"><h1><b>{this.props.title}</b></h1></div>
       <br/>
         {this.state.projects.length === 0 ? <div/> : 
-          <div class = "sticky" style = {{height: 45 + 60 * this.state.projects.length}}>
+          <div class = "sticky" style = {{height: 45 + 48 * this.state.projects.length}}>
             <CapChart
               data={this.state.chartData} 
-              height = {45 + 60 * this.state.projects.length} 
-              trackHeight = {60}
+              height = {45 + 48 * this.state.projects.length} 
+              trackHeight = {48}
               refreshState = {this.refreshState}/>
           </div >}
         <div class = "theRest">
