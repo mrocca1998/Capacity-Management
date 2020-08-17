@@ -172,20 +172,22 @@ class AllocationForm extends React.Component {
                     value = {this.state.startDate}
                     onChange = {this.changeHandler}
                     required
-                    style={{width : "145px"}}/>
+                    style={{width : "160px", font: "95% Arial, Helvetica, sans-serif", textAlign: 'center', border: '2px solid #0079c1'}}/>
                     {/* <label > End Month: </label> */}
                     <input type="month" min="2020-07"
                     name = 'endDate'
                     value = {this.state.endDate}
                     onChange = {this.changeHandler}
-                    style={{width: "146px"}}/>
+                    style={{width: "161px", font: "95% Arial, Helvetica, sans-serif", textAlign: 'center',  border: '2px solid #0079c1'}}/>
                     {/* <br/><label> Allocation: </label> */}
                     <input type = "text"
+                    style = {{border: '2px solid #0079c1'}}
                     value = {this.props.projects.filter(project => project.id === this.props.projectId)[0].title}
                     class = "emFormThird"
                     readOnly
                     />
-                    <input 
+                    <input
+                    style = {{ border: '2px solid #0079c1'}} 
                     class = "third"
                     width = "100"
                     type="number" min="0" max="100" step="1" 
@@ -196,6 +198,7 @@ class AllocationForm extends React.Component {
                     />
                     {/* <label> Weight: </label> */}
                     <input
+                    style = {{textAlign: 'center',  border: '2px solid #0079c1'}}
                     class = "fourth"
                     type="number" min=".25" max="1" step=".25" 
                     name = 'weight'
@@ -204,6 +207,7 @@ class AllocationForm extends React.Component {
                     required 
                     />
                     <select type = "text" 
+                    style = {{textAlign: 'center',  border: '2px solid #0079c1'}}
                     name = 'role'
                     value = {this.state.role}
                     onChange = {this.changeHandler}
@@ -213,7 +217,7 @@ class AllocationForm extends React.Component {
                         <option>QA</option>
                         <option>Dev</option>
                     </select>
-                    {this.props.isEditing ? <span>&nbsp;<button onClick = {this.props.toggleEdit}>Cancel</button>&nbsp;<button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
+                    {this.props.isEditing ? <span>&nbsp;<button onClick = {this.props.toggleEdit} class = "Aes"><img src="https://image.flaticon.com/icons/svg/66/66847.svg" alt = "" width="12" height="12"/></button><button type = 'submit' class = "Aes"><img src="https://www.pngfind.com/pngs/m/89-891121_confirm-icon-png-play-button-icon-png-transparent.png" alt = "" width="12" height="12"/></button></span> : <button type = 'submit'>Add Allocation</button>}
                     </form>   
                     </td> 
                 :
@@ -227,15 +231,16 @@ class AllocationForm extends React.Component {
                     value = {this.state.startDate}
                     onChange = {this.changeHandler}
                     required
-                    style={{width : "145px"}}/>
+                    style={{width : "160px", font: "95% Arial, Helvetica, sans-serif", textAlign: 'center', border: '2px solid #0079c1'}}/>
                     {/* <label > End Month: </label> */}
                     <input type="month" min="2020-07"
                     name = 'endDate'
                     value = {this.state.endDate}
                     onChange = {this.changeHandler}
-                    style={{width: "145px"}}/>
+                    style={{width: "160px", font: "95% Arial, Helvetica, sans-serif", textAlign: 'center', border: '2px solid #0079c1'}}/>
                     {/* <br/><label> Allocation: </label> */}
                     <input 
+                    style = {{textAlign: 'center', border: '2px solid #0079c1'}}
                     class = "third"
                     type="number" min="0" max="100" step="1" 
                     name = 'allocation'
@@ -245,6 +250,7 @@ class AllocationForm extends React.Component {
                     />
                     {/* <label> Weight: </label> */}
                     <input 
+                    style = {{textAlign: 'center', border: '2px solid #0079c1'}}
                     class = "fourth"
                     type="number" min=".25" max="1" step=".25" 
                     name = 'weight'
@@ -253,6 +259,7 @@ class AllocationForm extends React.Component {
                     required 
                     />
                     <select type = "text" 
+                    style =  {{border: '2px solid #0079c1'}}
                     name = 'role'
                     value = {this.state.role}
                     onChange = {this.changeHandler}
@@ -262,7 +269,7 @@ class AllocationForm extends React.Component {
                         <option>QA</option>
                         <option>Dev</option>
                     </select>
-                    {this.props.isEditing ? <span>&nbsp;<button onClick = {this.props.toggleEdit}>Cancel</button>&nbsp;<button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
+                    {this.props.isEditing ? <span>&nbsp;<button onClick = {this.props.toggleEdit} class = "Aes"><img src="https://image.flaticon.com/icons/svg/66/66847.svg" alt = "" width="12" height="12"/></button><button type = 'submit' class = "Aes"><img src="https://www.pngfind.com/pngs/m/89-891121_confirm-icon-png-play-button-icon-png-transparent.png" alt = "" width="12" height="12"/></button></span> : <button type = 'submit'>Add Allocation</button>}
                     </form>    
                     </td>            
 
@@ -270,12 +277,12 @@ class AllocationForm extends React.Component {
         } 
         else {
             return (
+                <td colspan = "7">
                 <form 
                     onSubmit={this.props.isEditing ? this.putAllocationCheck : this.postAllocation} 
                 >
-                <br/>
-                <label >Employee: </label>
                 <select type="text"
+                style = {{height: '17px', width: '100px'}}
                 name = 'employee'
                 value = {this.state.employee}
                 onChange = {this.changeHandler}
@@ -284,130 +291,57 @@ class AllocationForm extends React.Component {
                     <option>{employee.name}</option>
                 )}
                 </select>
-                <label > Role: </label>
+
                 <select type = "text" 
+                style = {{height: '17px'}}
                 name = 'role'
                 value = {this.state.role}
                 onChange = {this.changeHandler}
                 required>
-                    <option>BA</option>
+                    <option style = {{height: '17px'}}>BA</option>
                     <option>QA</option>
                     <option>Dev</option>
                 </select>
-                <label > Start Month: </label>
-                <input type="month" min="2020-07" 
+
+                <input type="month" min="2020-07"
+                style = {{height: '17px', width : '160px', font: "95% Arial, Helvetica, sans-serif", textAlign: 'center'}} 
                 name = 'startDate'
                 value = {this.state.startDate}
                 onChange = {this.changeHandler}
                 required
-                style={{width: "145px"}}/>
-                <label > End Month: </label>
+                />
+
                 <input type="month" min="2020-07"
+                style = {{height: '17px', width : '160px', font: "95% Arial, Helvetica, sans-serif", textAlign: 'center'}} 
                 name = 'endDate'
                 value = {this.state.endDate}
                 onChange = {this.changeHandler}
-                style={{width: "145px"}}/>
-                <br/><label> Allocation: </label>
+                />
+
                 <input 
                 type="number" min="0" max="100" step="1" 
+                style = {{textAlign: 'center'}}
                 name = 'allocation'
                 value = {this.state.allocation}
                 onChange = {this.changeHandler}
                 required 
                 />
-                <label> Weight: </label>
+
                 <input 
                 type="number" min=".25" max="1" step=".25" 
+                style = {{textAlign: 'center', width: '70px'}}
                 name = 'weight'
                 value = {this.state.weight}
                 onChange = {this.changeHandler}
                 required 
                 />
-                {/* <select type = "number" 
-                name = 'weight'
-                value = {this.state.weight}
-                onChange = {this.changeHandler}>
-                    <option>1</option>
-                    <option>.75</option>
-                    <option>.50</option>
-                    <option>.25</option>
-                </select>         */}
-                {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
+
+                {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit} class = "Aes"><img src="https://image.flaticon.com/icons/svg/66/66847.svg" alt = "" width="12" height="12"/></button><button type = 'submit' class = "Aes"><img src="https://www.pngfind.com/pngs/m/89-891121_confirm-icon-png-play-button-icon-png-transparent.png" alt = "" width="12" height="12"/></button></span> : <button type = 'submit'>Add Allocation</button>}
                 </form>
+                </td>
             )
         }
-
-			// <label >Employee: </label>
-            // <input type="text" list="employees"
-            // name = 'employee'
-            // autoComplete = "off"
-            // value = {this.state.employee}
-            // onChange = {this.changeHandler}
-            // required/>
-            // <datalist id="employees">
-            //     {this.props.employees.map(employee => <EmployeeDropdown key = {employee.id} {...employee}/>)}
-            // </datalist>
-            // <label > Role: </label>
-            // <select type = "text" 
-            // name = 'role'
-            // value = {this.state.role}
-            // onChange = {this.changeHandler}
-            // required>
-            //     <option>BA</option>
-            //     <option>QA</option>
-            //     <option>Dev</option>
-            // </select>
-            // <br/>
-            // <label > Start Month: </label>
-            // <input type="month" min="2020-07" 
-            // name = 'startDate'
-            // value = {this.state.startDate}
-            // onChange = {this.changeHandler}
-            // required
-            // style={{width: "145px"}}/>
-            // <label > End Month: </label>
-            // <input type="month" min="2020-07"
-            // name = 'endDate'
-            // value = {this.state.endDate}
-            // onChange = {this.changeHandler}
-            // style={{width: "145px"}}/>
-            // <br/><label> Allocation: </label>
-            // <input 
-            // type="number" min="0" max="100" step="1" 
-            // name = 'allocation'
-            // value = {this.state.allocation}
-            // onChange = {this.changeHandler}
-            // required 
-            // />
-            // <label> Weight: </label>
-            // <input 
-            // type="number" min=".25" max="1" step=".25" 
-            // name = 'weight'
-            // value = {this.state.weight}
-            // onChange = {this.changeHandler}
-            // required 
-            // />
-            // {/* <select type = "number" 
-            // name = 'weight'
-            // value = {this.state.weight}
-            // onChange = {this.changeHandler}>
-            //     <option>1</option>
-            //     <option>.75</option>
-            //     <option>.50</option>
-            //     <option>.25</option>
-            // </select>         */}
-            // {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Allocation</button>}
-			// </form>
 		}
 	}
-
-// class EmployeeDropdown extends React.Component {
-// 	render() {
-//   	const employee = this.props;
-//   	return (
-//         <option>{employee.name}</option>
-//     );
-//   }
-// }
 
 export default AllocationForm;

@@ -3,6 +3,8 @@ import AllocationForm from "./AllocationForm";
 import { AlloCollapsable }from './AlloCollapse'
 import { API_ROOT } from './api-config';
 import './index.css'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+
 
 
 
@@ -126,16 +128,14 @@ class ProjectForm extends React.Component {
     render() {
 
         return (
-            <div>
-	        
+            <td colSpan = "8" style = {{alignContent: 'left'}}>
             {/* Form */}
             <form 
                 onSubmit={this.props.isEditing ? this.putProject : this.postProject} 
                 style = {this.formStyle}
             >
-                            
-            <label>Project Title: </label>
-            <input 
+            <input
+            style = {{width: '100px', textAlign: "center"}}
             type="text"
             name = 'title'
             value = {this.state.title}
@@ -143,18 +143,18 @@ class ProjectForm extends React.Component {
             required 
             autoComplete="off"
             />
-            
             {/* Dates */}
-            <label> Start Date: </label>
             <input 
+            style = {{height: '17px', font: "95% Arial, Helvetica, sans-serif", textAlign: "center"}}
             type="date"
+            
             name = 'startDate'
             value = {this.state.startDate}
             onChange = {this.changeHandler}
             required 
             />
-            <label> End Date: </label>
-            <input 
+            <input
+            style = {{height: '17px', font: "95% Arial, Helvetica, sans-serif", textAlign: "center"}}
             type="date"
             name = 'endDate'
             value = {this.state.endDate}
@@ -163,32 +163,33 @@ class ProjectForm extends React.Component {
 
             
             {/* Points */}
-            <label>Total Points: </label>
             <input 
+            style = {{width: '85px', textAlign: "center"}}
             type="number"
             name = 'totalPoints'
             value = {this.state.totalPoints}
             onChange = {this.changeHandler}
             required 
             />
-            <br /><label>BA Points: </label>
+            
             <input 
+            style = {{width: '85px', textAlign: "center"}}
             type="number"
             name = 'baPoints'
             value = {this.state.baPoints}
             onChange = {this.changeHandler}
             required 
             />
-            <label> QA Points: </label>
             <input 
+            style = {{width: '85px', textAlign: "center"}}
             type="number"
             name = 'qaPoints'
             value = {this.state.qaPoints}
             onChange = {this.changeHandler}
             required 
             />
-            <label > Dev Points: </label>
             <input 
+            style = {{width: '85px', textAlign: "center"}}
             type="number"
             name = 'devPoints'
             value = {this.state.devPoints}
@@ -196,9 +197,9 @@ class ProjectForm extends React.Component {
             required 
             />
             
-            {this.props.isEditing ? <span><button onClick = {this.props.toggleEdit}>Cancel</button><button type = 'submit'>Confirm</button></span> : <button type = 'submit'>Add Project</button>}
+            {this.props.isEditing ? <span style = {{width: '100px'}}><button onClick = {this.props.toggleEdit} style = {{width: '30px'}} class = "Aes"><img src="https://image.flaticon.com/icons/svg/66/66847.svg" alt = "" width="12" height="12"/></button><button type = 'submit' class = "Aes"><img src="https://www.pngfind.com/pngs/m/89-891121_confirm-icon-png-play-button-icon-png-transparent.png" alt = "" width="12" height="12"/></button>&nbsp;&nbsp;</span> : <button type = 'submit'>Add Project</button>}
             </form>
-            </div>
+            </td>
 
         );
     }
@@ -269,36 +270,109 @@ class Project extends React.Component {
     if (this.state.isEditing) {
         return (
             <div>
-                <ProjectForm 
-                    refreshState = {this.props.refreshState}
-                    isEditing = {this.state.isEditing} 
-                    toggleEdit = {this.toggleEdit}
-                    projectId = {this.props.id}
-                    title = {this.props.title}
-                    startDate = {this.props.startDate}
-                    endDate = {this.props.endDate}
-                    totalPoints = {this.props.totalPoints}
-                    baPoints = {this.props.baPoints}
-                    qaPoints = {this.props.qaPoints}
-                    devPoints = {this.props.devPoints}
-                    isShowing = {this.props.isShowing}
-                />
-                <AlloCollapsable 
-                    refreshState = {this.props.refreshState} 
-                    projectId = {this.props.id} 
-                    employees = {this.props.employees} 
-                    allocations = {this.props.allocations} 
-                    expandProjectRow = {this.props.expandProjectRow}
-                    collapseProjectRow = {this.props.collapseProjectRow}
-                    projectRows = {this.props.projectRows}
-                    projectName = {this.props.title}
-                />
-                <AllocationForm 
-                    refreshState = {this.props.refreshState}
-                    projectId = {project.id} 
-                    employees = {project.employees} 
-                    allocations = {project.allocationState}
-                />
+                <table class = "legendTable" rules = 'all'>
+                    <tr class = "legendTable">
+                        <th width = "100px">Project</th>
+                        <th width = "145px">Start Date</th>
+                        <th width = "145px">End Date</th>
+                        <th width = "88px">Total Points</th>
+                        <th width = "92px">BA Points</th>
+                        <th width = "90px">QA Points</th>
+                        <th width = "90px">Dev Points</th>
+                        <th width = '65px'></th>
+                    </tr>
+                    <tr class = "legendTable" colspan = "8">
+                        <ProjectForm 
+                            refreshState = {this.props.refreshState}
+                            isEditing = {this.state.isEditing} 
+                            toggleEdit = {this.toggleEdit}
+                            projectId = {this.props.id}
+                            title = {this.props.title}
+                            startDate = {this.props.startDate}
+                            endDate = {this.props.endDate}
+                            totalPoints = {this.props.totalPoints}
+                            baPoints = {this.props.baPoints}
+                            qaPoints = {this.props.qaPoints}
+                            devPoints = {this.props.devPoints}
+                        />
+                        <br/>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <div class = "disciplineTabs">
+                <Tabs>
+                    <TabList>
+                        <Tab>BA</Tab>
+                        <Tab>QA</Tab>
+                        <Tab>Dev</Tab>
+                    </TabList>
+                    <TabPanel>
+                        <AlloCollapsable 
+                            key = {this.props.id} 
+                            refreshState = {this.props.refreshState} 
+                            projectId = {this.props.id} employees = {this.props.employees} 
+                            allocations = {this.props.allocations} 
+                            addAllocation = {this.props.addAllocation}
+                            expandProjectRow = {this.props.expandProjectRow}
+                            collapseProjectRow = {this.props.collapseProjectRow}
+                            projectRows = {this.props.projectRows}
+                            projectName = {this.props.title}
+                            role = {'BA'}
+                        />
+                    </TabPanel>
+                    <TabPanel>
+                        <AlloCollapsable 
+                            key = {this.props.id} 
+                            refreshState = {this.props.refreshState} 
+                            projectId = {this.props.id} employees = {this.props.employees} 
+                            allocations = {this.props.allocations} 
+                            addAllocation = {this.props.addAllocation}
+                            expandProjectRow = {this.props.expandProjectRow}
+                            collapseProjectRow = {this.props.collapseProjectRow}
+                            projectRows = {this.props.projectRows}
+                            projectName = {this.props.title}
+                            role = {'QA'}
+                        />
+                    </TabPanel>
+                    <TabPanel>
+                        <AlloCollapsable 
+                            key = {this.props.id} 
+                            refreshState = {this.props.refreshState} 
+                            projectId = {this.props.id} employees = {this.props.employees} 
+                            allocations = {this.props.allocations} 
+                            addAllocation = {this.props.addAllocation}
+                            expandProjectRow = {this.props.expandProjectRow}
+                            collapseProjectRow = {this.props.collapseProjectRow}
+                            projectRows = {this.props.projectRows}
+                            projectName = {this.props.title}
+                            role = {'Dev'}
+                        />
+                    </TabPanel>
+                </Tabs>
+                <br/>
+                <br/>
+                </div>
+                <table class = "legendTable" rules = 'all'>
+                    <tr class = "legendTable">
+                        <th width = "95px">Employee</th>
+                        <th width = "46px">Role</th>
+                        <th width = "150px">Start Month</th>
+                        <th width = "150px">End Month</th>
+                        <th width = "85px">Allocation</th>
+                        <th width = "60px">Weight</th>
+                        <th width = '100px'></th>
+                    </tr>
+                    <tr class = "legendTable">
+                        <AllocationForm
+                            refreshState = {this.props.refreshState} 
+                            projectId = {project.id} 
+                            employees = {project.employees} 
+                            allocations = {project.allocationState} 
+                            isEditing = {false}
+                        />
+                    </tr>
+                </table>
             </div>
         )
     }  else {
@@ -306,16 +380,16 @@ class Project extends React.Component {
             <div>
                 <table class = "legendTable" rules = 'all'>
                         <tr class = "legendTable">
-                            <th>Project</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Total Points</th>
-                            <th>BA Points</th>
-                            <th>QA Points</th>
-                            <th>Dev Points</th>
-                            <th></th>
+                            <th width = "100px">Project</th>
+                            <th width = "145px">Start Date</th>
+                            <th width = "145px">End Date</th>
+                            <th width = "88px">Total Points</th>
+                            <th width = "92px">BA Points</th>
+                            <th width = "90px">QA Points</th>
+                            <th width = "90px">Dev Points</th>
+                            <th width = '65px'></th>
                         </tr>
-                        <tr class = "legendTable">
+                        <tr class = "legendTable" height = '24px'>
                             <td>{project.title}</td>
                             <td>{this.props.monthNames[new Date(project.startDate).getMonth()]} {project.startDate.substring(8, 10)}, {project.startDate.substring(0, 4)} </td>
                             <td>{project.endDate === null ? <span/> : <span>{this.props.monthNames[new Date(project.endDate).getMonth()]} {project.endDate.substring(8, 10)}, {project.endDate.substring(0, 4)}</span>}</td>
@@ -325,36 +399,88 @@ class Project extends React.Component {
                             <td>{project.devPoints}</td>
                             <td>
                                 <span>
-                                <button onClick = {this.toggleEdit}>Update</button>
+                                <button onClick = {this.toggleEdit} class = "Aes"><img src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_1280.png" alt = "" width="12" height="12"/></button>
                                 &nbsp;<button onClick={this.deleteProject} class = "Aes"><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt='This better work' width="12" height="12"/></button>
                                 </span>
                              </td>
                         </tr>
                 </table>
-                {/* <div style = {{backgroundColor : '#ddd3ee'}}>Project: {project.title}
-                 Start Date: {this.props.monthNames[new Date(project.startDate).getMonth()]} {project.startDate.substring(8, 10)}, {project.startDate.substring(0, 4)} {project.endDate === null ? <span/> : <span>End Date: {this.props.monthNames[new Date(project.endDate).getMonth()]} {project.endDate.substring(8, 10)}, {project.endDate.substring(0, 4)}</span>} Total Points: {project.totalPoints} BA Points: {project.baPoints} QA Points: {project.qaPoints} Dev Points: {project.devPoints}
-                <button onClick = {this.toggleEdit}>Update</button>
-                <button onClick={this.deleteProject}><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt='This better work' width="12" height="12"/></button>
-                </div> */}
                 <br/>
-                <AlloCollapsable 
-                    key = {this.props.id} 
-                    refreshState = {this.props.refreshState} 
-                    projectId = {this.props.id} employees = {this.props.employees} 
-                    allocations = {this.props.allocations} 
-                    addAllocation = {this.props.addAllocation}
-                    expandProjectRow = {this.props.expandProjectRow}
-                    collapseProjectRow = {this.props.collapseProjectRow}
-                    projectRows = {this.props.projectRows}
-                    projectName = {this.props.title}
-                />
-                <AllocationForm
-                    refreshState = {this.props.refreshState} 
-                    projectId = {project.id} 
-                    employees = {project.employees} 
-                    allocations = {project.allocationState} 
-                    isEditing = {false}
-                />
+                <br/>
+                <div class = "disciplineTabs">
+                <Tabs>
+                    <TabList>
+                        <Tab>BA</Tab>
+                        <Tab>QA</Tab>
+                        <Tab>Dev</Tab>
+                    </TabList>
+                    <TabPanel>
+                        <AlloCollapsable 
+                            key = {this.props.id} 
+                            refreshState = {this.props.refreshState} 
+                            projectId = {this.props.id} employees = {this.props.employees} 
+                            allocations = {this.props.allocations} 
+                            addAllocation = {this.props.addAllocation}
+                            expandProjectRow = {this.props.expandProjectRow}
+                            collapseProjectRow = {this.props.collapseProjectRow}
+                            projectRows = {this.props.projectRows}
+                            projectName = {this.props.title}
+                            role = {'BA'}
+                        />
+                    </TabPanel>
+                    <TabPanel>
+                        <AlloCollapsable 
+                            key = {this.props.id} 
+                            refreshState = {this.props.refreshState} 
+                            projectId = {this.props.id} employees = {this.props.employees} 
+                            allocations = {this.props.allocations} 
+                            addAllocation = {this.props.addAllocation}
+                            expandProjectRow = {this.props.expandProjectRow}
+                            collapseProjectRow = {this.props.collapseProjectRow}
+                            projectRows = {this.props.projectRows}
+                            projectName = {this.props.title}
+                            role = {'QA'}
+                        />
+                    </TabPanel>
+                    <TabPanel>
+                        <AlloCollapsable 
+                            key = {this.props.id} 
+                            refreshState = {this.props.refreshState} 
+                            projectId = {this.props.id} employees = {this.props.employees} 
+                            allocations = {this.props.allocations} 
+                            addAllocation = {this.props.addAllocation}
+                            expandProjectRow = {this.props.expandProjectRow}
+                            collapseProjectRow = {this.props.collapseProjectRow}
+                            projectRows = {this.props.projectRows}
+                            projectName = {this.props.title}
+                            role = {'Dev'}
+                        />
+                    </TabPanel>
+                <br/>
+                <br/>
+                </Tabs>
+                </div>
+                <table class = "legendTable" rules = 'all'>
+                    <tr class = "legendTable">
+                        <th width = "95px">Employee</th>
+                        <th width = "46px">Role</th>
+                        <th width = "150px">Start Month</th>
+                        <th width = "150px">End Month</th>
+                        <th width = "85px">Allocation</th>
+                        <th width = "60px">Weight</th>
+                        <th width = '100px'></th>
+                    </tr>
+                    <tr class = "legendTable" style = {{justifyContent: 'left'}}>
+                        <AllocationForm
+                            refreshState = {this.props.refreshState} 
+                            projectId = {project.id} 
+                            employees = {project.employees} 
+                            allocations = {project.allocationState} 
+                            isEditing = {false}
+                        />
+                    </tr>
+                </table>
+
             </div>
         );
     }

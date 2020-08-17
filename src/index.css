@@ -1,7 +1,23 @@
+div.flexBox {
+  display: flex;
+  width : 100%;
+  font: 95% Arial, Helvetica, sans-serif;
+   
+}
+
+
 div.body {
 margin-left: auto;
 margin-right: auto;
 justify-content: center;
+font: 95% Arial, Helvetica, sans-serif;
+}
+
+div.disciplineTabs {
+  margin-left: 20%;
+  margin-right: 20%;
+  justify-content: center;
+  font: 95% Arial, Helvetica, sans-serif;
 }
 
 table.legendTable {
@@ -12,10 +28,6 @@ table.legendTable {
   border: 2px;
 }
 
-/* tr:first-child td:first-child { border-top-left-radius: 10px; }
-tr:first-child td:last-child { border-top-right-radius: 10px; }
-tr:last-child td:first-child { border-bottom-left-radius: 10px; }
-tr:last-child td:last-child { border-bottom-right-radius: 10px; } */
 
 tr.legendTable th{
   background-color: #0079c1;
@@ -24,9 +36,33 @@ tr.legendTable th{
 }
 
 tr.legendTable td {
-  color: #555555;
   text-align: center;
   border-color: #0079c1;
+}
+
+table.alloTable {
+  font: 95% Arial, Helvetica, sans-serif;
+  margin-left: 15%;
+  border-color: #002955;
+  border: 2px;
+}
+
+table.alloTable2 {
+  font: 95% Arial, Helvetica, sans-serif;
+  border-color: #002955;
+  border: 2px;
+}
+
+
+tr.alloTable th{
+  background-color: #002955;
+  color: #F7F7F7;
+  border-color: #002955;
+}
+
+tr.alloTable td {
+  text-align: center;
+  border-color: #002955;
 }
 
 div.header {
@@ -85,5 +121,9 @@ div.chart {
 div.sticky {
   position: sticky;
   top:0;
-  z-index: 999
+  z-index: 999;
+  border-bottom: 2px solid;
+  border-bottom-color: #002955;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }

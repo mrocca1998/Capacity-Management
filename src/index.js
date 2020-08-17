@@ -11,7 +11,6 @@ import { API_ROOT } from './api-config';
 import EmployeeCollapsable from './EmployeeCollapse';
 
 
-
 //chart library format
 // const chartSettings = [
 //     [
@@ -219,11 +218,10 @@ class App extends React.Component {
       textAlign: 'center'
     }
     const tabStyle = {
-      borderColor: 'blue',
-      marginLeft : '10%',
-      marginRight : '10%',
+      marginLeft: '10%',
+      marginRight: '10%'
     }
-  	return (
+  return (
     	<div class = "body">
       <div class = "header"><h1><b>{this.props.title}</b></h1></div>
       <br/>
@@ -271,6 +269,7 @@ class App extends React.Component {
               collapseProjectRow = {this.collapseProjectRow}
               projectRows = {this.state.projectRows}
               {...project}/>
+              <br/>
               <BreakdownChart height = {150} chartSettings = {[
               { type: 'string', label: 'Task ID' },
               { type: 'string', label: 'Task Name' },
@@ -285,15 +284,28 @@ class App extends React.Component {
               </div>
             </TabPanel>)}
             <TabPanel>
-              <ProjectForm 
-              
-                height = {this.state.height}
-                isEditing = {false}
-                allocations = {this.state.allocations} 
-                employees = {this.state.employees} 
-                projects = {this.state.projects} 
-                refreshState={this.refreshState}
-              />
+            <table class = "legendTable" rules = 'all'>
+                <tr class = "legendTable">
+                    <th width = "100px">Project</th>
+                    <th width = "145px">Start Date</th>
+                    <th width = "145px">End Date</th>
+                    <th width = "88px">Total Points</th>
+                    <th width = "92px">BA Points</th>
+                    <th width = "90px">QA Points</th>
+                    <th width = "90px">Dev Points</th>
+                    <th width = '80px'></th>
+                </tr>
+                <tr class = "legendTable">
+                    <ProjectForm 
+                    height = {this.state.height}
+                    isEditing = {false}
+                    allocations = {this.state.allocations} 
+                    employees = {this.state.employees} 
+                    projects = {this.state.projects} 
+                    refreshState={this.refreshState}
+                    />
+                </tr>
+            </table>
             </TabPanel>
           </Tabs  >
 
@@ -306,7 +318,7 @@ class App extends React.Component {
   }	
 }
 ReactDOM.render(
-  <App title = {'Webteams Capacity Management'}/>,
+  <App title = {'Webteam Capacity Management'}/>,
   document.getElementById('root')
 );
 

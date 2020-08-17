@@ -50,14 +50,14 @@ class EmployeeCollapsable extends React.Component {
                 allocation.employeeId === employee.id).length > 0
             ) {
               itemRows.push(
-                  <tr key1 = {employee.id} >
+                  <tr key1 = {employee.id} class = "alloTable">
                       <th class = "first">Start Month</th>
                       <th class = "second">End Month</th>
                       <th class = "emThird">Project</th>
                       <th class = "third">Allocation</th>
                       <th class = "fourth">Weight</th>
                       <th class = "emFifth">Role</th>
-                      <th class = "seventh"></th>
+                      <th  style = {{backgroundColor: '#ffffff00', border: 0}}></th>
                   </tr>
               )
             }
@@ -96,9 +96,10 @@ class EmployeeCollapsable extends React.Component {
       
       return (
         <div>
-          <table rules = 'all'>
-                    {allItemRows}
-          </table>
+            <table rules = 'all' class = "alloTable">
+                        {allItemRows}
+            </table>
+            <br/>
           <EmployeeForm 
           refreshState = {this.props.refreshState}
           isEditing = {false} />
@@ -167,7 +168,7 @@ class Employee extends React.Component {
           <tr key1 = {this.props.key1} class = "noBorder">
               <th colspan = "3" style = {{width: "300px"}}>
                   {this.props.employee.name} 
-                  &nbsp;<button onClick = {this.toggleEdit}>Edit</button>
+                  &nbsp;<button onClick = {this.toggleEdit} class = "Aes"><img src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_1280.png" alt = "" width="12" height="12"/></button>
                   &nbsp;<button onClick={this.deleteEmployee} class = "Aes"><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>
                   &nbsp;{this.props.hasAllocations ? <button onClick={this.props.onClick} class = "Aes">{this.props.expandedRows.includes(this.props.employee.id) ? '-':'+'}</button> : <span/>}
               </th>
@@ -277,7 +278,7 @@ class EmployeeForm extends React.Component {
           value = {this.state.name}
           onChange = {this.changeHandler}
           required/>
-          {this.props.isEditing ? <span>&nbsp;<button onClick = {this.props.toggleEdit}>Cancel</button>&nbsp;<button type = 'submit'>Confirm</button></span> : <span>&nbsp;<button type = 'submit'>Add Employee</button></span>}
+          {this.props.isEditing ? <span>&nbsp;<button onClick = {this.props.toggleEdit} class = "Aes"><img src="https://www.pngfind.com/pngs/m/89-891121_confirm-icon-png-play-button-icon-png-transparent.png" alt = "" width="12" height="12"/></button></span> : <span>&nbsp;<button type = 'submit'>Add Employee</button></span>}
     </form>
     </td>
     );

@@ -4,11 +4,11 @@ tr.noBorder th {
     text-align: left
   }
 th.first {
-  width: 149px;
+  width: 164px;
 }
 
 th.second {
-    width: 147px;
+    width: 162px;
 }
 
 th.third {
@@ -72,7 +72,7 @@ select.emFormSixth {
 
 th.seventh {
   border: 0;
-  width: 124px;
+  width: 131px;
 }
 
 td.seventh {

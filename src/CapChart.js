@@ -42,7 +42,7 @@ class CapChart extends React.Component {
           "light": "#9400D3"
         }
       ],
-      trackHeight: this.props.trackHeight,
+      trackHeight: 48,
       criticalPathEnabled: false,
       sortTasks: false,
       innerGridTrack: {fill: 'white'},
