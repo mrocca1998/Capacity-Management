@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css'
 import CapChart from './CapChart';
-import BreakdownChart from './BreakdownChart';
 import * as serviceWorker from './serviceWorker';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -232,7 +231,7 @@ class App extends React.Component {
       <div class = "header"><h1><b>{this.props.title}</b></h1></div>
       <br/>
         {this.state.projects.length === 0 ? <div/> : 
-          <div class = "sticky" style = {{height: 45 + 48 * this.state.projects.length}}>
+          <div class = "mainChart" style = {{height: 65 + 48 * this.state.projects.length}}>
             <CapChart
               data={this.state.chartData} 
               height = {45 + 48 * this.state.projects.length} 
@@ -253,22 +252,6 @@ class App extends React.Component {
               <Tab >+</Tab>
             </TabList>
             <TabPanel>
-            <button type="button" class="collapsible">BA</button>
-            <div class="content">
-              <p>Lorem ipsum...</p>
-            </div>
-            <br/>
-            <br/>
-            <button type="button" class="collapsible">QA</button>
-            <div class="content">
-              <p>Lorem ipsum...</p>
-            </div>
-            <br/>
-            <br/>
-            <button type="button" class="collapsible">Dev</button>
-            <div class="content">
-              <p>Lorem ipsum...</p>
-            </div>
             <div class = "emDisciplineTabs">
             <br/>
             <Tabs>
@@ -335,17 +318,7 @@ class App extends React.Component {
               projectRows = {this.state.projectRows}
               {...project}/>
               <br/>
-              <BreakdownChart height = {150} chartSettings = {[
-              { type: 'string', label: 'Task ID' },
-              { type: 'string', label: 'Task Name' },
-              { type: 'string', label: 'Resource' },
-              { type: 'date', label: 'Start Date' },
-              { type: 'date', label: 'End Date' },
-              { type: 'number', label: 'Duration' },
-              { type: 'number', label: 'Percent Complete' },
-              { type: 'string', label: 'Dependencies' },
-              ]} 
-              {...project}/>
+              
               </div>
             </TabPanel>)}
             <TabPanel>

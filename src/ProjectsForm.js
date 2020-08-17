@@ -4,8 +4,7 @@ import { AlloCollapsable }from './AlloCollapse'
 import { API_ROOT } from './api-config';
 import './index.css'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
-
+import BreakdownChart from './BreakdownChart';
 
 
 class ProjectForm extends React.Component {
@@ -224,7 +223,7 @@ class Project extends React.Component {
     }
 
     async deleteProject(id) {
-        if(window.confirm('Are you sure you want to delete the project ' + this.props.title + '?\nDoing so will also delete all allocations attributed to the project')) {
+        if(window.confirm('Are you sure you want to delete the project ' + this.props.title + '?\nDoing so will also delete all allocations attributed to the project.')) {
             
             try { 
                 const result = await fetch(API_ROOT + 'projects/' + this.props.id, {
@@ -299,6 +298,49 @@ class Project extends React.Component {
                     </tr>
                 </table>
                 <br/>
+                <div class = "sticky">
+                <BreakdownChart height = {170} chartSettings = {[
+                    { type: 'string', label: 'Task ID' },
+                    { type: 'string', label: 'Task Name' },
+                    { type: 'string', label: 'Resource' },
+                    { type: 'date', label: 'Start Date' },
+                    { type: 'date', label: 'End Date' },
+                    { type: 'number', label: 'Duration' },
+                    { type: 'number', label: 'Percent Complete' },
+                    { type: 'string', label: 'Dependencies' },
+                    ]} 
+                    baEndDate = {this.props.baEndDate}
+                    qaEndDate = {this.props.qaEndDate}
+                    devEndDate = {this.props.devEndDate}
+                    startDate = {this.props.startDate}
+                    endDate = {this.props.endDate}
+                    calcEndDate = {this.props.calcEndDate}
+                    title = {this.props.title}
+                />
+                </div>
+                <br/>
+                <br/>
+                <table class = "legendTable" rules = 'all'>
+                    <tr class = "legendTable">
+                        <th width = "95px">Employee</th>
+                        <th width = "46px">Role</th>
+                        <th width = "150px">Start Month</th>
+                        <th width = "150px">End Month</th>
+                        <th width = "85px">Allocation</th>
+                        <th width = "60px">Weight</th>
+                        <th width = '100px'></th>
+                    </tr>
+                    <tr class = "legendTable">
+                        <AllocationForm
+                            refreshState = {this.props.refreshState} 
+                            projectId = {project.id} 
+                            employees = {project.employees} 
+                            allocations = {project.allocationState} 
+                            isEditing = {false}
+                        />
+                    </tr>
+                </table>
+                <br/>
                 <br/>
                 <div class = "disciplineTabs">
                 <Tabs>
@@ -353,26 +395,7 @@ class Project extends React.Component {
                 <br/>
                 <br/>
                 </div>
-                <table class = "legendTable" rules = 'all'>
-                    <tr class = "legendTable">
-                        <th width = "95px">Employee</th>
-                        <th width = "46px">Role</th>
-                        <th width = "150px">Start Month</th>
-                        <th width = "150px">End Month</th>
-                        <th width = "85px">Allocation</th>
-                        <th width = "60px">Weight</th>
-                        <th width = '100px'></th>
-                    </tr>
-                    <tr class = "legendTable">
-                        <AllocationForm
-                            refreshState = {this.props.refreshState} 
-                            projectId = {project.id} 
-                            employees = {project.employees} 
-                            allocations = {project.allocationState} 
-                            isEditing = {false}
-                        />
-                    </tr>
-                </table>
+
             </div>
         )
     }  else {
@@ -406,6 +429,49 @@ class Project extends React.Component {
                         </tr>
                 </table>
                 <br/>
+                <div class = "sticky">
+                <BreakdownChart height = {170} chartSettings = {[
+                    { type: 'string', label: 'Task ID' },
+                    { type: 'string', label: 'Task Name' },
+                    { type: 'string', label: 'Resource' },
+                    { type: 'date', label: 'Start Date' },
+                    { type: 'date', label: 'End Date' },
+                    { type: 'number', label: 'Duration' },
+                    { type: 'number', label: 'Percent Complete' },
+                    { type: 'string', label: 'Dependencies' },
+                    ]} 
+                    baEndDate = {this.props.baEndDate}
+                    qaEndDate = {this.props.qaEndDate}
+                    devEndDate = {this.props.devEndDate}
+                    startDate = {this.props.startDate}
+                    endDate = {this.props.endDate}
+                    calcEndDate = {this.props.calcEndDate}
+                    title = {this.props.title}
+                />
+                </div>
+                <br/>
+                <br/>
+                <table class = "legendTable" rules = 'all'>
+                    <tr class = "legendTable">
+                        <th width = "95px">Employee</th>
+                        <th width = "46px">Role</th>
+                        <th width = "150px">Start Month</th>
+                        <th width = "150px">End Month</th>
+                        <th width = "85px">Allocation</th>
+                        <th width = "60px">Weight</th>
+                        <th width = '100px'></th>
+                    </tr>
+                    <tr class = "legendTable" style = {{justifyContent: 'left'}}>
+                        <AllocationForm
+                            refreshState = {this.props.refreshState} 
+                            projectId = {project.id} 
+                            employees = {project.employees} 
+                            allocations = {project.allocationState} 
+                            isEditing = {false}
+                        />
+                    </tr>
+                </table>
+                <br/>
                 <br/>
                 <div class = "disciplineTabs">
                 <Tabs>
@@ -460,26 +526,6 @@ class Project extends React.Component {
                 <br/>
                 </Tabs>
                 </div>
-                <table class = "legendTable" rules = 'all'>
-                    <tr class = "legendTable">
-                        <th width = "95px">Employee</th>
-                        <th width = "46px">Role</th>
-                        <th width = "150px">Start Month</th>
-                        <th width = "150px">End Month</th>
-                        <th width = "85px">Allocation</th>
-                        <th width = "60px">Weight</th>
-                        <th width = '100px'></th>
-                    </tr>
-                    <tr class = "legendTable" style = {{justifyContent: 'left'}}>
-                        <AllocationForm
-                            refreshState = {this.props.refreshState} 
-                            projectId = {project.id} 
-                            employees = {project.employees} 
-                            allocations = {project.allocationState} 
-                            isEditing = {false}
-                        />
-                    </tr>
-                </table>
 
             </div>
         );

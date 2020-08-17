@@ -130,7 +130,7 @@ class Allocation extends React.Component {
     }
 
     async deleteAllocation(id) {
-        if(window.confirm('Are you sure you want to delete this allocation for ' + this.props.employees.filter(employee => employee.id = this.props.employeeId)[0].name + '?')) {     
+        if(window.confirm('Are you sure you want to delete this allocation for ' + this.props.employees.filter(employee => employee.id === this.props.employeeId)[0].name + '?')) {     
             try { 
                 const result = await fetch(API_ROOT + 'allocations/' + this.props.id, {
                     method: 'delete',
