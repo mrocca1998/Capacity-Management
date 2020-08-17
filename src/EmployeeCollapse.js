@@ -83,7 +83,7 @@ class EmployeeCollapsable extends React.Component {
   
   render() {
       let allItemRows = [];
-      this.props.role ? 
+
       this.props.employees.filter(employee => employee.role === this.props.role).map(employee => {
 
               const perItemRows = this.renderItem(employee);
@@ -93,17 +93,7 @@ class EmployeeCollapsable extends React.Component {
             )
       }
       )
-      :
 
-      this.props.employees.map(employee => {
-
-        const perItemRows = this.renderItem(employee);
-        allItemRows = allItemRows.concat(perItemRows);
-      return (
-          <span/>
-            )
-        }
-        )
 
       
       return (
