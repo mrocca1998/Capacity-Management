@@ -315,7 +315,19 @@ class App extends React.Component {
                     </TabPanel>
                 <br/>
                 </Tabs>
+
+                <EmployeeCollapsable 
+                        employees = {this.state.employees}
+                        allocations = {this.state.allocations}
+                        projects = {this.state.projects}
+                        refreshState = {this.refreshState}
+                        expandEmRow = {this.expandEmRow}
+                        collapseEmRow = {this.collapseEmRow}
+                        employeeRows = {this.state.employeeRows}
+                        
+                      />
             </div>
+            
             <EmployeeForm 
                   refreshState = {this.refreshState}
                   isEditing = {false}
