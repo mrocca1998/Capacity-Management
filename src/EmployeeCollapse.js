@@ -62,7 +62,7 @@ class EmployeeCollapsable extends React.Component {
               )
             }
               this.props.allocations.filter(allocation =>
-              allocation.employeeId === employee.id )
+              allocation.employeeId === employee.id)
               .map(allocation => 
                   itemRows.push(
                     <Allocation 
@@ -84,7 +84,7 @@ class EmployeeCollapsable extends React.Component {
   render() {
       let allItemRows = [];
 
-      this.props.employees.map(employee => {
+      this.props.employees.filter(employee => employee.role === this.props.role).map(employee => {
 
               const perItemRows = this.renderItem(employee);
               allItemRows = allItemRows.concat(perItemRows);
@@ -100,9 +100,7 @@ class EmployeeCollapsable extends React.Component {
                         {allItemRows}
             </table>
             <br/>
-          <EmployeeForm 
-          refreshState = {this.props.refreshState}
-          isEditing = {false} />
+
         </div>
       );
   }
@@ -128,7 +126,7 @@ class Employee extends React.Component {
   }
 
   async deleteEmployee(id) {
-      if(window.confirm('Are you sure')) {     
+      if(window.confirm('Are you sure you want to delete ' + this.props.employee.name + '? \nDoing so will also delete all allocations attributed to them.')) {     
           try { 
               const result = await fetch(API_ROOT + 'employees/' + this.props.employee.id, {
                   method: 'delete',
@@ -157,6 +155,7 @@ class Employee extends React.Component {
                   toggleEdit = {this.toggleEdit}
                   id = {this.props.employee.id}
                   name = {this.props.employee.name}
+                  role = {this.props.employee.role}
               />
               <br/>
               <br/>
@@ -185,7 +184,8 @@ class EmployeeForm extends React.Component {
   constructor(props) {
       super(props)
       this.state = {
-        name: ''
+        name: '',
+        role: 'BA'
       }
       this.postEmployee = this.postEmployee.bind(this);
       this.putEmployee = this.putEmployee.bind(this);
@@ -207,6 +207,7 @@ class EmployeeForm extends React.Component {
               },
               body: JSON.stringify({
                   name: this.state.name,
+                  role: this.state.role
               })
           })
           .then(result => result.json())
@@ -233,7 +234,8 @@ class EmployeeForm extends React.Component {
               },
               body: JSON.stringify({
                   id: this.props.id,
-                  name: this.state.name
+                  name: this.state.name,
+                  role: this.state.role
               })
           })
           .then(result => result.json())
@@ -254,7 +256,8 @@ class EmployeeForm extends React.Component {
 
   fillState() {
       this.setState({
-          name : this.props.name
+          name : this.props.name,
+          role: this.props.role
       })
   }
 
@@ -278,7 +281,18 @@ class EmployeeForm extends React.Component {
           value = {this.state.name}
           onChange = {this.changeHandler}
           required/>
-          {this.props.isEditing ? <span>&nbsp;<button onClick = {this.props.toggleEdit} class = "Aes"><img src="https://www.pngfind.com/pngs/m/89-891121_confirm-icon-png-play-button-icon-png-transparent.png" alt = "" width="12" height="12"/></button></span> : <span>&nbsp;<button type = 'submit'>Add Employee</button></span>}
+          &nbsp;
+          <select type = "text" 
+                style = {{textAlign: 'center'}}
+                name = 'role'
+                value = {this.state.role}
+                onChange = {this.changeHandler}
+                required>
+                    <option>BA</option>
+                    <option>QA</option>
+                    <option>Dev</option>
+            </select>
+          {this.props.isEditing ? <span>&nbsp;<button type = 'submit' class = "Aes"><img src="https://www.pngfind.com/pngs/m/89-891121_confirm-icon-png-play-button-icon-png-transparent.png" alt = "" width="12" height="12"/></button></span> : <span>&nbsp;<button type = 'submit'>Add Employee</button></span>}
     </form>
     </td>
     );
@@ -287,4 +301,4 @@ class EmployeeForm extends React.Component {
 
 
 
-export default EmployeeCollapsable;
+export { EmployeeCollapsable, EmployeeForm };

@@ -55,7 +55,7 @@ th.emThird {
 }
 th.emFifth {
   width: 46px;
-  border-right: 0;
+  border-right: 1;
 }
 
 input.emFormThird {
@@ -63,7 +63,8 @@ input.emFormThird {
 }
 
 td.sixth {
-  border-right: 0
+  border-right: -1;
+  border-right-width: 1px;
 }
 
 select.emFormSixth {
@@ -71,7 +72,9 @@ select.emFormSixth {
 }
 
 th.seventh {
-  border: 0;
+  border-top: 0;
+  border-right: 0;
+  border-bottom:0;
   width: 131px;
 }
 

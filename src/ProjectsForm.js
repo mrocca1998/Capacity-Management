@@ -224,7 +224,7 @@ class Project extends React.Component {
     }
 
     async deleteProject(id) {
-        if(window.confirm('Are you sure')) {
+        if(window.confirm('Are you sure you want to delete the project ' + this.props.title + '?\nDoing so will also delete all allocations attributed to the project')) {
             
             try { 
                 const result = await fetch(API_ROOT + 'projects/' + this.props.id, {

@@ -8,8 +8,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { ProjectForm, Project } from './ProjectsForm';
 import { API_ROOT } from './api-config';
-import EmployeeCollapsable from './EmployeeCollapse';
-
+import { EmployeeCollapsable, EmployeeForm } from './EmployeeCollapse';
 
 //chart library format
 // const chartSettings = [
@@ -40,8 +39,8 @@ function Legend(props) {
   return <table rules ='all' 
   class = "legendTable">
  <tr class = "legendTable">
-    <th style = {{width: 20}}>Weight</th>
-    <th style = {{width: 50}}>Description</th>
+    <th width = '20'>Weight</th>
+    <th width = '50'>Description</th>
     <th width = '50'> BA Hours per point</th>
     <th width = '50'> QA Hours per point</th>
     <th width = '50'> Dev Hours per point</th>
@@ -209,6 +208,12 @@ class App extends React.Component {
   
   componentDidMount() {
     this.refreshState();
+    const script = document.createElement("script");
+
+    script.src = "myScript.js";
+    script.async = true;
+
+    document.body.appendChild(script);
   };  
 
 	render() {
@@ -221,6 +226,7 @@ class App extends React.Component {
       marginLeft: '10%',
       marginRight: '10%'
     }
+    
   return (
     	<div class = "body">
       <div class = "header"><h1><b>{this.props.title}</b></h1></div>
@@ -247,15 +253,73 @@ class App extends React.Component {
               <Tab >+</Tab>
             </TabList>
             <TabPanel>
-              <EmployeeCollapsable 
-                employees = {this.state.employees}
-                allocations = {this.state.allocations}
-                projects = {this.state.projects}
-                refreshState = {this.refreshState}
-                expandEmRow = {this.expandEmRow}
-                collapseEmRow = {this.collapseEmRow}
-                employeeRows = {this.state.employeeRows}
-              />
+            <button type="button" class="collapsible">BA</button>
+            <div class="content">
+              <p>Lorem ipsum...</p>
+            </div>
+            <br/>
+            <br/>
+            <button type="button" class="collapsible">QA</button>
+            <div class="content">
+              <p>Lorem ipsum...</p>
+            </div>
+            <br/>
+            <br/>
+            <button type="button" class="collapsible">Dev</button>
+            <div class="content">
+              <p>Lorem ipsum...</p>
+            </div>
+            <div class = "emDisciplineTabs">
+            <br/>
+            <Tabs>
+                    <TabList>
+                        <Tab>BA</Tab>
+                        <Tab>QA</Tab>
+                        <Tab>Dev</Tab>
+                    </TabList>
+                    <TabPanel>
+                      <EmployeeCollapsable 
+                          employees = {this.state.employees}
+                          allocations = {this.state.allocations}
+                          projects = {this.state.projects}
+                          refreshState = {this.refreshState}
+                          expandEmRow = {this.expandEmRow}
+                          collapseEmRow = {this.collapseEmRow}
+                          employeeRows = {this.state.employeeRows}
+                          role = {'BA'}
+                        />
+                    </TabPanel>
+                    <TabPanel>
+                      <EmployeeCollapsable 
+                          employees = {this.state.employees}
+                          allocations = {this.state.allocations}
+                          projects = {this.state.projects}
+                          refreshState = {this.refreshState}
+                          expandEmRow = {this.expandEmRow}
+                          collapseEmRow = {this.collapseEmRow}
+                          employeeRows = {this.state.employeeRows}
+                          role = {'QA'}
+                        />
+                    </TabPanel>
+                    <TabPanel>
+                      <EmployeeCollapsable 
+                        employees = {this.state.employees}
+                        allocations = {this.state.allocations}
+                        projects = {this.state.projects}
+                        refreshState = {this.refreshState}
+                        expandEmRow = {this.expandEmRow}
+                        collapseEmRow = {this.collapseEmRow}
+                        employeeRows = {this.state.employeeRows}
+                        role = {'Dev'}
+                      />
+                    </TabPanel>
+                <br/>
+                </Tabs>
+            </div>
+            <EmployeeForm 
+                  refreshState = {this.refreshState}
+                  isEditing = {false}
+                />
             </TabPanel>
             {this.state.projects.map(project => <TabPanel key = {project.id}>
               
@@ -284,6 +348,7 @@ class App extends React.Component {
               </div>
             </TabPanel>)}
             <TabPanel>
+            <div>
             <table class = "legendTable" rules = 'all'>
                 <tr class = "legendTable">
                     <th width = "100px">Project</th>
@@ -306,10 +371,12 @@ class App extends React.Component {
                     />
                 </tr>
             </table>
+            </div>
             </TabPanel>
           </Tabs  >
 
       </div>
+      
       </div>
       
 
@@ -317,6 +384,7 @@ class App extends React.Component {
     );
   }	
 }
+
 ReactDOM.render(
   <App title = {'Webteam Capacity Management'}/>,
   document.getElementById('root')

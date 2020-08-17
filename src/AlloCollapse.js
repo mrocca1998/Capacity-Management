@@ -130,7 +130,7 @@ class Allocation extends React.Component {
     }
 
     async deleteAllocation(id) {
-        if(window.confirm('Are you sure')) {     
+        if(window.confirm('Are you sure you want to delete this allocation for ' + this.props.employees.filter(employee => employee.id = this.props.employeeId)[0].name + '?')) {     
             try { 
                 const result = await fetch(API_ROOT + 'allocations/' + this.props.id, {
                     method: 'delete',
@@ -177,14 +177,14 @@ class Allocation extends React.Component {
       else {
         return (
             this.props.isEmTab ? 
-                <tr height = '28px' class = "alloTable">
+                <tr height = '27px' class = "alloTable">
                     <td>{this.state.monthNames[new Date(allocation.startDate).getMonth()]} {allocation.startDate.substring(0, 4)}</td>
                     <td>{this.state.monthNames[new Date(allocation.endDate).getMonth()]} {allocation.endDate.substring(0, 4)}</td>
                     <td>{this.props.projects.filter(project => project.id === allocation.projectId)[0].title}</td>
                     <td>{allocation.allocation1}%</td>
                     <td>{allocation.workWeight}</td>
                     <td class = "sixth">{allocation.role}</td>
-                    <td class = "seventh">
+                    <td class = "seventh" >
                         <span>
                         &nbsp;<button onClick = {this.toggleEdit} class = "Aes"><img src="https://cdn.pixabay.com/photo/2019/04/08/20/26/pencil-4112898_1280.png" alt = "" width="12" height="12"/></button>
                         <button onClick={this.deleteAllocation} class ="Aes"><img src="https://icon-library.com/images/delete-icon-png-16x16/delete-icon-png-16x16-21.jpg" alt = "" width="12" height="12"/></button>   
