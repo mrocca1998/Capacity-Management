@@ -17,7 +17,7 @@ class BreakdownChart extends React.Component {
       return (   
         <div>    
             <div class = "body"><h3 style={{textAlign: "center"}}>{this.props.title} Breakdown</h3></div>
-        <CapChart trackHeight = {30} height = {45 + 3* 48} data = {[this.props.chartSettings, 
+        <CapChart trackHeight = {30} height = {55 + 3* 48} data = {[this.props.chartSettings, 
           [1,
           this.props.endDate? 
           'BA\nIntended ' + this.props.endDate.substring(5,10) + '-' + this.props.endDate.substring(0,4) + '\nCalculated ' + this.props.baEndDate.substring(5,10) + '-' + this.props.baEndDate.substring(0,4)

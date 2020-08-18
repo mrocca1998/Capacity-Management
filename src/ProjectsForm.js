@@ -196,7 +196,7 @@ class ProjectForm extends React.Component {
             required 
             />
             
-            {this.props.isEditing ? <span style = {{width: '100px'}}><button onClick = {this.props.toggleEdit} style = {{width: '30px'}} class = "Aes"><img src="https://image.flaticon.com/icons/svg/66/66847.svg" alt = "" width="12" height="12"/></button><button type = 'submit' class = "Aes"><img src="https://www.pngfind.com/pngs/m/89-891121_confirm-icon-png-play-button-icon-png-transparent.png" alt = "" width="12" height="12"/></button>&nbsp;&nbsp;</span> : <button type = 'submit'>Add Project</button>}
+            {this.props.isEditing ? <span ><button onClick = {this.props.toggleEdit} style = {{width: '34px'}} class = "Aes"><img src="https://image.flaticon.com/icons/svg/66/66847.svg" alt = "" width="12" height="12"/></button><button type = 'submit' class = "Aes"><img src="https://www.pngfind.com/pngs/m/89-891121_confirm-icon-png-play-button-icon-png-transparent.png" alt = "" width="12" height="12"/></button>&nbsp;&nbsp;</span> : <button type = 'submit'>Add Project</button>}
             </form>
             </td>
 
@@ -280,7 +280,7 @@ class Project extends React.Component {
                         <th width = "90px">Dev Points</th>
                         <th width = '65px'></th>
                     </tr>
-                    <tr class = "legendTable" colspan = "8">
+                    <tr class = "legendTable" colspan = "8" style = {{justifyContent:'left'}}>
                         <ProjectForm 
                             refreshState = {this.props.refreshState}
                             isEditing = {this.state.isEditing} 
@@ -294,12 +294,11 @@ class Project extends React.Component {
                             qaPoints = {this.props.qaPoints}
                             devPoints = {this.props.devPoints}
                         />
-                        <br/>
                     </tr>
                 </table>
                 <br/>
                 <div class = "sticky">
-                <BreakdownChart height = {170} chartSettings = {[
+                <BreakdownChart height = {180} chartSettings = {[
                     { type: 'string', label: 'Task ID' },
                     { type: 'string', label: 'Task Name' },
                     { type: 'string', label: 'Resource' },
@@ -330,7 +329,7 @@ class Project extends React.Component {
                         <th width = "60px">Weight</th>
                         <th width = '100px'></th>
                     </tr>
-                    <tr class = "legendTable">
+                    <tr class = "legendTable" >
                         <AllocationForm
                             refreshState = {this.props.refreshState} 
                             projectId = {project.id} 
@@ -430,7 +429,7 @@ class Project extends React.Component {
                 </table>
                 <br/>
                 <div class = "sticky">
-                <BreakdownChart height = {170} chartSettings = {[
+                <BreakdownChart height = {180} chartSettings = {[
                     { type: 'string', label: 'Task ID' },
                     { type: 'string', label: 'Task Name' },
                     { type: 'string', label: 'Resource' },
