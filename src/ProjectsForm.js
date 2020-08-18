@@ -324,10 +324,10 @@ class Project extends React.Component {
                         <th width = "95px">Employee</th>
                         <th width = "46px">Role</th>
                         <th width = "150px">Start Month</th>
-                        <th width = "150px">End Month</th>
+                        <th width = "155px">End Month</th>
                         <th width = "85px">Allocation</th>
                         <th width = "60px">Weight</th>
-                        <th width = '100px'></th>
+                        <th width = '101px'></th>
                     </tr>
                     <tr class = "legendTable" >
                         <AllocationForm
@@ -455,10 +455,10 @@ class Project extends React.Component {
                         <th width = "95px">Employee</th>
                         <th width = "46px">Role</th>
                         <th width = "150px">Start Month</th>
-                        <th width = "150px">End Month</th>
+                        <th width = "155px">End Month</th>
                         <th width = "85px">Allocation</th>
                         <th width = "60px">Weight</th>
-                        <th width = '100px'></th>
+                        <th width = '101px'></th>
                     </tr>
                     <tr class = "legendTable" style = {{justifyContent: 'left'}}>
                         <AllocationForm
