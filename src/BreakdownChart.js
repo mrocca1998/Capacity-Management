@@ -22,7 +22,7 @@ class BreakdownChart extends React.Component {
           this.props.endDate? 
           'BA\nIntended ' + this.props.endDate.substring(5,10) + '-' + this.props.endDate.substring(0,4) + '\nCalculated ' + this.props.baEndDate.substring(5,10) + '-' + this.props.baEndDate.substring(0,4)
           : 
-          this.props.title + '\nCalculated ' + this.props.calcEndDate.substring(5,10) + '-' + this.props.calcEndDate.substring(0,4),
+          'BA\nCalculated ' + this.props.calcEndDate.substring(5,10) + '-' + this.props.calcEndDate.substring(0,4),
           null,
           new Date(this.props.startDate),
           new Date(this.props.baEndDate),
@@ -33,7 +33,7 @@ class BreakdownChart extends React.Component {
           this.props.endDate? 
           'QA \nIntended ' + this.props.endDate.substring(5,10) + '-' + this.props.endDate.substring(0,4) + '\nCalculated ' + this.props.qaEndDate.substring(5,10) + '-' + this.props.qaEndDate.substring(0,4)
           : 
-          this.props.title + '\nCalculated ' + this.props.calcEndDate.substring(5,10) + '-' + this.props.calcEndDate.substring(0,4),
+          'QA\nCalculated ' + this.props.calcEndDate.substring(5,10) + '-' + this.props.calcEndDate.substring(0,4),
           null,
           new Date(this.props.startDate),
           new Date(this.props.qaEndDate),
@@ -44,7 +44,7 @@ class BreakdownChart extends React.Component {
           this.props.endDate? 
           'Dev \nIntended ' + this.props.endDate.substring(5,10) + '-' + this.props.endDate.substring(0,4) + '\nCalculated ' + this.props.devEndDate.substring(5,10) + '-' + this.props.devEndDate.substring(0,4)
           : 
-          this.props.title + '\nCalculated ' + this.props.calcEndDate.substring(5,10) + '-' + this.props.calcEndDate.substring(0,4),
+          'Dev\nCalculated ' + this.props.calcEndDate.substring(5,10) + '-' + this.props.calcEndDate.substring(0,4),
           null,
           new Date(this.props.startDate),
           new Date(this.props.devEndDate),
