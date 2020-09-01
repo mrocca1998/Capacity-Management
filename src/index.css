@@ -96,13 +96,19 @@ tr.alloTable td {
 div.header {
   margin-right: -8px;
   margin-left: -8px;
-  margin-top: -25px;
+  margin-top: -8px;
   height : 80px;
   background-color: #002955;
-  text-align: center;
+  display:flex; 
+  flex-direction:row;
+  color: white;
+  font: 95% Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  justify-content: left;
+  line-height: 80px;
 }
 
-div.header h1 {
+div.h1 h1 {
   font: 95% Arial, Helvetica, sans-serif;
   font-size: 35px;
   color: white;
@@ -120,6 +126,28 @@ button {
   cursor:pointer;
   overflow: hidden;
   outline: none;
+}
+
+div.reset{
+  margin-top: -5px;
+  justify-content: center;
+  margin-left: 13%;
+}
+
+button.reset{
+  font: 95% Arial, Helvetica, sans-serif,;
+  font-weight: bold;
+  font-size: 14px;
+  Height: 34px;
+  width: 115px;
+  color: white;
+  background-repeat:no-repeat;
+  background-color : #0079c1;
+  border-radius: 15px;
+  cursor:pointer;
+  overflow: hidden;
+  outline: none;
+  justify-content: center;
 }
 
 button.Aes {
@@ -159,6 +187,7 @@ div.sticky {
   position: sticky;
   top:0;
   z-index: 999;
+  background-color: white;
   border-bottom: 2px solid;
   border-bottom-color: #002955;
   border-bottom-left-radius: 10px;

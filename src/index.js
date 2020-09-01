@@ -8,6 +8,7 @@ import 'react-tabs/style/react-tabs.css';
 import { ProjectForm, Project } from './ProjectsForm';
 import { API_ROOT } from './api-config';
 import { EmployeeCollapsable, EmployeeForm } from './EmployeeCollapse';
+import ToggleSwitch from './toggleSwitch';
 
 //chart library format
 // const chartSettings = [
@@ -93,27 +94,30 @@ class App extends React.Component {
         { type: 'number', label: 'Percent Complete' },
         { type: 'string', label: 'Dependencies' },
       ],
-      ], projects: [], allocations: [], employees: [], height: 0, 
+      ], projects: [], allProjects: [], allocations: [], allAllocations: [], employees: [], height: 0, 
       monthNames : ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December" ],
       showLegend: false, 
       employeeRows : [],
       projectRows:{},
+      isUpdate: true,
     };
     this.refreshState = this.refreshState.bind(this);
+    this.toggleMode = this.toggleMode.bind(this);
     this.toggleLegend = this.toggleLegend.bind(this);
     this.expandEmRow = this.expandEmRow.bind(this);
     this.collapseEmRow = this.collapseEmRow.bind(this);
     this.expandProjectRow = this.expandProjectRow.bind(this);
     this.collapseProjectRow = this.collapseProjectRow.bind(this);
-  }
+    this.reset = this.reset.bind(this);
+  } 
   async refreshState () {
       await fetch(API_ROOT + 'projects')
       .then(res => res.json())
       .then(json => {
           const projectData = [this.state.chartData[0],];
           const rowCopy = {};
-          json.map(project =>
+          json.filter(project => project.isUpdate === this.state.isUpdate).map(project =>
 
               projectData.push([
                   project.id,
@@ -130,16 +134,17 @@ class App extends React.Component {
               ]),
           )
 
-          json.map(project =>
+          json.filter(project => project.isUpdate === this.state.isUpdate).map(project =>
             rowCopy[project.title] = [],
           )       
 
           
           this.setState({
-            projects: json,
+            projects: json.filter(project => project.isUpdate === this.state.isUpdate),
+            allProjects: json,
             chartData: projectData,
             projectRows: rowCopy,
-            height: (120 + (json.length * 100)),
+            height: (120 + (json.filter(project => project.isUpdate === this.state.isUpdate).length * 100)),
           });
         }
         
@@ -159,7 +164,8 @@ class App extends React.Component {
       .then(res => res.json())
       .then(json => {
           this.setState({
-              allocations: json,
+              allocations: json.filter(allocation => allocation.isUpdate === this.state.isUpdate),
+              allAllocations: json
               });
         },
       )   
@@ -169,6 +175,13 @@ class App extends React.Component {
     this.setState({
       showLegend: !this.state.showLegend,
     })
+  }
+
+  toggleMode() {
+    this.setState({
+      isUpdate: !this.state.isUpdate,
+    })
+    this.refreshState();
   }
 
   expandEmRow = (rowId) => {
@@ -205,6 +218,99 @@ class App extends React.Component {
     return Math.round(Math.abs((firstDate - secondDate) / oneDay));
   }
   
+  async deleteProject(project) {
+    if(window.confirm('Are you sure you want to delete the project ' + project.title + '?\nDoing so will also delete all allocations attributed to the project.')) {
+        
+        try { 
+            const result = await fetch(API_ROOT + 'projects/' + project.id, {
+                method: 'delete',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type':'application/json',
+                }
+            })
+
+            console.log('Result ' + result)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    this.refreshState();
+}
+
+postProjectCopy(project) {
+  try {
+      fetch(API_ROOT + 'projects', {
+          method: 'post',
+          headers: {
+              'Accept': 'application/json',
+              'Content-type':'application/json',
+          },
+          body: JSON.stringify({
+              title : project.title + ' Copy',
+              startDate : project.startDate,
+              endDate : project.endDate,
+              totalPoints: project.totalPoints,
+              baPoints : project.baPoints,
+              qaPoints : project.qaPoints,
+              devPoints : project.devPoints,
+              isUpdate: 0
+          })
+      })
+      .then(result => result.json())
+      .then(json => {
+        if (json.length > 0 && isNaN(json)) {
+          alert(json);
+        }  
+        else if (!isNaN(json)) {
+          const copyId = json;
+          this.state.allAllocations.filter(allocation => allocation.projectId === project.id).map(allocation => this.postCopyAllocation(allocation, copyId))
+        }   
+        this.refreshState();  
+      })
+  } catch (e) {
+      console.log(e)
+  }
+}
+
+postCopyAllocation(allocation, copyId) {
+  try {
+      fetch(API_ROOT + 'allocations', {
+          method: 'post',
+          headers: {
+              'Accept': 'application/json',
+              'Content-type':'application/json',
+          },
+          body: JSON.stringify({
+              projectId: copyId,
+              employeeId: allocation.employeeId,
+              role: allocation.role,
+              startDate: allocation.startDate,
+              endDate: allocation.endDate,
+              allocation1: allocation.allocation1,
+              workWeight: allocation.workWeight,
+              isUpdate: false
+          })
+      })
+      .then(result => result.json())
+      .then(json => {
+          if (json.length > 0) {
+              alert(json);
+          }  
+          this.refreshState();     
+      })
+  } catch (e) {
+      console.log(e)
+  }
+}
+
+  reset() {
+    if(window.confirm('Are you sure you want to reset simulate mode to match update mode? \nAll simulate mode data will be lost.')) {
+      this.state.projects.filter(project => !project.isUpdate).map(project => this.deleteProject(project));
+      this.state.allProjects.filter(project => project.isUpdate).map(project => this.postProjectCopy(project));
+    }
+  }
+  
   componentDidMount() {
     this.refreshState();
     const script = document.createElement("script");
@@ -228,7 +334,23 @@ class App extends React.Component {
     
   return (
     	<div class = "body">
-      <div class = "header"><h1><b>{this.props.title}</b></h1></div>
+      <div class = "header">
+        <div style = {{marginLeft: '3%'}}>
+        <ToggleSwitch Text={['Simulate', 'Update']} id = {'id'} onChange = {this.toggleMode} style/>
+        </div>
+        <div style = {{marginLeft: '17%'}}>
+         {this.props.title}
+        </div>
+        {!this.state.isUpdate ? 
+          <div class = "reset">
+            <button class = "reset" onClick = {this.reset}>
+              RESET
+            </button>
+          </div>  
+          :
+          <span/>
+        }
+      </div>
       <br/>
         {this.state.projects.length === 0 ? <div/> : 
           <div class = "mainChart" style = {{height: 65 + 48 * this.state.projects.length}}>
@@ -316,6 +438,7 @@ class App extends React.Component {
               expandProjectRow = {this.expandProjectRow}
               collapseProjectRow = {this.collapseProjectRow}
               projectRows = {this.state.projectRows}
+              isUpdate = {this.state.isUpdate}
               {...project}/>
               <br/>
               
@@ -342,6 +465,7 @@ class App extends React.Component {
                     employees = {this.state.employees} 
                     projects = {this.state.projects} 
                     refreshState={this.refreshState}
+                    isUpdate = {this.state.isUpdate}
                     />
                 </tr>
             </table>

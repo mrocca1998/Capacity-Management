@@ -42,6 +42,7 @@ class AllocationForm extends React.Component {
                     endDate: this.state.endDate,
                     allocation1: this.state.allocation,
                     workWeight: this.state.weight,
+                    isUpdate: this.props.isUpdate? 1: 0
                 })
             })
             .then(result => result.json())
@@ -167,14 +168,14 @@ class AllocationForm extends React.Component {
                     onSubmit={this.props.isEditing ? this.putAllocationCheck : this.postAllocation} 
                     >
                     {/* <label > Start Month: </label> */}
-                    <input type="month" min='2020-08'
+                    <input type="month" 
                     name = 'startDate'
                     value = {this.state.startDate}
                     onChange = {this.changeHandler}
                     required
                     style={{width : "160px", font: "95% Arial, Helvetica, sans-serif", textAlign: 'center', border: '2px solid #0079c1'}}/>
                     {/* <label > End Month: </label> */}
-                    <input type="month" min="2020-08"
+                    <input type="month" 
                     name = 'endDate'
                     value = {this.state.endDate}
                     onChange = {this.changeHandler}
@@ -226,14 +227,14 @@ class AllocationForm extends React.Component {
                         onSubmit={this.props.isEditing ? this.putAllocationCheck : this.postAllocation} 
                     >
                     {/* <label > Start Month: </label> */}
-                    <input type="month" min="2020-08" 
+                    <input type="month"  
                     name = 'startDate'
                     value = {this.state.startDate}
                     onChange = {this.changeHandler}
                     required
                     style={{width : "160px", font: "95% Arial, Helvetica, sans-serif", textAlign: 'center', border: '2px solid #0079c1'}}/>
                     {/* <label > End Month: </label> */}
-                    <input type="month" min="2020-08"
+                    <input type="month" 
                     name = 'endDate'
                     value = {this.state.endDate}
                     onChange = {this.changeHandler}
@@ -303,7 +304,7 @@ class AllocationForm extends React.Component {
                     <option>Dev</option>
                 </select>
 
-                <input type="month" min="2020-08"
+                <input type="month" 
                 style = {{height: '17px', width : '160px', font: "95% Arial, Helvetica, sans-serif", textAlign: 'center'}} 
                 name = 'startDate'
                 value = {this.state.startDate}
@@ -311,7 +312,7 @@ class AllocationForm extends React.Component {
                 required
                 />
 
-                <input type="month" min="2020-08"
+                <input type="month"
                 style = {{height: '17px', width : '160px', font: "95% Arial, Helvetica, sans-serif", textAlign: 'center'}} 
                 name = 'endDate'
                 value = {this.state.endDate}

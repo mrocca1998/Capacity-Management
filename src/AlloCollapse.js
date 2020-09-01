@@ -170,6 +170,7 @@ class Allocation extends React.Component {
                     isEmTab = {this.props.isEmTab}
                     projects = {this.props.projects}
                     sortAllocations = {this.props.sortAllocations}
+                    isUpdate = {this.props.isUpdate}
                 />
             </tr>
         )

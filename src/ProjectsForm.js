@@ -19,7 +19,7 @@ class ProjectForm extends React.Component {
             baPoints : '',
             qaPoints : '',
             devPoints : '',
-            isShowing: ''
+            isUpdate: ''
         }
         this.formStyle = {
             marginLeft : 'auto',
@@ -51,12 +51,12 @@ class ProjectForm extends React.Component {
                     baPoints : this.state.baPoints,
                     qaPoints : this.state.qaPoints,
                     devPoints : this.state.devPoints,
-                    isShowing: false
+                    isUpdate: this.props.isUpdate
                 })
             })
             .then(result => result.json())
             .then(json => {
-                if (json.length > 0) {
+                if (json.length > 0 && isNaN(json)) {
                     alert(json);
                 }  
                 this.props.refreshState();     
@@ -112,7 +112,8 @@ class ProjectForm extends React.Component {
             baPoints : this.props.baPoints,
             qaPoints : this.props.qaPoints,
             devPoints : this.props.devPoints,
-            isShowing: this.props.isShowing
+            isUpdate: this.props.isUpdate
+            
         })
     }
 
@@ -281,7 +282,7 @@ class Project extends React.Component {
                         <th width = '65px'></th>
                     </tr>
                     <tr class = "legendTable" colspan = "8" style = {{justifyContent:'left'}}>
-                        <ProjectForm 
+                        <ProjectForm
                             refreshState = {this.props.refreshState}
                             isEditing = {this.state.isEditing} 
                             toggleEdit = {this.toggleEdit}
@@ -293,6 +294,7 @@ class Project extends React.Component {
                             baPoints = {this.props.baPoints}
                             qaPoints = {this.props.qaPoints}
                             devPoints = {this.props.devPoints}
+                            isUpdate = {this.props.isUpdate}
                         />
                     </tr>
                 </table>
@@ -336,6 +338,7 @@ class Project extends React.Component {
                             employees = {project.employees} 
                             allocations = {project.allocationState} 
                             isEditing = {false}
+                            isUpdate= {this.props.isUpdate}
                         />
                     </tr>
                 </table>
@@ -360,6 +363,7 @@ class Project extends React.Component {
                             projectRows = {this.props.projectRows}
                             projectName = {this.props.title}
                             role = {'BA'}
+                            isUpdate = {this.props.isUpdate}
                         />
                     </TabPanel>
                     <TabPanel>
@@ -374,6 +378,7 @@ class Project extends React.Component {
                             projectRows = {this.props.projectRows}
                             projectName = {this.props.title}
                             role = {'QA'}
+                            isUpdate = {this.props.isUpdate}
                         />
                     </TabPanel>
                     <TabPanel>
@@ -388,6 +393,7 @@ class Project extends React.Component {
                             projectRows = {this.props.projectRows}
                             projectName = {this.props.title}
                             role = {'Dev'}
+                            isUpdate = {this.props.isUpdate}
                         />
                     </TabPanel>
                 </Tabs>
@@ -466,7 +472,7 @@ class Project extends React.Component {
                             projectId = {project.id} 
                             employees = {project.employees} 
                             allocations = {project.allocationState} 
-                            isEditing = {false}
+                            isUpdate = {this.props.isUpdate}
                         />
                     </tr>
                 </table>
@@ -491,6 +497,7 @@ class Project extends React.Component {
                             projectRows = {this.props.projectRows}
                             projectName = {this.props.title}
                             role = {'BA'}
+                            isUpdate = {this.props.isUpdate}
                         />
                     </TabPanel>
                     <TabPanel>
@@ -505,6 +512,7 @@ class Project extends React.Component {
                             projectRows = {this.props.projectRows}
                             projectName = {this.props.title}
                             role = {'QA'}
+                            isUpdate = {this.props.isUpdate}
                         />
                     </TabPanel>
                     <TabPanel>
@@ -519,6 +527,7 @@ class Project extends React.Component {
                             projectRows = {this.props.projectRows}
                             projectName = {this.props.title}
                             role = {'Dev'}
+                            isUpdate = {this.props.isUpdate}
                         />
                     </TabPanel>
                 <br/>
