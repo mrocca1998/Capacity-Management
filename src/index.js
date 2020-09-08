@@ -109,7 +109,7 @@ class App extends React.Component {
     this.collapseEmRow = this.collapseEmRow.bind(this);
     this.expandProjectRow = this.expandProjectRow.bind(this);
     this.collapseProjectRow = this.collapseProjectRow.bind(this);
-    this.reset = this.reset.bind(this);
+    //this.reset = this.reset.bind(this);
   } 
   async refreshState () {
       await fetch(API_ROOT + 'projects')
@@ -238,78 +238,78 @@ class App extends React.Component {
     this.refreshState();
 }
 
-postProjectCopy(project) {
-  try {
-      fetch(API_ROOT + 'projects', {
-          method: 'post',
-          headers: {
-              'Accept': 'application/json',
-              'Content-type':'application/json',
-          },
-          body: JSON.stringify({
-              title : project.title + ' Copy',
-              startDate : project.startDate,
-              endDate : project.endDate,
-              totalPoints: project.totalPoints,
-              baPoints : project.baPoints,
-              qaPoints : project.qaPoints,
-              devPoints : project.devPoints,
-              isUpdate: 0
-          })
-      })
-      .then(result => result.json())
-      .then(json => {
-        if (json.length > 0 && isNaN(json)) {
-          alert(json);
-        }  
-        else if (!isNaN(json)) {
-          const copyId = json;
-          this.state.allAllocations.filter(allocation => allocation.projectId === project.id).map(allocation => this.postCopyAllocation(allocation, copyId))
-        }   
-        this.refreshState();  
-      })
-  } catch (e) {
-      console.log(e)
-  }
-}
+// postProjectCopy(project) {
+//   try {
+//       fetch(API_ROOT + 'projects', {
+//           method: 'post',
+//           headers: {
+//               'Accept': 'application/json',
+//               'Content-type':'application/json',
+//           },
+//           body: JSON.stringify({
+//               title : project.title + ' Copy',
+//               startDate : project.startDate,
+//               endDate : project.endDate,
+//               totalPoints: project.totalPoints,
+//               baPoints : project.baPoints,
+//               qaPoints : project.qaPoints,
+//               devPoints : project.devPoints,
+//               isUpdate: 0
+//           })
+//       })
+//       .then(result => result.json())
+//       .then(json => {
+//         if (json.length > 0 && isNaN(json)) {
+//           alert(json);
+//         }  
+//         else if (!isNaN(json)) {
+//           const copyId = json;
+//           this.state.allAllocations.filter(allocation => allocation.projectId === project.id).map(allocation => this.postCopyAllocation(allocation, copyId))
+//         }   
+//         this.refreshState();  
+//       })
+//   } catch (e) {
+//       console.log(e)
+//   }
+// }
 
-postCopyAllocation(allocation, copyId) {
-  try {
-      fetch(API_ROOT + 'allocations', {
-          method: 'post',
-          headers: {
-              'Accept': 'application/json',
-              'Content-type':'application/json',
-          },
-          body: JSON.stringify({
-              projectId: copyId,
-              employeeId: allocation.employeeId,
-              role: allocation.role,
-              startDate: allocation.startDate,
-              endDate: allocation.endDate,
-              allocation1: allocation.allocation1,
-              workWeight: allocation.workWeight,
-              isUpdate: false
-          })
-      })
-      .then(result => result.json())
-      .then(json => {
-          if (json.length > 0) {
-              alert(json);
-          }  
-          this.refreshState();     
-      })
-  } catch (e) {
-      console.log(e)
-  }
-}
+// postCopyAllocation(allocation, copyId) {
+//   try {
+//       fetch(API_ROOT + 'allocations', {
+//           method: 'post',
+//           headers: {
+//               'Accept': 'application/json',
+//               'Content-type':'application/json',
+//           },
+//           body: JSON.stringify({
+//               projectId: copyId,
+//               employeeId: allocation.employeeId,
+//               role: allocation.role,
+//               startDate: allocation.startDate,
+//               endDate: allocation.endDate,
+//               allocation1: allocation.allocation1,
+//               workWeight: allocation.workWeight,
+//               isUpdate: false
+//           })
+//       })
+//       .then(result => result.json())
+//       .then(json => {
+//           if (json.length > 0) {
+//               alert(json);
+//           }  
+//           this.refreshState();     
+//       })
+//   } catch (e) {
+//       console.log(e)
+//   }
+// }
 
-  reset() {
-    if(window.confirm('Are you sure you want to reset simulate mode to match update mode? \nAll simulate mode data will be lost.')) {
-      this.state.projects.filter(project => !project.isUpdate).map(project => this.deleteProject(project));
-      this.state.allProjects.filter(project => project.isUpdate).map(project => this.postProjectCopy(project));
-    }
-  }
+//   reset() {
+//     if(window.confirm('Are you sure you want to reset simulate mode to match update mode? \nAll simulate mode data will be lost.')) {
+//       this.state.projects.filter(project => !project.isUpdate).map(project => this.deleteProject(project));
+//       this.state.allProjects.filter(project => project.isUpdate).map(project => this.postProjectCopy(project));
+//     }
+//   }
   
   componentDidMount() {
     this.refreshState();
@@ -343,9 +343,9 @@ postCopyAllocation(allocation, copyId) {
         </div>
         {!this.state.isUpdate ? 
           <div class = "reset">
-            <button class = "reset" onClick = {this.reset}>
+            {/* <button class = "reset" onClick = {this.reset}>
               RESET
-            </button>
+            </button> */}
           </div>  
           :
           <span/>
@@ -425,16 +425,18 @@ postCopyAllocation(allocation, copyId) {
             <EmployeeForm 
                   refreshState = {this.refreshState}
                   isEditing = {false}
-                />
+            />
             </TabPanel>
             {this.state.projects.map(project => <TabPanel key = {project.id}>
               
               <div>
               <Project 
+              projects = {this.state.projects}
               monthNames = {this.state.monthNames}
               refreshState = {this.refreshState} 
               employees = {this.state.employees} 
               allocationState = {this.state.allocations}  
+              allAllocations = {this.state.allAllocations}
               expandProjectRow = {this.expandProjectRow}
               collapseProjectRow = {this.collapseProjectRow}
               projectRows = {this.state.projectRows}

@@ -215,6 +215,7 @@ class Project extends React.Component {
         this.deleteProject = this.deleteProject.bind(this);
         this.toggleEdit = this.toggleEdit.bind(this);
         this.toggleShowing = this.toggleShowing.bind(this);
+        this.postProjectCopy = this.postProjectCopy.bind(this);
     }
 
     toggleEdit() {
@@ -263,6 +264,74 @@ class Project extends React.Component {
         }
         this.props.refreshState();
     }
+
+    async postProjectCopy() {
+        const project = this.props;
+        try {
+            fetch(API_ROOT + 'projects', {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type':'application/json',
+                },
+                body: JSON.stringify({
+                    title : project.title + ' Update',
+                    startDate : project.startDate,
+                    endDate : project.endDate,
+                    totalPoints: project.totalPoints,
+                    baPoints : project.baPoints,
+                    qaPoints : project.qaPoints,
+                    devPoints : project.devPoints,
+                    isUpdate: 1
+                })
+            })
+            .then(result => result.json())
+            .then(json => {
+              if (json.length > 0 && isNaN(json)) {
+                alert(json);
+              }  
+              else if (!isNaN(json)) {
+                const copyId = json;
+                this.props.allAllocations.filter(allocation => allocation.projectId === project.id).map(allocation => this.postCopyAllocation(allocation, copyId))
+              }   
+              this.props.refreshState();  
+            })
+        } catch (e) {
+            console.log(e)
+        }
+      }
+      
+      postCopyAllocation(allocation, copyId) {
+        try {
+            fetch(API_ROOT + 'allocations', {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type':'application/json',
+                },
+                body: JSON.stringify({
+                    projectId: copyId,
+                    employeeId: allocation.employeeId,
+                    role: allocation.role,
+                    startDate: allocation.startDate,
+                    endDate: allocation.endDate,
+                    allocation1: allocation.allocation1,
+                    workWeight: allocation.workWeight,
+                    isUpdate: 1
+                })
+            })
+            .then(result => result.json())
+            .then(json => {
+                if (json.length > 0) {
+                    alert(json);
+                }  
+                this.props.refreshState();     
+            })
+        } catch (e) {
+            console.log(e)
+        }
+      }
+      
 
 	render() {
     const project = this.props;
@@ -399,7 +468,7 @@ class Project extends React.Component {
                 </Tabs>
                 <br/>
                 <br/>
-                <div class = "updateButton"><button onClick = {this.sendToUpdate}>Send to Update Mode</button></div>
+                {!this.props.isUpdate ? <div class = "updateButton"><button onClick = {this.postProjectCopy}>Send to Update Mode</button></div> : <div/>}
                 </div>
 
             </div>
@@ -534,7 +603,7 @@ class Project extends React.Component {
                 <br/>
                 <br/>
                 </Tabs>
-                <div class = "updateButton"><button onClick = {this.sendToUpdate}>Send to Update Mode</button></div>
+                {!this.props.isUpdate ? <div class = "updateButton"><button onClick = {this.postProjectCopy}>Send to Update Mode</button></div> : <div/>}
                 </div>
 
             </div>
