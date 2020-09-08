@@ -178,8 +178,13 @@ class App extends React.Component {
   }
 
   toggleMode() {
+    var employeeRowsCopy = this.state.employeeRows;
+    employeeRowsCopy = [];
     this.setState({
+      
+      employeeRows: employeeRowsCopy,
       isUpdate: !this.state.isUpdate,
+      
     })
     this.refreshState();
   }
@@ -386,19 +391,20 @@ class App extends React.Component {
                       <EmployeeCollapsable 
                           employees = {this.state.employees}
                           allocations = {this.state.allocations}
-                          projects = {this.state.projects}
+                          projects = {this.state.allProjects}
                           refreshState = {this.refreshState}
                           expandEmRow = {this.expandEmRow}
                           collapseEmRow = {this.collapseEmRow}
                           employeeRows = {this.state.employeeRows}
                           role = {'BA'}
+                          isUpdate = {this.state.isUpdate}
                         />
                     </TabPanel>
                     <TabPanel>
                       <EmployeeCollapsable 
                           employees = {this.state.employees}
                           allocations = {this.state.allocations}
-                          projects = {this.state.projects}
+                          projects = {this.state.allProjects}
                           refreshState = {this.refreshState}
                           expandEmRow = {this.expandEmRow}
                           collapseEmRow = {this.collapseEmRow}
@@ -410,7 +416,7 @@ class App extends React.Component {
                       <EmployeeCollapsable 
                         employees = {this.state.employees}
                         allocations = {this.state.allocations}
-                        projects = {this.state.projects}
+                        projects = {this.state.allProjects}
                         refreshState = {this.refreshState}
                         expandEmRow = {this.expandEmRow}
                         collapseEmRow = {this.collapseEmRow}
