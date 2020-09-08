@@ -75,6 +75,7 @@ class AllocationForm extends React.Component {
                     endDate: this.state.endDate,
                     allocation1: this.state.allocation,
                     workWeight: this.state.weight,
+                    isUpdate: this.props.isUpdate? 1: 0
                 })
             })
             .then(result => result.json())
@@ -113,6 +114,7 @@ class AllocationForm extends React.Component {
                     endDate: this.state.endDate,
                     allocation1: this.state.allocation,
                     workWeight: this.state.weight,
+                    isUpdate: this.props.isUpdate? 1: 0
                 })
             })
             .then(result => result.json())
@@ -148,7 +150,6 @@ class AllocationForm extends React.Component {
             endDate : endDate,
             weight : this.props.weight,
             allocation: this.props.allocation,
-            
         })
     }
 

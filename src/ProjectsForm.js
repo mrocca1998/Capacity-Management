@@ -399,6 +399,7 @@ class Project extends React.Component {
                 </Tabs>
                 <br/>
                 <br/>
+                <div class = "updateButton"><button onClick = {this.sendToUpdate}>Send to Update Mode</button></div>
                 </div>
 
             </div>
@@ -533,6 +534,7 @@ class Project extends React.Component {
                 <br/>
                 <br/>
                 </Tabs>
+                <div class = "updateButton"><button onClick = {this.sendToUpdate}>Send to Update Mode</button></div>
                 </div>
 
             </div>
